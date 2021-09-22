@@ -1,0 +1,10 @@
+# Land Mine
+# Turns until it is not facing a wall and then just infects.
+
+ifwall 5
+ifsame 5
+infect
+go 1
+
+left 90
+go 1

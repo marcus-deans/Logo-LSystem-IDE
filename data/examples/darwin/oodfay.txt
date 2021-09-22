@@ -1,0 +1,5 @@
+# OodFay
+# Food just sits there and spins waiting to be infected
+
+left 20
+go 1

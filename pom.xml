@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>CompSci307_2021Fall</groupId>
+<artifactId>oolala_team01</artifactId>
+<version>master-SNAPSHOT</version>
+<packaging>jar</packaging>
+
+<properties>
+    <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
+</properties>
+
+
+<dependencies>
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.7.2</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+
+
+<build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+    <resources>
+        <!-- external data files -->
+        <resource>
+            <directory>data</directory>
+        </resource>
+        <!-- internal resource files also need to be included, but not directly -->
+        <resource>
+            <directory>src</directory>
+        </resource>
+    </resources>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+                <encoding>iso-8859-1</encoding>
+                <includes>
+                    <include>src/**/*.java</include>
+                </includes>
+                <source>16</source>
+                <target>16</target>
+                <compilerArgs>
+                    <arg>--enable-preview</arg>
+                </compilerArgs>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.45.1</version>
+            <configuration>
+                <configLocation>google_checks.xml</configLocation>
+                <encoding>UTF-8</encoding>
+                <consoleOutput>true</consoleOutput>
+                <linkXRef>false</linkXRef>
+            </configuration>
+            <executions>
+            <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <goals>
+                <goal>check</goal>
+            </goals>
+            </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+</project>

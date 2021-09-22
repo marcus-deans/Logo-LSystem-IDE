@@ -1,0 +1,15 @@
+# Rover
+# Constantly moves forward.  When it runs into a wall or another rover, randomly turns.
+
+ifenemy 11
+ifwall 6
+ifsame 6
+move 40
+go 1
+ifrandom 9
+left 90
+go 1
+right 90
+go 1
+infect
+go 1

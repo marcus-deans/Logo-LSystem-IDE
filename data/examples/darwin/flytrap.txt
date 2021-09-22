@@ -1,0 +1,10 @@
+# Flytrap
+# Sits in one place and spins. It infects anything which comes in front.
+
+ifenemy 4
+left 20
+go 1
+
+infect
+go 1
+

@@ -1,0 +1,7 @@
+# Hop
+# This just hops forward blindly -- good for testing your program works at all.
+
+
+    MOVE 30
+Go     1
+

@@ -1,0 +1,11 @@
+# Draw the Sierpinski triangle
+# https://en.wikipedia.org/wiki/Sierpinski_triangle
+
+# set angle to 120
+
+start  : T
+rule T 	 F−G−G
+rule F 	 F−G+F+G−F
+rule G 	 GG
+
+set G "pd fd LENGTH"

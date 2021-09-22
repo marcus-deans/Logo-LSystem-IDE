@@ -1,0 +1,57 @@
+# Creeping Death
+# Try to combine advantages of rover and land mine.
+# Use roving behavior to get food and to find other like it.
+# Then try to clump together and face outward.
+
+# basic infection loop
+ifenemy 3
+go 5
+infect
+go 1
+
+# spin looking for something to infect
+ifenemy 1
+left 20
+ifenemy 1
+left 20
+ifenemy 1
+left 20
+ifenemy 1
+
+# spin looking for your own species to clump
+ifsame 34
+left 20
+ifenemy 1
+ifsame 34
+left 20
+ifenemy 1
+ifsame 34
+left 20
+ifenemy 1
+ifsame 34
+ifenemy 1
+ifwall 29
+ifrandom 27
+left 20
+go 21
+move 30
+go 21
+
+left 90
+ifenemy 1
+ifsame 34
+left 90
+go 21
+ifenemy 1
+ifempty 38
+
+left 90
+go 34
+infect
+ifrandom 34
+ifrandom 34
+ifrandom 34
+ifrandom 34
+ifrandom 34
+ifrandom 34
+go 1
