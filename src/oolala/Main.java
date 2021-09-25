@@ -6,6 +6,7 @@ package oolala;
  */
 public class Main {
 
+<<<<<<< HEAD
   /**
    * A method to test (and a joke :).
    */
@@ -25,4 +26,14 @@ public class Main {
 
 
   }
+=======
+    //adding a comment
+
+    /**
+     * Start of the program.
+     */
+    public static void main (String[] args) {
+        System.out.println("Hello world");
+    }
+>>>>>>> c5bf541a1e057cc909c4096853f9f5064e779bd1
 }
