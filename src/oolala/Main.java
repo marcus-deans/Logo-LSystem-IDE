@@ -12,6 +12,8 @@ public class Main {
         return 0.001;
     }
 
+    //adding a comment
+
     /**
      * Start of the program.
      */
