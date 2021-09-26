@@ -1,5 +1,15 @@
 package oolala.model;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.*;
@@ -64,10 +74,17 @@ public class Logo {
   }
 
   //Method to save the user input commands to a fle
-  public void saveCommand(String inputStream){
-    //save to a file
-
+  public void saveCommand(String inputStream, String filename){
+    File tempDir = new File(System.getProperty("java.io.data"));
+    File newProgram = new File(tempDir, filename);
+    try {
+      FileWriter myWrtier = new FileWriter(filename);
+      myWrtier.write(inputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
+
 
   Instruction getNextInstruction(){
     for(Instruction instructionIterator : myInstructions){

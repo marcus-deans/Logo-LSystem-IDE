@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
@@ -36,6 +37,7 @@ public class LogoDisplay extends Application {
   private Turtle myTurtle;
   private Logo myLogo;
   private TextArea commandLine;
+  private String fileName;
 
 
   public void start(Stage stage) {
@@ -81,10 +83,26 @@ public class LogoDisplay extends Application {
     saveCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        myLogo.saveCommand(commandLine.getText());
+        myLogo.saveCommand(commandLine.getText(), getUserFileName());
       }
     });
   }
+
+  private String getUserFileName(){
+    TextInputDialog getUserInput = new TextInputDialog();
+    getUserInput.setHeaderText("Enter a filename:");
+    Button submit = new Button("Submit");
+    EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent e)
+      {
+        fileName = getUserInput.getEditor().getText();
+      }
+    };
+    submit.setOnAction(event);
+    root.getChildren().add(submit);
+    return fileName;
+  }
+
 
   //Create method that passes in queue of commands to Logo
 
