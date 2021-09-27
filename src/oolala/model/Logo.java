@@ -29,6 +29,7 @@ public class Logo {
   private Instruction myInstructionsPointer;
   private String currentUserCommand;
   private int currentUserPixels;
+  private ArrayList<String> history;
 
 //  private LinkedHashMap<String, Integer> myInstructions;
   private Queue<Instruction> myInstructions;
@@ -83,6 +84,10 @@ public class Logo {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public void saveHistory(String historyElement) {
+    history.add(historyElement);
   }
 
 
