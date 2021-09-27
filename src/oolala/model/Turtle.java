@@ -27,9 +27,7 @@ public class Turtle {
     this.newX = newx;
     this.newY = newy;
     // make turtle shape and set property
-    myTurtleView = new ImageView(new Image(TURTLE_IMAGE));
-    myTurtleView.setFitHeight(TURTLE_SIZE);
-    myTurtleView.setFitWidth(TURTLE_SIZE);
+    myTurtleView = createTurtleView();
   }
 
   public Turtle(int oldx, int oldy) {
@@ -40,11 +38,30 @@ public class Turtle {
     //Switch between the instructions
     updateCoordinates(instruction);
     switch(instruction.command){
-      case "rt", "lt" -> setRotation(root, lineRoot);
+      case "rt", "lt" -> setRotation();
+      case "ht", "st" -> displayTurtle();
+      case "stamp" -> stampTurtle(root, lineRoot);
       default -> {
       }
     }
 
+  }
+
+  private ImageView createTurtleView(){
+    ImageView newTurtleView = new ImageView(new Image(TURTLE_IMAGE));
+    newTurtleView.setFitHeight(TURTLE_SIZE);
+    newTurtleView.setFitWidth(TURTLE_SIZE);
+    return newTurtleView;
+  }
+
+  private void displayTurtle() {
+    myTurtleView.setVisible(!myTurtleView.isVisible());
+  }
+
+  private void stampTurtle(Group root, Group lineRoot){
+    ImageView stampTurtleView = createTurtleView();
+    stampTurtleView.setRotate(degreesRotation);
+    root.getChildren().add(stampTurtleView);
   }
 
   public ImageView getMyTurtleView(){
@@ -58,7 +75,7 @@ public class Turtle {
     switch (instruction.command) {
       case "fd" -> computeForwardCoordinates();
       case "bk" -> computeBackwardCoordinates();
-      case "hm" -> computeHomeCoordinates();
+      case "home" -> computeHomeCoordinates();
       case "rt" -> computeRightRotation();
       case "lt" -> computeLeftRotation();
       default -> {
@@ -89,9 +106,8 @@ public class Turtle {
     degreesRotation -= length;
   }
 
-  private void setRotation(Group root, Group lineRoot){
+  private void setRotation(){
     degreesRotation %= 360;
-//    root.getChildren().remove(this);
     myTurtleView.setRotate(degreesRotation);
   }
 

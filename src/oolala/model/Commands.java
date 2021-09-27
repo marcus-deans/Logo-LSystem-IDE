@@ -5,7 +5,10 @@ public enum Commands {
   BACK ("bk"),
   RIGHT ("rt"),
   LEFT ("lt"),
-  HOME ("hm")
+  HOME ("home"),
+  HIDE ("ht"),
+  SHOW ("st"),
+  STAMP("stamp")
   ;
 
   private String commandString;
