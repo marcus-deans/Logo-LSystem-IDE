@@ -52,11 +52,11 @@ public class LogoDisplay extends Application {
   }
 
   private Scene setupGame(int width, int height, Paint background) {
-    root = new Group();
-
     //Initialize the view classes
     myTurtle = new Turtle(0, 0);
     myLogo = new Logo();
+
+    root = new Group(myTurtle.getMyTurtleView());
 
     //Initialize command line
     initializeCommandLine();

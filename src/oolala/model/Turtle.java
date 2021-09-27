@@ -1,6 +1,8 @@
 package oolala.model;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Turtle {
 
@@ -14,16 +16,24 @@ public class Turtle {
   private int yVector;
   private int xVector;
 
+  private ImageView myTurtleView;
+
+  private static final String TURTLE_IMAGE = "turtle-picture.png";
+  private final double TURTLE_SIZE = 20;
+
   public Turtle(int oldx, int oldy, int newx, int newy) {
-    oldX = oldx;
-    oldY = oldy;
-    newX = newx;
-    newY = newy;
+    this.oldX = oldx;
+    this.oldY = oldy;
+    this.newX = newx;
+    this.newY = newy;
+    // make turtle shape and set property
+    myTurtleView = new ImageView(new Image(TURTLE_IMAGE));
+    myTurtleView.setFitHeight(TURTLE_SIZE);
+    myTurtleView.setFitWidth(TURTLE_SIZE);
   }
 
   public Turtle(int oldx, int oldy) {
-    oldX = oldx;
-    oldY = oldy;
+    this(oldx, oldy, oldx, oldy);
   }
 
   public void execute(Instruction instruction, Group root, Group lineRoot) {
@@ -35,6 +45,10 @@ public class Turtle {
       }
     }
 
+  }
+
+  public ImageView getMyTurtleView(){
+    return myTurtleView;
   }
 
   public void updateCoordinates(Instruction instruction) {
@@ -78,10 +92,11 @@ public class Turtle {
   private void setRotation(Group root, Group lineRoot){
     degreesRotation %= 360;
 //    root.getChildren().remove(this);
+    myTurtleView.setRotate(degreesRotation);
   }
 
   private boolean rightFacing() {
-    return (degreesRotation >= 0) && (degreesRotation <= 180)
+    return (degreesRotation >= 0) && (degreesRotation <= 180);
   }
 
   private boolean upwardFacing() {
