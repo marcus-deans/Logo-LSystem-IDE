@@ -60,9 +60,8 @@ public class Logo {
         boolean isInt = false;
         try{
           Integer.parseInt(commandElements[1]);
+        }catch(NumberFormatException e){
           isInt = true;
-        }catch{
-          System.out.println("Command is not an integer");
         }
         if(commands.contains(commandElements[0]) && isInt){
             Instruction newInstruction = new Instruction(Integer.valueOf(commandElements[1]), commandElements[0]);
