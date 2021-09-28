@@ -166,7 +166,9 @@ public class LogoDisplay extends Application {
     history.setLayoutY(HISTORY_TITLE_Y);
     root.getChildren().add(history);
     historyPrograms = new ComboBox();
-    //historyPrograms = new ComboBox<>(FXCollections.observableList(myLogo.getHistory()));
+    historyPrograms.setOnAction((event) -> {
+      commandLine.setText(historyPrograms.getSelectionModel().getSelectedItem().toString());
+    });
     historyPrograms.setLayoutX(HISTORY_DROPDOWN_X);
     historyPrograms.setLayoutY(HISTORY_DROPDOWN_Y);
     root.getChildren().add(historyPrograms);
@@ -194,8 +196,16 @@ public class LogoDisplay extends Application {
         System.out.println("Run command: " + commandLine.getText());
         myLogo.inputParser(commandLine.getText());
         myLogo.saveHistory(commandLine.getText());
+        updateHistoryDropdown();
       }
     });
+  }
+
+  private void updateHistoryDropdown() {
+    historyPrograms.getItems().clear();
+    for(String element: myLogo.getHistory()){
+      historyPrograms.getItems().add(element);
+    }
   }
 
   private void initializeSaveButton() {
@@ -247,6 +257,7 @@ public class LogoDisplay extends Application {
   //Create method that passes in queue of commands to Logo
 
   private void step() {
+    //If an instruction has been sent to myLogo, run it
     Queue<Instruction> instructions = myLogo.getMyInstructions();
     if(!instructions.isEmpty()){
       Instruction currentInstruction = instructions.poll(); //pop a single instruction (FIFO i think?)
