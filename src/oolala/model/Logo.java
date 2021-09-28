@@ -29,7 +29,7 @@ public class Logo {
   private Instruction myInstructionsPointer;
   private String currentUserCommand;
   private int currentUserPixels;
-  private ArrayList<String> history;
+  private ArrayList<String> history = new ArrayList<>();
 
 //  private LinkedHashMap<String, Integer> myInstructions;
   private Queue<Instruction> myInstructions;

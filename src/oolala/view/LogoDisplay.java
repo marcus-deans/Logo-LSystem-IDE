@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
 
 
 /**
@@ -40,7 +41,7 @@ public class LogoDisplay extends Application {
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
   //Top Layout
-  public static final int GAME_TITLE_X = 7;
+  public static final int GAME_TITLE_X = 10;
   public static final int GAME_TITLE_Y = 17;
   public static final int GAME_DROPDOWN_X = 100;
   public static final int GAME_DROPDOWN_Y = 0;
@@ -76,6 +77,8 @@ public class LogoDisplay extends Application {
   private ComboBox gameSetting;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
+  private double turtleHomeX;
+  private double turtleHomeY;
 
   //Games
   private List<String> gameTypes = new ArrayList<>(Arrays.asList("Logo", "L-System", "Darwin"));
@@ -112,11 +115,12 @@ public class LogoDisplay extends Application {
 
   private void spawnTurtle() {
     myTurtle = new Turtle(0, 0);
+    turtleHomeX = FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2;
+    turtleHomeY = (FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2;
     root = new Group(myTurtle.getMyTurtleView());
     allTurtles.add(myTurtle);
-    myTurtle.getMyTurtleView().setX(FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
-    myTurtle.getMyTurtleView().setY((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
-
+    myTurtle.getMyTurtleView().setX(turtleHomeX);
+    myTurtle.getMyTurtleView().setY(turtleHomeY);
   }
 
   private void initializeBoundaries() {
@@ -188,8 +192,8 @@ public class LogoDisplay extends Application {
       @Override
       public void handle(ActionEvent event) {
         System.out.println("Run command: " + commandLine.getText());
-        //myLogo.inputParser(commandLine.getText());
-        //myLogo.saveHistory(commandLine.getText());
+        myLogo.inputParser(commandLine.getText());
+        myLogo.saveHistory(commandLine.getText());
       }
     });
   }
@@ -207,7 +211,7 @@ public class LogoDisplay extends Application {
         String filename = getUserFileName();
         System.out.println(filename);
         System.out.println("Run command: "+ commandLine.getText());
-        //myLogo.saveCommand(commandLine.getText(), getUserFileName());
+        myLogo.saveCommand(commandLine.getText(), filename);
       }
     });
   }
@@ -243,10 +247,10 @@ public class LogoDisplay extends Application {
   //Create method that passes in queue of commands to Logo
 
   private void step() {
-//        Queue<Instruction> instructions = myLogo.getMyInstructions();
-//        if(!instructions.isEmpty()){
-//            Instruction currentInstruction = instructions.poll(); //pop a single instruction (FIFO i think?)
-//            myTurtle.execute(currentInstruction, root, lineRoot);
-//        }
+    Queue<Instruction> instructions = myLogo.getMyInstructions();
+    if(!instructions.isEmpty()){
+      Instruction currentInstruction = instructions.poll(); //pop a single instruction (FIFO i think?)
+      myTurtle.execute(currentInstruction, root, lineRoot);
+    }
   }
 }
