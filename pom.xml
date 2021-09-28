@@ -9,19 +9,25 @@
     <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 </properties>
 
-
 <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+    <!-- framework for writing repeatable tests by using assertions about your code's values -->
     <dependency>
         <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>5.7.2</version>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- provides testing for JavaFX by simulating user interactions and checking using JUnit assertions -->
+    <dependency>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-junit5</artifactId>
+        <version>4.0.16-alpha</version>
         <scope>test</scope>
     </dependency>
 </dependencies>
 
-
 <build>
+    <!-- use simple names for folders instead of maven's prerferred ones -->
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
     <resources>
@@ -35,6 +41,7 @@
         </resource>
     </resources>
     <plugins>
+        <!-- compiles project source code using correct version and flags -->
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -51,6 +58,20 @@
                 </compilerArgs>
             </configuration>
         </plugin>
+        <!-- used to execute the unit tests of an application and generate a report -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M5</version>
+            <configuration>
+                <argLine>
+                    @{argLine}
+                    --enable-preview
+                    --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                </argLine>
+            </configuration>
+        </plugin>
+        <!-- check for violations of code style -->
         <plugin>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
@@ -62,13 +83,13 @@
                 <linkXRef>false</linkXRef>
             </configuration>
             <executions>
-            <execution>
-            <id>validate</id>
-            <phase>validate</phase>
-            <goals>
-                <goal>check</goal>
-            </goals>
-            </execution>
+                <execution>
+                    <id>validate</id>
+                    <phase>validate</phase>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
             </executions>
         </plugin>
     </plugins>
