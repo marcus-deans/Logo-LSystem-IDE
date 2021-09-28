@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.paint.Paint;
@@ -32,14 +33,14 @@ import java.util.List;
 public class LogoDisplay extends Application {
 
   public static final String TITLE = "Logo Turtle Game";
-  public static final int FRAME_WIDTH = 800;
-  public static final int FRAME_HEIGHT = 700;
+  public static final int FRAME_WIDTH = 733;
+  public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
   //Top Layout
-  public static final int GAME_TITLE_X = 5;
+  public static final int GAME_TITLE_X = 7;
   public static final int GAME_TITLE_Y = 17;
   public static final int GAME_DROPDOWN_X = 100;
   public static final int GAME_DROPDOWN_Y = 0;
@@ -66,20 +67,20 @@ public class LogoDisplay extends Application {
   public static final int SAVE_X = 620;
   public static final int SAVE_Y = 600;
 
-
   private Group root;
   private Group lineRoot;
-  //    private Turtle myTurtle;
-//    private Logo myLogo;
+  private Turtle myTurtle;
+  private Logo myLogo;
   private TextArea commandLine;
   private String fileName;
   private ComboBox gameSetting;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
 
-
   //Games
   private List<String> gameTypes = new ArrayList<>(Arrays.asList("Logo", "L-System", "Darwin"));
+  //Turtles
+  private ArrayList<Turtle> allTurtles = new ArrayList<>();
 
   public void start(Stage stage) {
     //Variables
@@ -95,20 +96,38 @@ public class LogoDisplay extends Application {
 
   private Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-//        myTurtle = new Turtle(0, 0, root);
-//        myLogo = new Logo();
-
-    root = new Group(); //root = new Group(myTurtle.getMyTurtleView());
-    initializeGameSetting();
-    initializeSavedPrograms();
-    initializeHistory();
+    myLogo = new Logo();
+    spawnTurtle();
+    initializeGameSetting(); //game type dropdown
+    initializeSavedPrograms(); //saved programs dropdown
+    initializeHistory(); //program history dropdown
     initializeCommandLine(); //initialize the command line
     initializeRunButton(); //initialize the program run button
     initializeSaveButton(); //initializes the program save button
-
+    initializeBoundaries(); // sets up program boundaries for where the turtle will move
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     return scene;
+  }
+
+  private void spawnTurtle() {
+    myTurtle = new Turtle(0, 0);
+    root = new Group(myTurtle.getMyTurtleView());
+    allTurtles.add(myTurtle);
+    myTurtle.getMyTurtleView().setX(FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
+    myTurtle.getMyTurtleView().setY((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
+
+  }
+
+  private void initializeBoundaries() {
+    Line topLine = new Line(10,26, FRAME_WIDTH-10,26);
+    Line leftLine = new Line(10, 26, 10, COMMAND_Y-15);
+    Line rightLine = new Line(FRAME_WIDTH-10, 26, FRAME_WIDTH-10, COMMAND_Y-15);
+    Line bottomLine = new Line(10,COMMAND_Y-15,FRAME_WIDTH-10,COMMAND_Y-15);
+    root.getChildren().add(topLine);
+    root.getChildren().add(leftLine);
+    root.getChildren().add(rightLine);
+    root.getChildren().add(bottomLine);
   }
 
   private void initializeGameSetting() {
