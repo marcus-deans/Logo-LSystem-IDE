@@ -90,10 +90,10 @@ public class Logo {
   }
 
 
-  Instruction getNextInstruction(){
+  private void getNextInstruction(){
     for(Instruction instructionIterator : myInstructions){
       myCurrentInstruction = instructionIterator;
-      Turtle.updateCoordinates(myCurrentInstruction);
+      //Turtle.updateCoordinates(myCurrentInstruction);
     }
 //    Instruction currentInstruction = myInstructions.peek();
 //    currentUserPixels = currentInstruction.pixels;

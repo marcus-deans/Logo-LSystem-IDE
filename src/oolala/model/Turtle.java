@@ -19,7 +19,7 @@ public class Turtle {
   private ImageView myTurtleView;
 
   private static final String TURTLE_IMAGE = "turtle-picture.png";
-  private final double TURTLE_SIZE = 20;
+  private final double TURTLE_SIZE = 70;
 
   public Turtle(int oldx, int oldy, int newx, int newy) {
     this.oldX = oldx;
