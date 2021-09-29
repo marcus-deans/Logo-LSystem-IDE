@@ -16,28 +16,33 @@ public class Turtle {
   private int yVector;
   private int xVector;
 
+  private double TurtleHomeX;
+  private double TurtleHomeY;
+
+  public int myId;
+
   private ImageView myTurtleView;
 
   private static final String TURTLE_IMAGE = "turtle-picture.png";
   private final double TURTLE_SIZE = 70;
 
-  public Turtle(int oldx, int oldy, int newx, int newy) {
-    this.oldX = oldx;
-    this.oldY = oldy;
-    this.newX = newx;
-    this.newY = newy;
+  public Turtle(int homeX, int homeY, int id) {
+    TurtleHomeX = homeX;
+    TurtleHomeY = homeY;
+    myId = id;
+    this.oldX = homeX;
+    this.oldY = homeY;
+    this.newX = 0;
+    this.newY = 0;
     // make turtle shape and set property
-    myTurtleView = createTurtleView();
-  }
-
-  public Turtle(int oldx, int oldy) {
-    this(oldx, oldy, oldx, oldy);
+    initializeTurtleView();
   }
 
   public void execute(Instruction instruction, Group root, Group lineRoot) {
     //Switch between the instructions
-    updateCoordinates(instruction);
+    computeCoordinates(instruction);
     switch(instruction.command){
+      case "fd", "bk" -> setMovement();
       case "rt", "lt" -> setRotation();
       case "ht", "st" -> displayTurtle();
       case "stamp" -> stampTurtle(root, lineRoot);
@@ -45,6 +50,13 @@ public class Turtle {
       }
     }
   }
+
+  private void initializeTurtleView(){
+    myTurtleView = createTurtleView();
+    myTurtleView.setX(TurtleHomeX);
+    myTurtleView.setY(TurtleHomeY);
+  }
+
 
   private ImageView createTurtleView(){
     ImageView newTurtleView = new ImageView(new Image(TURTLE_IMAGE));
@@ -67,7 +79,7 @@ public class Turtle {
     return myTurtleView;
   }
 
-  public void updateCoordinates(Instruction instruction) {
+  private void computeCoordinates(Instruction instruction) {
     length = instruction.pixels;
     xVector = (int) Math.sin(degreesRotation) * length;
     yVector = (int) Math.cos(degreesRotation) * length;
@@ -80,6 +92,11 @@ public class Turtle {
       default -> {
       }
     }
+  }
+
+  public void updateCoordinates(){
+    oldX = newX;
+    oldY = newY;
   }
 
   private void computeForwardCoordinates() {
@@ -108,6 +125,11 @@ public class Turtle {
   private void setRotation(){
     degreesRotation %= 360;
     myTurtleView.setRotate(degreesRotation);
+  }
+
+  private void setMovement(){
+    myTurtleView.setX(newX);
+    myTurtleView.setY(newY);
   }
 
   private boolean rightFacing() {

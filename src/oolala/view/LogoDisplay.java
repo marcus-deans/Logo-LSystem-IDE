@@ -33,7 +33,8 @@ import java.util.*;
  */
 public class LogoDisplay extends Application {
 
-  public static final String TITLE = "Logo Turtle Game";
+//  public static final String TITLE = R.string.program_name;
+  public String TITLE = "TRIAL";
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
@@ -82,8 +83,8 @@ public class LogoDisplay extends Application {
   private ComboBox gameSetting;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
-  private double turtleHomeX;
-  private double turtleHomeY;
+  private int turtleHomeX;
+  private int turtleHomeY;
 
   //Games
   private List<String> gameTypes = new ArrayList<>(Arrays.asList("Logo", "L-System", "Darwin"));
@@ -120,9 +121,9 @@ public class LogoDisplay extends Application {
   }
 
   private void spawnTurtle() {
-    myTurtle = new Turtle(0, 0);
-    turtleHomeX = FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2;
-    turtleHomeY = (FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2;
+    turtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
+    turtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
+    myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //spawns first turtle with ID 0
     root = new Group(myTurtle.getMyTurtleView());
     allTurtles.add(myTurtle);
     myTurtle.getMyTurtleView().setX(turtleHomeX);
@@ -340,7 +341,19 @@ public class LogoDisplay extends Application {
 
   private void tellTurtle(int id){
     //loop through allTurtles - if ID exists, switch to this turtle
-    //id doesn't exist - create new turtle with next available id, switch to that
+    boolean exists = false;
+    for(Turtle turtle: allTurtles){
+      if(turtle.myId == id){
+        myTurtle = turtle; //switch current turtle to this turtle
+        exists = true;
+        //TODO: inform user that turtle has switched
+      }
+    }
+    if(!exists){//id doesn't exist - create new turtle with this ID
+        myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
+        allTurtles.add(myTurtle);
+        //TODO: inform user that a new turtle has been spawned
+    }
   }
 
   //Create method that passes in queue of commands to Logo
@@ -360,5 +373,9 @@ public class LogoDisplay extends Application {
         default -> myTurtle.execute(currentInstruction, root, lineRoot);
       }
     }
+    //TODO: tell the Turtle to updates its coordinates ONCE the line has been drawn
+//    myTurtle.updateCoordinates();
+
+
   }
 }
