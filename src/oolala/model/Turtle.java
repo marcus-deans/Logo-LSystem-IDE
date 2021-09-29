@@ -44,7 +44,6 @@ public class Turtle {
       default -> {
       }
     }
-
   }
 
   private ImageView createTurtleView(){

@@ -88,7 +88,7 @@ public class LogoDisplay extends Application {
   //Games
   private List<String> gameTypes = new ArrayList<>(Arrays.asList("Logo", "L-System", "Darwin"));
   //Turtles
-  private ArrayList<Turtle> allTurtles = new ArrayList<>();
+  private List<Turtle> allTurtles = new ArrayList<>();
 
   public void start(Stage stage) {
     //Variables
@@ -178,8 +178,7 @@ public class LogoDisplay extends Application {
 
   private void getContentFromFilename() {
     String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
-    //TODO: don't use absolute path, figure out general path
-    File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
+    File[] files = new File("data/examples/logo").listFiles();
     for(File file : files){
       if(file.isFile() && file.getName().equals(filename)){
         try {
@@ -201,8 +200,7 @@ public class LogoDisplay extends Application {
   }
 
   private void populateFileNames() {
-    //TODO: don't use absolute path, figure out general path
-    File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
+    File[] files = new File("data/examples/logo").listFiles();
     for (File file : files) {
       if (file.isFile()) {
         savedPrograms.getItems().add(file.getName());
@@ -251,7 +249,6 @@ public class LogoDisplay extends Application {
     runCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        System.out.println("Run command: " + commandLine.getText());
         myLogo.inputParser(commandLine.getText());
         validateCommandStream();
         myLogo.saveHistory(commandLine.getText());
@@ -262,8 +259,7 @@ public class LogoDisplay extends Application {
 
   private void validateCommandStream() {
     Boolean valid = myLogo.getValidCommand();
-    if(!valid){
-      System.out.println("Validation: Invalid command!");
+    if(!valid){ //TODO: popup doesn't work
       Popup popup = new Popup();
       popup.setAutoFix(true);
       popup.setAutoHide(true);
@@ -277,8 +273,6 @@ public class LogoDisplay extends Application {
       });
       popup.getContent().add(label);
       myLogo.setValidCommand(true);
-    }else{
-      System.out.println("Validation: Valid command!");
     }
   }
 
@@ -293,8 +287,6 @@ public class LogoDisplay extends Application {
       @Override
       public void handle(ActionEvent event) {
         String filename = getUserFileName();
-        System.out.println(filename);
-        System.out.println("Run command: "+ commandLine.getText());
         myLogo.saveCommand(commandLine.getText(), filename);
         updateSavedDropdown();
       }
@@ -346,15 +338,27 @@ public class LogoDisplay extends Application {
     return false;
   }
 
-  //Create method that passes in queue of commands to Logo
+  private void tellTurtle(int id){
+    //loop through allTurtles - if ID exists, switch to this turtle
+    //id doesn't exist - create new turtle with next available id, switch to that
+  }
 
+  //Create method that passes in queue of commands to Logo
   private void step() {
     //If an instruction has been sent to myLogo, run it
     Queue<Instruction> instructions = myLogo.getMyInstructions();
     if(!instructions.isEmpty()){
-      System.out.println("LogoDisplay: Sending an instruction...Data size: " + instructions.size());
-      Instruction currentInstruction = instructions.poll(); //pop a single instruction (FIFO i think?)
-      myTurtle.execute(currentInstruction, root, lineRoot);
+      Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
+      switch(currentInstruction.command){
+        case "pu" -> {
+          //change pen opacity to 0
+        }
+        case "pd" -> {
+          //change pen opacity to 100
+        }
+        case "tell" -> tellTurtle(currentInstruction.pixels);
+        default -> myTurtle.execute(currentInstruction, root, lineRoot);
+      }
     }
   }
 }
