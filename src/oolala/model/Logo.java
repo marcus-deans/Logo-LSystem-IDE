@@ -1,15 +1,8 @@
 package oolala.model;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.TextInputDialog;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.*;
@@ -29,7 +22,7 @@ public class Logo {
   private Instruction myInstructionsPointer;
   private String currentUserCommand;
   private int currentUserPixels;
-  private ArrayList<String> history;
+  private List<String> myHistory;
 
 //  private LinkedHashMap<String, Integer> myInstructions;
   private Queue<Instruction> myInstructions;
@@ -38,6 +31,7 @@ public class Logo {
     myInstructions = new LinkedList<>();
     commands = new ArrayList<>(Arrays.asList("fd", "bk", "lt", "rt", "pd", "pu", "st",
         "ht", "home", "stamp", "tell"));
+    myHistory = new ArrayList<>();
   }
 
   //Method to parse the input
@@ -75,18 +69,28 @@ public class Logo {
 
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename){
-    File tempDir = new File(System.getProperty("java.io.data"));
-    File newProgram = new File(tempDir, filename);
+    String path = "/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo/" + filename + ".txt";
+    File newProgram = new File(path);
     try {
-      FileWriter myWrtier = new FileWriter(filename);
-      myWrtier.write(inputStream);
+      if (newProgram.createNewFile()) {
+        FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
+        writeToFile.write(inputStream);
+        writeToFile.close();
+        System.out.println("File created: " + newProgram.getName());
+      } else {
+        System.out.println("File already exists.");
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   public void saveHistory(String historyElement) {
-    history.add(historyElement);
+    myHistory.add(historyElement);
+  }
+
+  public List<String> getHistory(){
+    return myHistory;
   }
 
 

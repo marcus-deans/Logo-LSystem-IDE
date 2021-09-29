@@ -21,10 +21,9 @@ import oolala.model.Turtle;
 import oolala.model.Logo;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -40,7 +39,7 @@ public class LogoDisplay extends Application {
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
   //Top Layout
-  public static final int GAME_TITLE_X = 7;
+  public static final int GAME_TITLE_X = 10;
   public static final int GAME_TITLE_Y = 17;
   public static final int GAME_DROPDOWN_X = 100;
   public static final int GAME_DROPDOWN_Y = 0;
@@ -52,6 +51,7 @@ public class LogoDisplay extends Application {
   public static final int HISTORY_TITLE_Y = 17;
   public static final int HISTORY_DROPDOWN_X = 450;
   public static final int HISTORY_DROPDOWN_Y = 0;
+  public static final int MAX_DROPDOWN_WIDTH = 85;
 
   //Bottom Layout
   public static final int COMMAND_WIDTH = 600;
@@ -76,6 +76,8 @@ public class LogoDisplay extends Application {
   private ComboBox gameSetting;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
+  private double turtleHomeX;
+  private double turtleHomeY;
 
   //Games
   private List<String> gameTypes = new ArrayList<>(Arrays.asList("Logo", "L-System", "Darwin"));
@@ -112,11 +114,12 @@ public class LogoDisplay extends Application {
 
   private void spawnTurtle() {
     myTurtle = new Turtle(0, 0);
+    turtleHomeX = FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2;
+    turtleHomeY = (FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2;
     root = new Group(myTurtle.getMyTurtleView());
     allTurtles.add(myTurtle);
-    myTurtle.getMyTurtleView().setX(FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
-    myTurtle.getMyTurtleView().setY((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
-
+    myTurtle.getMyTurtleView().setX(turtleHomeX);
+    myTurtle.getMyTurtleView().setY(turtleHomeY);
   }
 
   private void initializeBoundaries() {
@@ -138,6 +141,7 @@ public class LogoDisplay extends Application {
     gameSetting = new ComboBox<>(FXCollections.observableList(gameTypes));
     gameSetting.setLayoutX(GAME_DROPDOWN_X);
     gameSetting.setLayoutY(GAME_DROPDOWN_Y);
+    gameSetting.setMaxWidth(MAX_DROPDOWN_WIDTH);
     gameSetting.setOnAction((event) -> {
       //TODO: run a different program based on user selection
     });
@@ -152,8 +156,42 @@ public class LogoDisplay extends Application {
     savedPrograms = new ComboBox();
     savedPrograms.setLayoutX(SAVED_DROPDOWN_X);
     savedPrograms.setLayoutY(SAVED_DROPDOWN_Y);
-    //TODO: populate filenames from "example" folder
+    savedPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    populateFileNames();
+    savedPrograms.setOnAction((event) -> {
+      String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
+      File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
+      for(File file : files){
+        if(file.isFile() && file.getName().equals(filename)){
+          try {
+            Scanner scanner = new Scanner(file);
+            String input;
+            StringBuffer contents = new StringBuffer();
+            while (scanner.hasNextLine()) {
+              input = scanner.nextLine();
+
+              if(!Arrays.asList(input.split("")).contains("#")){
+                contents.append(input+" ");
+              }
+            }
+            commandLine.setText(contents.toString());
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+
+    });
     root.getChildren().add(savedPrograms);
+  }
+
+  private void populateFileNames() {
+    File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
+    for (File file : files) {
+      if (file.isFile()) {
+        savedPrograms.getItems().add(file.getName());
+      }
+    }
   }
 
   private void initializeHistory(){
@@ -162,9 +200,12 @@ public class LogoDisplay extends Application {
     history.setLayoutY(HISTORY_TITLE_Y);
     root.getChildren().add(history);
     historyPrograms = new ComboBox();
-    //historyPrograms = new ComboBox<>(FXCollections.observableList(myLogo.getHistory()));
+    historyPrograms.setOnAction((event) -> {
+      commandLine.setText(historyPrograms.getSelectionModel().getSelectedItem().toString());
+    });
     historyPrograms.setLayoutX(HISTORY_DROPDOWN_X);
     historyPrograms.setLayoutY(HISTORY_DROPDOWN_Y);
+    historyPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
     root.getChildren().add(historyPrograms);
   }
 
@@ -188,10 +229,18 @@ public class LogoDisplay extends Application {
       @Override
       public void handle(ActionEvent event) {
         System.out.println("Run command: " + commandLine.getText());
-        //myLogo.inputParser(commandLine.getText());
-        //myLogo.saveHistory(commandLine.getText());
+        myLogo.inputParser(commandLine.getText());
+        myLogo.saveHistory(commandLine.getText());
+        updateHistoryDropdown();
       }
     });
+  }
+
+  private void updateHistoryDropdown() {
+    historyPrograms.getItems().clear();
+    for(String element: myLogo.getHistory()){
+      historyPrograms.getItems().add(element);
+    }
   }
 
   private void initializeSaveButton() {
@@ -207,7 +256,7 @@ public class LogoDisplay extends Application {
         String filename = getUserFileName();
         System.out.println(filename);
         System.out.println("Run command: "+ commandLine.getText());
-        //myLogo.saveCommand(commandLine.getText(), getUserFileName());
+        myLogo.saveCommand(commandLine.getText(), filename);
       }
     });
   }
@@ -243,10 +292,11 @@ public class LogoDisplay extends Application {
   //Create method that passes in queue of commands to Logo
 
   private void step() {
-//        Queue<Instruction> instructions = myLogo.getMyInstructions();
-//        if(!instructions.isEmpty()){
-//            Instruction currentInstruction = instructions.poll(); //pop a single instruction (FIFO i think?)
-//            myTurtle.execute(currentInstruction, root, lineRoot);
-//        }
+    //If an instruction has been sent to myLogo, run it
+    Queue<Instruction> instructions = myLogo.getMyInstructions();
+    if(!instructions.isEmpty()){
+      Instruction currentInstruction = instructions.poll(); //pop a single instruction (FIFO i think?)
+      myTurtle.execute(currentInstruction, root, lineRoot);
+    }
   }
 }
