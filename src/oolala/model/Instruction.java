@@ -5,7 +5,7 @@ public class Instruction{
   public String command;
   public Commands cmd;
 
-  public Instruction(int inPixels, String inCommand){
+  public Instruction(String inCommand, int inPixels){
     this.pixels = inPixels;
     this.command = inCommand;
     computeCommands();

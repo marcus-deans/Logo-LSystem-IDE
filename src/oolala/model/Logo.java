@@ -3,13 +3,15 @@ package oolala.model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.*;
 
 public class Logo {
 
-  public ArrayList<String> commands;
+  public ArrayList<String> doubleCommands;
+  public ArrayList<String> singleCommands;
 
   public int currentX;
   public int currentY;
@@ -23,47 +25,45 @@ public class Logo {
   private String currentUserCommand;
   private int currentUserPixels;
   private List<String> myHistory;
+  private boolean isValidCommand;
 
 //  private LinkedHashMap<String, Integer> myInstructions;
   private Queue<Instruction> myInstructions;
 
   public Logo(){
     myInstructions = new LinkedList<>();
-    commands = new ArrayList<>(Arrays.asList("fd", "bk", "lt", "rt", "pd", "pu", "st",
-        "ht", "home", "stamp", "tell"));
+    doubleCommands = new ArrayList<>(Arrays.asList("fd", "bk", "lt", "rt"));
+    singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp", "tell"));
     myHistory = new ArrayList<>();
+    isValidCommand = true;
   }
 
   //Method to parse the input
   public void inputParser(String inputStream){
-    String[] elements = inputStream.split("\n");
-    List<String> inputCommands = Arrays.asList(elements); //each command is a line
-
+    List<String> inputCommands = Arrays.asList(inputStream.split(" |\\\n")); //split by space or tab
+    int index = 0;
     for(String command : inputCommands){
-      String[] commandElements = command.split(" "); //split commands by space
-      if(commandElements.length == 1){
-        //check if this is a valid command. if it is, then create a new instruction
-        if(commands.contains(commandElements[0])){
-          Instruction newInstruction = new Instruction(commandElements[0]);
-          myInstructions.add(newInstruction);
-        }else{
-          //throw error - invalid command
-        }
-      }else if(commandElements.length == 2){
-        //check if first element is a valid command AND second element is a number
-        boolean isInt = false;
-        try{
-          Integer.parseInt(commandElements[1]);
-        }catch(NumberFormatException e){
-          isInt = true;
-        }
-        if(commands.contains(commandElements[0]) && isInt){
-            Instruction newInstruction = new Instruction(Integer.valueOf(commandElements[1]), commandElements[0]);
+      if(singleCommands.contains(command)){ //Valid single command
+        Instruction newInstruction = new Instruction(command);
+        myInstructions.add(newInstruction);
+      }else if(doubleCommands.contains(command)){ //Valid double command (requires a second number)
+        if(index < inputCommands.size()){
+          boolean nextCommandIsInteger = true;
+          try{
+            Integer.parseInt(inputCommands.get(index+1));
+          }catch(NumberFormatException e){
+            nextCommandIsInteger = false;
+          }
+          System.out.println(nextCommandIsInteger);
+          if(nextCommandIsInteger){ //First command is valid, second command is valid number
+            Instruction newInstruction = new Instruction(command, Integer.valueOf(inputCommands.get(index+1)));
             myInstructions.add(newInstruction);
+          }
         }
-      }else{
-        //throw error - command can't have 0 or 3 elements (or more)
+      }else{ //Not a valid command stream
+        isValidCommand = false;
       }
+      index++;
     }
   }
 
@@ -92,6 +92,9 @@ public class Logo {
   public List<String> getHistory(){
     return myHistory;
   }
+
+  public boolean getValidCommand(){return isValidCommand;}
+  public void setValidCommand(Boolean status){isValidCommand = status;}
 
 
   private void getNextInstruction(){

@@ -10,8 +10,10 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
@@ -249,10 +251,33 @@ public class LogoDisplay extends Application {
       public void handle(ActionEvent event) {
         System.out.println("Run command: " + commandLine.getText());
         myLogo.inputParser(commandLine.getText());
+        validateCommandStream();
         myLogo.saveHistory(commandLine.getText());
         updateHistoryDropdown();
       }
     });
+  }
+
+  private void validateCommandStream() {
+    Boolean valid = myLogo.getValidCommand();
+    if(!valid){
+      System.out.println("Invalid command!");
+      Popup popup = new Popup();
+      popup.setAutoFix(true);
+      popup.setAutoHide(true);
+      popup.setHideOnEscape(true);
+      Label label = new Label("Invalid Command!");
+      label.setOnMouseReleased(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent e) {
+          popup.hide();
+        }
+      });
+      popup.getContent().add(label);
+      myLogo.setValidCommand(true);
+    }else{
+      System.out.println("Valid command!");
+    }
   }
 
   private void initializeSaveButton() {
