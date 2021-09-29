@@ -59,13 +59,17 @@ public class LogoDisplay extends Application {
   public static final int COMMAND_X = 10;
   public static final int COMMAND_Y = 530;
   public static final int RUN_WIDTH = 100;
-  public static final int RUN_HEIGHT = 60;
+  public static final int RUN_HEIGHT = 30;
   public static final int RUN_X = 620;
   public static final int RUN_Y = 530;
   public static final int SAVE_WIDTH = 100;
-  public static final int SAVE_HEIGHT = 60;
+  public static final int SAVE_HEIGHT = 30;
   public static final int SAVE_X = 620;
-  public static final int SAVE_Y = 600;
+  public static final int SAVE_Y = 565;
+  public static final int CLEAR_WIDTH = 100;
+  public static final int CLEAR_HEIGHT = 30;
+  public static final int CLEAR_X = 620;
+  public static final int CLEAR_Y = 600;
 
   private Group root;
   private Group lineRoot;
@@ -106,6 +110,7 @@ public class LogoDisplay extends Application {
     initializeCommandLine(); //initialize the command line
     initializeRunButton(); //initialize the program run button
     initializeSaveButton(); //initializes the program save button
+    initializeClearScreen();
     initializeBoundaries(); // sets up program boundaries for where the turtle will move
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
@@ -164,6 +169,11 @@ public class LogoDisplay extends Application {
     root.getChildren().add(savedPrograms);
   }
 
+  private void updateSavedDropdown() {
+    savedPrograms.getItems().clear();
+    populateFileNames();
+  }
+
   private void getContentFromFilename() {
     String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
     File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
@@ -211,6 +221,13 @@ public class LogoDisplay extends Application {
     root.getChildren().add(historyPrograms);
   }
 
+  private void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
+    historyPrograms.getItems().clear();
+    for(String element: myLogo.getHistory()){
+      historyPrograms.getItems().add(element);
+    }
+  }
+
   private void initializeCommandLine() {
     commandLine = new TextArea();
     commandLine.setPrefWidth(COMMAND_WIDTH);
@@ -238,13 +255,6 @@ public class LogoDisplay extends Application {
     });
   }
 
-  private void updateHistoryDropdown() {
-    historyPrograms.getItems().clear();
-    for(String element: myLogo.getHistory()){
-      historyPrograms.getItems().add(element);
-    }
-  }
-
   private void initializeSaveButton() {
     Button saveCommands = new Button("Save");
     saveCommands.setPrefWidth(SAVE_WIDTH);
@@ -259,6 +269,24 @@ public class LogoDisplay extends Application {
         System.out.println(filename);
         System.out.println("Run command: "+ commandLine.getText());
         myLogo.saveCommand(commandLine.getText(), filename);
+        updateSavedDropdown();
+      }
+    });
+  }
+
+  private void initializeClearScreen() {
+    Button clearScreen = new Button("Clear");
+    clearScreen.setPrefWidth(CLEAR_WIDTH);
+    clearScreen.setPrefHeight(CLEAR_HEIGHT);
+    clearScreen.setLayoutX(CLEAR_X);
+    clearScreen.setLayoutY(CLEAR_Y);
+    root.getChildren().add(clearScreen);
+    clearScreen.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        //TODO: call turtle.home method, delete lines, delete created turtles
+        commandLine.clear();
+        historyPrograms.getItems().clear();
       }
     });
   }
