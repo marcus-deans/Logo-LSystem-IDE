@@ -32,8 +32,8 @@ public class Logo {
 
   public Logo(){
     myInstructions = new LinkedList<>();
-    doubleCommands = new ArrayList<>(Arrays.asList("fd", "bk", "lt", "rt"));
-    singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp", "tell"));
+    doubleCommands = new ArrayList<>(Arrays.asList("fd", "bk", "lt", "rt", "tell"));
+    singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp"));
     myHistory = new ArrayList<>();
     isValidCommand = true;
   }
@@ -45,10 +45,10 @@ public class Logo {
     boolean isIntegerAndPreviousWasCommand = false;
     int index = 0;
     for(String command : inputCommands){
-      if(singleCommands.contains(command)){ //Valid single command
+      if(singleCommands.contains(command.toLowerCase())){ //Valid single command
         Instruction newInstruction = new Instruction(command);
         myInstructions.add(newInstruction);
-      }else if(doubleCommands.contains(command)){ //Valid double command (requires a second number)
+      }else if(doubleCommands.contains(command.toLowerCase())){ //Valid double command (requires a second number)
         if(index < inputCommands.size()){
           boolean nextCommandIsInteger = true;
           try{
@@ -75,7 +75,7 @@ public class Logo {
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename){
     //TODO: don't use absolute path, figure out general path
-    String path = "/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo/" + filename + ".txt";
+    String path = "data/examples/logo" + filename + ".txt";
     File newProgram = new File(path);
     try {
       if (newProgram.createNewFile()) {
