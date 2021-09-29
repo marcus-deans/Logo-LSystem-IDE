@@ -34,7 +34,7 @@ import java.util.*;
 public class LogoDisplay extends Application {
 
 //  public static final String TITLE = R.string.program_name;
-  public String TITLE = "TRIAL";
+  public static final String TITLE = "TRIAL";
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
@@ -54,6 +54,10 @@ public class LogoDisplay extends Application {
   public static final int HISTORY_TITLE_Y = 17;
   public static final int HISTORY_DROPDOWN_X = 495;
   public static final int HISTORY_DROPDOWN_Y = 0;
+  public static final int TURTLES_TITLE_X = 620;
+  public static final int TURTLES_TITLE_Y = 17;
+  public static final int TURTLES_DROPDOWN_X = 680;
+  public static final int TURTLES_DROPDOWN_Y = 0;
   public static final int MAX_DROPDOWN_WIDTH = 120;
 
   //Bottom Layout
@@ -83,6 +87,7 @@ public class LogoDisplay extends Application {
   private ComboBox gameSetting;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
+  private ComboBox turtleDropdown;
   private int turtleHomeX;
   private int turtleHomeY;
 
@@ -110,6 +115,7 @@ public class LogoDisplay extends Application {
     initializeGameSetting(); //game type dropdown
     initializeSavedPrograms(); //saved programs dropdown
     initializeHistory(); //program history dropdown
+    initializeTurtleOptions(); //dropdown of all turtles and current running turtle
     initializeCommandLine(); //initialize the command line
     initializeRunButton(); //initialize the program run button
     initializeSaveButton(); //initializes the program save button
@@ -121,9 +127,9 @@ public class LogoDisplay extends Application {
   }
 
   private void spawnTurtle() {
+    myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //spawns first turtle with ID 0
     turtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
     turtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
-    myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //spawns first turtle with ID 0
     root = new Group(myTurtle.getMyTurtleView());
     allTurtles.add(myTurtle);
     myTurtle.getMyTurtleView().setX(turtleHomeX);
@@ -229,6 +235,21 @@ public class LogoDisplay extends Application {
     for(String element: myLogo.getHistory()){
       historyPrograms.getItems().add(element);
     }
+  }
+
+  private void initializeTurtleOptions(){
+    Text turtles = new Text("Turtles: ");
+    turtles.setLayoutX(TURTLES_TITLE_X);
+    turtles.setLayoutY(TURTLES_TITLE_Y);
+    root.getChildren().add(turtles);
+    turtleDropdown = new ComboBox();
+    turtleDropdown.setOnAction((event) -> {
+      //TODO: switch to this turtle
+    });
+    turtleDropdown.setLayoutX(TURTLES_DROPDOWN_X);
+    turtleDropdown.setLayoutY(TURTLES_DROPDOWN_Y);
+    turtleDropdown.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    root.getChildren().add(turtleDropdown);
   }
 
   private void initializeCommandLine() {
@@ -352,6 +373,8 @@ public class LogoDisplay extends Application {
     if(!exists){//id doesn't exist - create new turtle with this ID
         myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
         allTurtles.add(myTurtle);
+        turtleDropdown.getItems().add(myTurtle.myId);
+        turtleDropdown.setValue(myTurtle.myId); //TODO: make sure this works, java being laggy
         //TODO: inform user that a new turtle has been spawned
     }
   }

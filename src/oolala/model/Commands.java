@@ -2,13 +2,14 @@ package oolala.model;
 
 public enum Commands {
   FORWARD ("fd"),
-  BACK ("bk"),
+  BACKWARD ("bk"),
   RIGHT ("rt"),
   LEFT ("lt"),
   HOME ("home"),
   HIDE ("ht"),
   SHOW ("st"),
-  STAMP("stamp")
+  STAMP("stamp"),
+  OOPS("oops");
   ;
 
   private String commandString;
