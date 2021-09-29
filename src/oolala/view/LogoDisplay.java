@@ -261,7 +261,7 @@ public class LogoDisplay extends Application {
   private void validateCommandStream() {
     Boolean valid = myLogo.getValidCommand();
     if(!valid){
-      System.out.println("Invalid command!");
+      System.out.println("Validation: Invalid command!");
       Popup popup = new Popup();
       popup.setAutoFix(true);
       popup.setAutoHide(true);
@@ -276,7 +276,7 @@ public class LogoDisplay extends Application {
       popup.getContent().add(label);
       myLogo.setValidCommand(true);
     }else{
-      System.out.println("Valid command!");
+      System.out.println("Validation: Valid command!");
     }
   }
 

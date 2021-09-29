@@ -40,7 +40,9 @@ public class Logo {
 
   //Method to parse the input
   public void inputParser(String inputStream){
-    List<String> inputCommands = Arrays.asList(inputStream.split(" |\\\n")); //split by space or tab
+    List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
+    isValidCommand = true;
+    boolean isIntegerAndPreviousWasCommand = false;
     int index = 0;
     for(String command : inputCommands){
       if(singleCommands.contains(command)){ //Valid single command
@@ -54,14 +56,20 @@ public class Logo {
           }catch(NumberFormatException e){
             nextCommandIsInteger = false;
           }
-          System.out.println(nextCommandIsInteger);
-          if(nextCommandIsInteger){ //First command is valid, second command is valid number
+          if(nextCommandIsInteger){ //First command is valid AND second command is valid number
+            System.out.println("Number Instruction Created");
             Instruction newInstruction = new Instruction(command, Integer.valueOf(inputCommands.get(index+1)));
             myInstructions.add(newInstruction);
+            isIntegerAndPreviousWasCommand = true;
           }
         }
+      }else if(isIntegerAndPreviousWasCommand){
+        isIntegerAndPreviousWasCommand = false;
       }else{ //Not a valid command stream
+        System.out.println("Reaches else statement");
+        System.out.println(inputCommands);
         isValidCommand = false;
+        break;
       }
       index++;
     }
