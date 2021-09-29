@@ -33,8 +33,8 @@ import java.util.*;
  */
 public class LogoDisplay extends Application {
 
-//  public static final String TITLE = R.string.program_name;
-  public static final String TITLE = "TRIAL";
+  public static final String TITLE = R.string.program_name;
+//  public static final String TITLE = "TRIAL";
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
@@ -127,9 +127,9 @@ public class LogoDisplay extends Application {
   }
 
   private void spawnTurtle() {
-    myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //spawns first turtle with ID 0
-    turtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
-    turtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
+    myTurtle = new Turtle(FRAME_WIDTH/2, FRAME_HEIGHT/2, 0); //spawns first turtle with ID 0
+    //turtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
+    //turtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
     root = new Group(myTurtle.getMyTurtleView());
     allTurtles.add(myTurtle);
     myTurtle.getMyTurtleView().setX(turtleHomeX);
@@ -245,6 +245,13 @@ public class LogoDisplay extends Application {
     turtleDropdown = new ComboBox();
     turtleDropdown.setOnAction((event) -> {
       //TODO: switch to this turtle
+      int id = Integer.parseInt(historyPrograms.getSelectionModel().getSelectedItem().toString());
+      for(Turtle turtle : allTurtles){
+        if(turtle.myId == id){
+          myTurtle = turtle;
+        }
+      }
+      //TODO: clear previous lines?
     });
     turtleDropdown.setLayoutX(TURTLES_DROPDOWN_X);
     turtleDropdown.setLayoutY(TURTLES_DROPDOWN_Y);
@@ -281,7 +288,7 @@ public class LogoDisplay extends Application {
 
   private void validateCommandStream() {
     Boolean valid = myLogo.getValidCommand();
-    if(!valid){ //TODO: popup doesn't work
+    if(!valid){ //TODO: popup doesn't work, change to alert
       Popup popup = new Popup();
       popup.setAutoFix(true);
       popup.setAutoHide(true);
@@ -325,9 +332,11 @@ public class LogoDisplay extends Application {
     clearScreen.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        //TODO: call turtle.home method, delete lines, delete created turtles
+        //TODO: call turtle.home method, delete lines
         commandLine.clear();
         historyPrograms.getItems().clear();
+        turtleDropdown.getItems().clear();
+        myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //TODO: make sure this spawns correctly, should reset program
       }
     });
   }
@@ -339,7 +348,7 @@ public class LogoDisplay extends Application {
     if(validateStringFilenameUsingIO(fileName)){
       return fileName;
     }else{
-      //TODO: throw error - invalid filename
+      //TODO: throw error - invalid filename, make user try again
       return "";
     }
   }
@@ -367,6 +376,7 @@ public class LogoDisplay extends Application {
       if(turtle.myId == id){
         myTurtle = turtle; //switch current turtle to this turtle
         exists = true;
+        turtleDropdown.setValue(turtle.myId); //TODO: make sure this works, java being laggy
         //TODO: inform user that turtle has switched
       }
     }
