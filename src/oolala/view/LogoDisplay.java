@@ -21,11 +21,9 @@ import oolala.model.Turtle;
 import oolala.model.Logo;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 
 /**
@@ -53,6 +51,7 @@ public class LogoDisplay extends Application {
   public static final int HISTORY_TITLE_Y = 17;
   public static final int HISTORY_DROPDOWN_X = 450;
   public static final int HISTORY_DROPDOWN_Y = 0;
+  public static final int MAX_DROPDOWN_WIDTH = 85;
 
   //Bottom Layout
   public static final int COMMAND_WIDTH = 600;
@@ -142,6 +141,7 @@ public class LogoDisplay extends Application {
     gameSetting = new ComboBox<>(FXCollections.observableList(gameTypes));
     gameSetting.setLayoutX(GAME_DROPDOWN_X);
     gameSetting.setLayoutY(GAME_DROPDOWN_Y);
+    gameSetting.setMaxWidth(MAX_DROPDOWN_WIDTH);
     gameSetting.setOnAction((event) -> {
       //TODO: run a different program based on user selection
     });
@@ -156,8 +156,42 @@ public class LogoDisplay extends Application {
     savedPrograms = new ComboBox();
     savedPrograms.setLayoutX(SAVED_DROPDOWN_X);
     savedPrograms.setLayoutY(SAVED_DROPDOWN_Y);
-    //TODO: populate filenames from "example" folder
+    savedPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    populateFileNames();
+    savedPrograms.setOnAction((event) -> {
+      String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
+      File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
+      for(File file : files){
+        if(file.isFile() && file.getName().equals(filename)){
+          try {
+            Scanner scanner = new Scanner(file);
+            String input;
+            StringBuffer contents = new StringBuffer();
+            while (scanner.hasNextLine()) {
+              input = scanner.nextLine();
+
+              if(!Arrays.asList(input.split("")).contains("#")){
+                contents.append(input+" ");
+              }
+            }
+            commandLine.setText(contents.toString());
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+
+    });
     root.getChildren().add(savedPrograms);
+  }
+
+  private void populateFileNames() {
+    File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
+    for (File file : files) {
+      if (file.isFile()) {
+        savedPrograms.getItems().add(file.getName());
+      }
+    }
   }
 
   private void initializeHistory(){
@@ -171,6 +205,7 @@ public class LogoDisplay extends Application {
     });
     historyPrograms.setLayoutX(HISTORY_DROPDOWN_X);
     historyPrograms.setLayoutY(HISTORY_DROPDOWN_Y);
+    historyPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
     root.getChildren().add(historyPrograms);
   }
 
