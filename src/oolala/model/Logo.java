@@ -57,7 +57,6 @@ public class Logo {
             nextCommandIsInteger = false;
           }
           if(nextCommandIsInteger){ //First command is valid AND second command is valid number
-            System.out.println("Number Instruction Created");
             Instruction newInstruction = new Instruction(command, Integer.valueOf(inputCommands.get(index+1)));
             myInstructions.add(newInstruction);
             isIntegerAndPreviousWasCommand = true;
@@ -66,8 +65,6 @@ public class Logo {
       }else if(isIntegerAndPreviousWasCommand){
         isIntegerAndPreviousWasCommand = false;
       }else{ //Not a valid command stream
-        System.out.println("Reaches else statement");
-        System.out.println(inputCommands);
         isValidCommand = false;
         break;
       }
@@ -77,6 +74,7 @@ public class Logo {
 
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename){
+    //TODO: don't use absolute path, figure out general path
     String path = "/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo/" + filename + ".txt";
     File newProgram = new File(path);
     try {
@@ -84,8 +82,7 @@ public class Logo {
         FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
         writeToFile.write(inputStream);
         writeToFile.close();
-        System.out.println("File created: " + newProgram.getName());
-      } else {
+      } else { //TODO: error handling instead of a sys.out.print statement
         System.out.println("File already exists.");
       }
     } catch (IOException e) {

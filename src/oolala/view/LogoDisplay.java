@@ -178,6 +178,7 @@ public class LogoDisplay extends Application {
 
   private void getContentFromFilename() {
     String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
+    //TODO: don't use absolute path, figure out general path
     File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
     for(File file : files){
       if(file.isFile() && file.getName().equals(filename)){
@@ -200,6 +201,7 @@ public class LogoDisplay extends Application {
   }
 
   private void populateFileNames() {
+    //TODO: don't use absolute path, figure out general path
     File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
     for (File file : files) {
       if (file.isFile()) {
@@ -350,6 +352,7 @@ public class LogoDisplay extends Application {
     //If an instruction has been sent to myLogo, run it
     Queue<Instruction> instructions = myLogo.getMyInstructions();
     if(!instructions.isEmpty()){
+      System.out.println("LogoDisplay: Sending an instruction...Data size: " + instructions.size());
       Instruction currentInstruction = instructions.poll(); //pop a single instruction (FIFO i think?)
       myTurtle.execute(currentInstruction, root, lineRoot);
     }
