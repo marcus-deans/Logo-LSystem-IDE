@@ -1,5 +1,7 @@
 package oolala.model;
 
+import oolala.model.commands.Commands;
+
 public class Instruction {
     public int pixels;
     public String command;
@@ -17,32 +19,15 @@ public class Instruction {
 
     private void computeCommands() {
         switch (this.command) {
-            case "fd":
-                this.order = Commands.FORWARD;
-                break;
-            case "bk":
-                this.order = Commands.BACKWARD;
-                break;
-            case "rt":
-                this.order = Commands.RIGHT;
-                break;
-            case "lt":
-                this.order = Commands.LEFT;
-                break;
-            case "home":
-                this.order = Commands.HOME;
-                break;
-            case "ht":
-                this.order = Commands.HIDE;
-                break;
-            case "st":
-                this.order = Commands.SHOW;
-                break;
-            case "stamp":
-                this.order = Commands.STAMP;
-                break;
-            default:
-                this.order = Commands.OOPS;
+            case "fd" -> this.order = Commands.FORWARD;
+            case "bk" -> this.order = Commands.BACKWARD;
+            case "rt" -> this.order = Commands.RIGHT;
+            case "lt" -> this.order = Commands.LEFT;
+            case "home" -> this.order = Commands.HOME;
+            case "ht" -> this.order = Commands.HIDE;
+            case "st" -> this.order = Commands.SHOW;
+            case "stamp" -> this.order = Commands.STAMP;
+            default -> this.order = Commands.OOPS;
         }
     }
 
