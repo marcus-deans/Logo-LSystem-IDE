@@ -1,4 +1,4 @@
-package oolala.model.commands.logo;
+package oolala.model.commands.rotations;
 
 import oolala.model.commands.Command;
 
