@@ -1,4 +1,4 @@
-package oolala.model;
+package oolala.model.commands;
 
 public enum Commands {
   FORWARD ("fd"),
@@ -9,7 +9,7 @@ public enum Commands {
   HIDE ("ht"),
   SHOW ("st"),
   STAMP("stamp"),
-  OOPS("oops");
+  OOPS("oops")
   ;
 
   private String commandString;

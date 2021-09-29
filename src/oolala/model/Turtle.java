@@ -99,7 +99,7 @@ public class Turtle {
         yVector = checkVectors() ? (int) Math.cos(degreesRotation) * length : (int) Math.sin(degreesRotation) * length;
     }
 
-    private boolean checkVectors() {
+    public boolean checkVectors() {
         degreesRotation %= 360;
         return (degreesRotation <= 45) || (degreesRotation >= 315) || ((degreesRotation >= 135) && (degreesRotation <= 225));
     }
