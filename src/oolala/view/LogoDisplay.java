@@ -47,11 +47,11 @@ public class LogoDisplay extends Application {
   public static final int SAVED_TITLE_Y = 17;
   public static final int SAVED_DROPDOWN_X = 320;
   public static final int SAVED_DROPDOWN_Y = 0;
-  public static final int HISTORY_TITLE_X = 400;
+  public static final int HISTORY_TITLE_X = 445;
   public static final int HISTORY_TITLE_Y = 17;
-  public static final int HISTORY_DROPDOWN_X = 450;
+  public static final int HISTORY_DROPDOWN_X = 495;
   public static final int HISTORY_DROPDOWN_Y = 0;
-  public static final int MAX_DROPDOWN_WIDTH = 85;
+  public static final int MAX_DROPDOWN_WIDTH = 120;
 
   //Bottom Layout
   public static final int COMMAND_WIDTH = 600;
@@ -159,30 +159,32 @@ public class LogoDisplay extends Application {
     savedPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
     populateFileNames();
     savedPrograms.setOnAction((event) -> {
-      String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
-      File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
-      for(File file : files){
-        if(file.isFile() && file.getName().equals(filename)){
-          try {
-            Scanner scanner = new Scanner(file);
-            String input;
-            StringBuffer contents = new StringBuffer();
-            while (scanner.hasNextLine()) {
-              input = scanner.nextLine();
-
-              if(!Arrays.asList(input.split("")).contains("#")){
-                contents.append(input+" ");
-              }
-            }
-            commandLine.setText(contents.toString());
-          } catch (FileNotFoundException e) {
-            e.printStackTrace();
-          }
-        }
-      }
-
+      getContentFromFilename();
     });
     root.getChildren().add(savedPrograms);
+  }
+
+  private void getContentFromFilename() {
+    String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
+    File[] files = new File("/Users/naylaboorady/Downloads/oolala_team01/data/examples/logo").listFiles();
+    for(File file : files){
+      if(file.isFile() && file.getName().equals(filename)){
+        try {
+          Scanner scanner = new Scanner(file);
+          String input;
+          StringBuffer contents = new StringBuffer();
+          while (scanner.hasNextLine()) {
+            input = scanner.nextLine();
+            if(!Arrays.asList(input.split("")).contains("#")){
+              contents.append(input+" ");
+            }
+          }
+          commandLine.setText(contents.toString());
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   private void populateFileNames() {
