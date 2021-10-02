@@ -13,8 +13,10 @@ public class BackwardCommand extends MovementCommand {
   }
 
   private void computeBackwardCoordinates() {
-    myNewX = rightFacing() ? myTurtle.oldX - myXVector : myTurtle.oldX + myXVector;
-    myNewY = upwardFacing() ? myTurtle.oldY + myYVector : myTurtle.oldY - myYVector;
+    int myTurtleOldX = myTurtleCoordinates.turtleOldX;
+    int myTurtleOldY = myTurtleCoordinates.turtleOldY;
+    myNewX = rightFacing() ? myTurtleOldX- myXVector : myTurtleOldX + myXVector;
+    myNewY = upwardFacing() ? myTurtleOldY + myYVector : myTurtleOldY - myYVector;
   }
 }
 

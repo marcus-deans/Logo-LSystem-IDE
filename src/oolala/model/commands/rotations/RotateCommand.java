@@ -8,7 +8,7 @@ public abstract class RotateCommand extends Command {
     super(myTurtle, pixels);
   }
 
-  protected void setRotation(Turtle myTurtle) {
+  protected void setRotation() {
     myTurtle.setDegreesRotation(myTurtle.getDegreesRotation()%360);
     myTurtle.performRotate();
   }

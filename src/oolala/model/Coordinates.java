@@ -1,10 +1,10 @@
 package oolala.model;
 
 public class Coordinates {
-  int turtleOldX;
-  int turtleOldY;
-  int turtleNewX;
-  int turtleNewY;
+  public int turtleOldX;
+  public int turtleOldY;
+  public int turtleNewX;
+  public int turtleNewY;
 
   public Coordinates(int oldX, int oldY, int newX, int newY){
     turtleOldX = oldX;

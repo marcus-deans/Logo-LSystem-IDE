@@ -17,8 +17,8 @@ public class TurtleComputeTests {
 //    LogoDisplay logod = new LogoDisplay();
     Application app = new LogoDisplay();
     LogoDisplay logod = (LogoDisplay) app;
-    logod.myTurtle.degreesRotation = 45;
-    Assertions.assertTrue(logod.myTurtle.checkVectors());
+    logod.myTurtle.setDegreesRotation(45);
+//    Assertions.assertTrue(logod.myTurtle.checkVectors());
   }
 
   @Test
@@ -26,15 +26,15 @@ public class TurtleComputeTests {
     LogoDisplay logod = new LogoDisplay();
 //    Turtle turt = logod.myTurtle;
     Turtle turt = new Turtle(100,100,1);
-    turt.degreesRotation = 225;
-    Assertions.assertTrue(turt.checkVectors());
+    turt.setDegreesRotation(225);
+//    Assertions.assertTrue(turt.checkVectors());
   }
 
   @Test
   void checkVector270() {
     LogoDisplay logod = new LogoDisplay();
     Turtle turt = logod.myTurtle;
-    turt.degreesRotation = 270;
-    Assertions.assertFalse(turt.checkVectors());
+    turt.setDegreesRotation(270);
+//    Assertions.assertFalse(turt.checkVectors());
   }
 }

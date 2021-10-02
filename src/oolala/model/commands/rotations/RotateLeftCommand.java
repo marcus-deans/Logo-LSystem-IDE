@@ -12,5 +12,6 @@ public class RotateLeftCommand extends RotateCommand{
 
   private void setLeftRotation(){
     myTurtle.setDegreesRotation(myTurtle.getDegreesRotation()-pixels);
+    setRotation();
   }
 }
