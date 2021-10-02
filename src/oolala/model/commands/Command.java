@@ -3,7 +3,7 @@ package oolala.model.commands;
 import oolala.model.Turtle;
 
 public abstract class Command {
-  protected Commands command;
+  protected Commands myCommandName;
   protected int pixels;
   protected Turtle myTurtle;
 

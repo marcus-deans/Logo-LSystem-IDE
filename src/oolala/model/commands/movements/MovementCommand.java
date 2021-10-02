@@ -4,7 +4,7 @@ import oolala.model.Coordinates;
 import oolala.model.Turtle;
 import oolala.model.commands.Command;
 
-public class MovementCommand extends Command {
+public abstract class MovementCommand extends Command {
   Coordinates myTurtleCoordinates;
   int myDegreesRotation;
   int myXVector;

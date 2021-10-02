@@ -5,6 +5,7 @@ import static oolala.view.LogoDisplay.FRAME_HEIGHT;
 import static oolala.view.LogoDisplay.FRAME_WIDTH;
 
 import oolala.model.Turtle;
+import oolala.model.commands.Commands;
 
 public class HomeCommand extends MovementCommand{
   int myTurtleHomeX;
@@ -12,6 +13,7 @@ public class HomeCommand extends MovementCommand{
 
   public HomeCommand(Turtle myTurtle, int pixels) {
     super(myTurtle, pixels);
+    myCommandName = Commands.HOME;
     determineHomeCoordinates();
     computeHomeCoordinates();
     setNewCoordinates();

@@ -58,8 +58,7 @@ public class Turtle {
         myTurtleView.setY(TurtleHomeY);
     }
 
-
-    private ImageView createTurtleView() {
+    public ImageView createTurtleView() {
         ImageView newTurtleView = new ImageView(new Image(TURTLE_IMAGE));
         newTurtleView.setFitHeight(TURTLE_SIZE);
         newTurtleView.setFitWidth(TURTLE_SIZE);
