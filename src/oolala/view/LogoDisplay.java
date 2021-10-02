@@ -26,6 +26,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import oolala.model.commands.movements.BackwardCommand;
+import oolala.model.commands.movements.ForwardCommand;
+import oolala.model.commands.rotations.RotateLeftCommand;
+import oolala.model.commands.rotations.RotateRightCommand;
+import oolala.model.commands.visuals.HideCommand;
+import oolala.model.commands.visuals.ShowCommand;
+import oolala.model.commands.visuals.StampCommand;
 
 
 /**
@@ -400,20 +407,32 @@ public class LogoDisplay extends Application {
     Queue<Instruction> instructions = myLogo.getMyInstructions();
     if(!instructions.isEmpty()){
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
-      switch(currentInstruction.command){
-        case "pu" -> {
-          //change pen opacity to 0
-        }
-        case "pd" -> {
-          //change pen opacity to 100
-        }
-        case "tell" -> tellTurtle(currentInstruction.pixels);
-        default -> myTurtle.execute(currentInstruction, root, lineRoot);
-      }
+      performInstruction(currentInstruction);
     }
     //TODO: tell the Turtle to updates its coordinates ONCE the line has been drawn
 //    myTurtle.updateCoordinates();
+  }
 
-
+  private void performInstruction(Instruction currentInstruction){
+    int commandPixels = currentInstruction.pixels;
+    switch(currentInstruction.order){
+      case PENUP -> {
+        //TODO: change pen opacity to 0
+      }
+      case PENDOWN -> {
+        //TODO: change pen opacity to 100
+      }
+      case TELL -> tellTurtle(commandPixels);
+      case FORWARD -> new ForwardCommand(myTurtle,commandPixels);
+      case BACKWARD -> new BackwardCommand(myTurtle,commandPixels);
+      case RIGHT -> new RotateRightCommand(myTurtle, commandPixels);
+      case LEFT -> new RotateLeftCommand(myTurtle, commandPixels);
+      case HIDE -> new HideCommand(myTurtle);
+      case SHOW -> new ShowCommand(myTurtle);
+      case STAMP -> new StampCommand(myTurtle, root);
+      default -> {
+      }
+//      default -> myTurtle.execute(currentInstruction, root, lineRoot);
+    }
   }
 }
