@@ -149,4 +149,16 @@ public class Turtle {
     private boolean upwardFacing() {
         return (degreesRotation <= 90) || (degreesRotation >= 270);
     }
+
+    public void setDegreesRotation(int degreesRotation) {
+        this.degreesRotation = degreesRotation;
+    }
+
+    public int getDegreesRotation() {
+        return degreesRotation;
+    }
+
+    public void performRotate(){
+        myTurtleView.setRotate(degreesRotation);
+    }
 }
