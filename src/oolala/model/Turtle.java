@@ -124,18 +124,6 @@ public class Turtle {
         newY = 0;
     }
 
-    private void computeRightRotation() {
-        degreesRotation += length;
-    }
-
-    private void computeLeftRotation() {
-        degreesRotation -= length;
-    }
-
-    private void setRotation() {
-        degreesRotation %= 360;
-        myTurtleView.setRotate(degreesRotation);
-    }
 
     private void setMovement() {
         myTurtleView.setX(newX);
@@ -150,6 +138,19 @@ public class Turtle {
         return (degreesRotation <= 90) || (degreesRotation >= 270);
     }
 
+    private void computeRightRotation() {
+        degreesRotation += length;
+    }
+
+    private void computeLeftRotation() {
+        degreesRotation -= length;
+    }
+
+    private void setRotation() {
+        degreesRotation %= 360;
+        myTurtleView.setRotate(degreesRotation);
+    }
+
     public void setDegreesRotation(int degreesRotation) {
         this.degreesRotation = degreesRotation;
     }
@@ -160,5 +161,26 @@ public class Turtle {
 
     public void performRotate(){
         myTurtleView.setRotate(degreesRotation);
+    }
+
+    public Coordinates getTurtleCoordinates(){
+        return makeCoordinates();
+    }
+
+    private Coordinates makeCoordinates(){
+        return new Coordinates(oldX, oldY, newX, newY);
+    }
+
+    public void performMovement(){
+        myTurtleView.setX(newX);
+        myTurtleView.setY(newY);
+    }
+
+    public void setNewY(int newY) {
+        this.newY = newY;
+    }
+
+    public void setNewX(int newX) {
+        this.newX = newX;
     }
 }
