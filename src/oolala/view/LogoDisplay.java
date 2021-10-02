@@ -140,6 +140,13 @@ public class LogoDisplay extends Application {
     initializeBoundaries(); // sets up program boundaries for where the turtle will move
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
+
+    //https://docs.oracle.com/javafx/2/get_started/css.htm
+    scene.getStylesheets().add
+        (LogoDisplay.class.getResource("LogoDisplay.css").toExternalForm());
+    //https://tomsondev.bestsolution.at/2013/08/07/using-less-in-javafx/
+//    LessCSSLoader ls = new LessCSSLoader();
+//    scene.getStylesheets().add(ls.loadLess(getClass().getResource("logo.less")).toExternalForm());
     return scene;
   }
 
