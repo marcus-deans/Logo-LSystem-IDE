@@ -1,31 +1,47 @@
 package oolala.view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.scene.paint.Paint;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import oolala.model.Coordinates;
 import oolala.model.Instruction;
-import oolala.model.Turtle;
 import oolala.model.Logo;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
+import oolala.model.Turtle;
+import oolala.model.commands.movements.BackwardCommand;
+import oolala.model.commands.movements.ForwardCommand;
+import oolala.model.commands.movements.HomeCommand;
+import oolala.model.commands.rotations.RotateLeftCommand;
+import oolala.model.commands.rotations.RotateRightCommand;
+import oolala.model.commands.visuals.HideCommand;
+import oolala.model.commands.visuals.ShowCommand;
+import oolala.model.commands.visuals.StampCommand;
 
 
 /**
@@ -33,8 +49,8 @@ import java.util.*;
  */
 public class LogoDisplay extends Application {
 
-  public static final String TITLE = R.string.program_name;
-//  public static final String TITLE = "TRIAL";
+//  public static final String TITLE = R.string.program_name;
+  public static final String TITLE = "TRIAL";
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
@@ -77,10 +93,15 @@ public class LogoDisplay extends Application {
   public static final int CLEAR_HEIGHT = 30;
   public static final int CLEAR_X = 620;
   public static final int CLEAR_Y = 600;
-
+  //Games
+  private final List<String> gameTypes = new ArrayList<>(
+      Arrays.asList("Logo", "L-System", "Darwin"));
+  //Turtles
+  private final List<Turtle> allTurtles = new ArrayList<>();
+  // public for testing
+  public Turtle myTurtle;
   private Group root;
   private Group lineRoot;
-  private Turtle myTurtle;
   private Logo myLogo;
   private TextArea commandLine;
   private String fileName;
@@ -88,13 +109,9 @@ public class LogoDisplay extends Application {
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
   private ComboBox turtleDropdown;
+  private double penOpacity = 100.0;
   private int turtleHomeX;
   private int turtleHomeY;
-
-  //Games
-  private List<String> gameTypes = new ArrayList<>(Arrays.asList("Logo", "L-System", "Darwin"));
-  //Turtles
-  private List<Turtle> allTurtles = new ArrayList<>();
 
   public void start(Stage stage) {
     //Variables
@@ -127,20 +144,23 @@ public class LogoDisplay extends Application {
   }
 
   private void spawnTurtle() {
-    myTurtle = new Turtle(FRAME_WIDTH/2, FRAME_HEIGHT/2, 0); //spawns first turtle with ID 0
+//    myTurtle = new Turtle(FRAME_WIDTH/2, FRAME_HEIGHT/2, 0); //spawns first turtle with ID 0
+    myTurtle = new Turtle(0);
     //turtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
     //turtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
-    root = new Group(myTurtle.getMyTurtleView());
+    if (myTurtle.getMyTurtleView() != null) {
+      root = new Group(myTurtle.getMyTurtleView());
+    }
     allTurtles.add(myTurtle);
     myTurtle.getMyTurtleView().setX(turtleHomeX);
     myTurtle.getMyTurtleView().setY(turtleHomeY);
   }
 
   private void initializeBoundaries() {
-    Line topLine = new Line(10,26, FRAME_WIDTH-10,26);
-    Line leftLine = new Line(10, 26, 10, COMMAND_Y-15);
-    Line rightLine = new Line(FRAME_WIDTH-10, 26, FRAME_WIDTH-10, COMMAND_Y-15);
-    Line bottomLine = new Line(10,COMMAND_Y-15,FRAME_WIDTH-10,COMMAND_Y-15);
+    Line topLine = new Line(10, 26, FRAME_WIDTH - 10, 26);
+    Line leftLine = new Line(10, 26, 10, COMMAND_Y - 15);
+    Line rightLine = new Line(FRAME_WIDTH - 10, 26, FRAME_WIDTH - 10, COMMAND_Y - 15);
+    Line bottomLine = new Line(10, COMMAND_Y - 15, FRAME_WIDTH - 10, COMMAND_Y - 15);
     root.getChildren().add(topLine);
     root.getChildren().add(leftLine);
     root.getChildren().add(rightLine);
@@ -162,7 +182,7 @@ public class LogoDisplay extends Application {
     root.getChildren().add(gameSetting);
   }
 
-  private void initializeSavedPrograms(){
+  private void initializeSavedPrograms() {
     Text savedProgramTitle = new Text("Saved Programs: ");
     savedProgramTitle.setLayoutX(SAVED_TITLE_X);
     savedProgramTitle.setLayoutY(SAVED_TITLE_Y);
@@ -186,16 +206,16 @@ public class LogoDisplay extends Application {
   private void getContentFromFilename() {
     String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
     File[] files = new File("data/examples/logo").listFiles();
-    for(File file : files){
-      if(file.isFile() && file.getName().equals(filename)){
+    for (File file : files) {
+      if (file.isFile() && file.getName().equals(filename)) {
         try {
           Scanner scanner = new Scanner(file);
           String input;
           StringBuffer contents = new StringBuffer();
           while (scanner.hasNextLine()) {
             input = scanner.nextLine();
-            if(!Arrays.asList(input.split("")).contains("#")){
-              contents.append(input+" ");
+            if (!Arrays.asList(input.split("")).contains("#")) {
+              contents.append(input + " ");
             }
           }
           commandLine.setText(contents.toString());
@@ -215,7 +235,7 @@ public class LogoDisplay extends Application {
     }
   }
 
-  private void initializeHistory(){
+  private void initializeHistory() {
     Text history = new Text("History: ");
     history.setLayoutX(HISTORY_TITLE_X);
     history.setLayoutY(HISTORY_TITLE_Y);
@@ -232,12 +252,12 @@ public class LogoDisplay extends Application {
 
   private void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
     historyPrograms.getItems().clear();
-    for(String element: myLogo.getHistory()){
+    for (String element : myLogo.getHistory()) {
       historyPrograms.getItems().add(element);
     }
   }
 
-  private void initializeTurtleOptions(){
+  private void initializeTurtleOptions() {
     Text turtles = new Text("Turtles: ");
     turtles.setLayoutX(TURTLES_TITLE_X);
     turtles.setLayoutY(TURTLES_TITLE_Y);
@@ -246,8 +266,8 @@ public class LogoDisplay extends Application {
     turtleDropdown.setOnAction((event) -> {
       //TODO: switch to this turtle
       int id = Integer.parseInt(historyPrograms.getSelectionModel().getSelectedItem().toString());
-      for(Turtle turtle : allTurtles){
-        if(turtle.myId == id){
+      for (Turtle turtle : allTurtles) {
+        if (turtle.myTurtleId == id) {
           myTurtle = turtle;
         }
       }
@@ -288,7 +308,7 @@ public class LogoDisplay extends Application {
 
   private void validateCommandStream() {
     Boolean valid = myLogo.getValidCommand();
-    if(!valid){ //TODO: popup doesn't work, change to alert
+    if (!valid) { //TODO: popup doesn't work, change to alert
       Popup popup = new Popup();
       popup.setAutoFix(true);
       popup.setAutoHide(true);
@@ -336,24 +356,25 @@ public class LogoDisplay extends Application {
         commandLine.clear();
         historyPrograms.getItems().clear();
         turtleDropdown.getItems().clear();
-        myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //TODO: make sure this spawns correctly, should reset program
+//        myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //TODO: make sure this spawns correctly, should reset program
+        myTurtle = new Turtle(0);
       }
     });
   }
 
-  private String getUserFileName(){
+  private String getUserFileName() {
     TextInputDialog getUserInput = new TextInputDialog();
     getUserInput.setHeaderText("Enter a filename:");
     fileName = getUserInput.showAndWait().toString();
-    if(validateStringFilenameUsingIO(fileName)){
+    if (validateStringFilenameUsingIO(fileName)) {
       return fileName;
-    }else{
+    } else{
       //TODO: throw error - invalid filename, make user try again
       return "";
     }
   }
 
-  private boolean validateStringFilenameUsingIO(String filename){
+  private boolean validateStringFilenameUsingIO(String filename) {
     File file = new File(filename);
     boolean created = false;
     try {
@@ -369,23 +390,24 @@ public class LogoDisplay extends Application {
     return false;
   }
 
-  private void tellTurtle(int id){
+  private void tellTurtle(int id) {
     //loop through allTurtles - if ID exists, switch to this turtle
     boolean exists = false;
-    for(Turtle turtle: allTurtles){
-      if(turtle.myId == id){
+    for (Turtle turtle : allTurtles) {
+      if (turtle.myTurtleId == id) {
         myTurtle = turtle; //switch current turtle to this turtle
         exists = true;
-        turtleDropdown.setValue(turtle.myId); //TODO: make sure this works, java being laggy
-        //TODO: inform user that turtle has switched
+        turtleDropdown.setValue(turtle.myTurtleId); //TODO: make sure this works, java being laggy
+        turtleDropdown.setValue(turtle.myTurtleId); //TODO: make sure this works, java being laggy
       }
     }
-    if(!exists){//id doesn't exist - create new turtle with this ID
-        myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
-        allTurtles.add(myTurtle);
-        turtleDropdown.getItems().add(myTurtle.myId);
-        turtleDropdown.setValue(myTurtle.myId); //TODO: make sure this works, java being laggy
-        //TODO: inform user that a new turtle has been spawned
+    if (!exists) {//id doesn't exist - create new turtle with this ID
+//        myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
+      myTurtle = new Turtle(id);
+      allTurtles.add(myTurtle);
+      turtleDropdown.getItems().add(myTurtle.myTurtleId);
+      turtleDropdown.setValue(myTurtle.myTurtleId); //TODO: make sure this works, java being laggy
+      //TODO: inform user that a new turtle has been spawned
     }
   }
 
@@ -393,22 +415,42 @@ public class LogoDisplay extends Application {
   private void step() {
     //If an instruction has been sent to myLogo, run it
     Queue<Instruction> instructions = myLogo.getMyInstructions();
-    if(!instructions.isEmpty()){
+    if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
-      switch(currentInstruction.command){
-        case "pu" -> {
-          //change pen opacity to 0
-        }
-        case "pd" -> {
-          //change pen opacity to 100
-        }
-        case "tell" -> tellTurtle(currentInstruction.pixels);
-        default -> myTurtle.execute(currentInstruction, root, lineRoot);
-      }
+      performInstruction(currentInstruction);
+      drawTurtleLine();
+      myTurtle.updateCoordinates();
     }
-    //TODO: tell the Turtle to updates its coordinates ONCE the line has been drawn
-//    myTurtle.updateCoordinates();
-
-
   }
+
+  private void performInstruction(Instruction currentInstruction) {
+    int commandPixels = currentInstruction.pixels;
+    switch (currentInstruction.order) {
+      case PENUP -> penOpacity = 0.0;
+      case PENDOWN -> penOpacity = 100.0;
+      case TELL -> tellTurtle(commandPixels);
+      case FORWARD -> new ForwardCommand(myTurtle, commandPixels);
+      case BACKWARD -> new BackwardCommand(myTurtle, commandPixels);
+      case RIGHT -> new RotateRightCommand(myTurtle, commandPixels);
+      case LEFT -> new RotateLeftCommand(myTurtle, commandPixels);
+      case HIDE -> new HideCommand(myTurtle);
+      case SHOW -> new ShowCommand(myTurtle);
+      case STAMP -> new StampCommand(myTurtle, root);
+      case HOME -> new HomeCommand(myTurtle, 0);
+      default -> {
+      }
+//      default -> myTurtle.execute(currentInstruction, root, lineRoot);
+    }
+  }
+
+  private void drawTurtleLine() {
+    Coordinates turtleCoordinates = myTurtle.getTurtleCoordinates();
+    Rectangle connector = new Rectangle(turtleCoordinates.turtleOldX, turtleCoordinates.turtleNewY,
+        turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
+    connector.setOpacity(penOpacity);
+    connector.setFill(Color.RED);
+    connector.setWidth(2.0);
+    root.getChildren().add(connector);
+  }
+
 }

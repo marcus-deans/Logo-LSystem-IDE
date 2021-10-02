@@ -9,6 +9,9 @@ public enum Commands {
   HIDE ("ht"),
   SHOW ("st"),
   STAMP("stamp"),
+  TELL("tell"),
+  PENUP("pu"),
+  PENDOWN("pd"),
   OOPS("oops")
   ;
 
