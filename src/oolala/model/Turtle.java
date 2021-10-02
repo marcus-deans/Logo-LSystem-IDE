@@ -19,8 +19,8 @@ public class Turtle {
     private int yVector;
     private int xVector;
 
-    private int TurtleHomeX;
-    private int TurtleHomeY;
+    private final int TurtleHomeX;
+    private final int TurtleHomeY;
 
     public int myTurtleId;
 
@@ -29,8 +29,8 @@ public class Turtle {
     private static final String TURTLE_IMAGE = "turtle-picture.png";
     private final double TURTLE_SIZE = 70;
 
-//    public Turtle(int homeX, int homeY, int id) {
-    public Turtle(int id){
+    //    public Turtle(int homeX, int homeY, int id) {
+    public Turtle(int id) {
         myTurtleId = id;
         degreesRotation = 0;
 
@@ -61,102 +61,6 @@ public class Turtle {
         newTurtleView.setFitWidth(TURTLE_SIZE);
         return newTurtleView;
     }
-
-//    public void execute(Instruction instruction, Group root, Group lineRoot) {
-//        //Switch between the instructions
-//        computeCoordinates(instruction);
-//        switch (instruction.order) {
-//            case FORWARD, BACKWARD -> setMovement();
-//            case RIGHT, LEFT -> setRotation();
-//            case HIDE, SHOW -> displayTurtle();
-//            case STAMP -> stampTurtle(root, lineRoot);
-//            default -> {
-//            }
-//        }
-//    }
-
-//
-//    private void displayTurtle() {
-//        myTurtleView.setVisible(!myTurtleView.isVisible());
-//    }
-//
-//    private void stampTurtle(Group root, Group lineRoot) {
-//        ImageView stampTurtleView = createTurtleView();
-//        stampTurtleView.setRotate(degreesRotation);
-//        root.getChildren().add(stampTurtleView);
-//    }
-
-
-//    private void computeCoordinates(Instruction instruction) {
-//        length = instruction.pixels;
-//        computeVectors();
-//        switch (instruction.order) {
-//            case FORWARD -> computeForwardCoordinates();
-//            case BACKWARD -> computeBackwardCoordinates();
-//            case HOME -> computeHomeCoordinates();
-//            case RIGHT -> computeRightRotation();
-//            case LEFT -> computeLeftRotation();
-//            default -> {
-//            }
-//        }
-//    }
-//
-//    private void computeVectors() {
-//        xVector = checkVectors() ? (int) Math.sin(degreesRotation) * length : (int) Math.cos(degreesRotation) * length;
-//        yVector = checkVectors() ? (int) Math.cos(degreesRotation) * length : (int) Math.sin(degreesRotation) * length;
-//    }
-//
-//    public boolean checkVectors() {
-//        degreesRotation %= 360;
-//        return (degreesRotation <= 45) || (degreesRotation >= 315) || ((degreesRotation >= 135) && (degreesRotation <= 225));
-//    }
-//
-//    public void updateCoordinates() {
-//        oldX = newX;
-//        oldY = newY;
-//    }
-//
-//    private void computeForwardCoordinates() {
-//        newX = rightFacing() ? oldX + xVector : oldX - xVector;
-//        newY = upwardFacing() ? oldY - yVector : oldY + yVector;
-//    }
-//
-//    private void computeBackwardCoordinates() {
-//        newX = rightFacing() ? oldX - xVector : oldX + xVector;
-//        newY = upwardFacing() ? oldY + yVector : oldY - yVector;
-//    }
-//
-//    private void computeHomeCoordinates() {
-//        newX = 0;
-//        newY = 0;
-//    }
-//
-//
-//    private void setMovement() {
-//        myTurtleView.setX(newX);
-//        myTurtleView.setY(newY);
-//    }
-//
-//    private boolean rightFacing() {
-//        return (degreesRotation >= 0) && (degreesRotation <= 180);
-//    }
-//
-//    private boolean upwardFacing() {
-//        return (degreesRotation <= 90) || (degreesRotation >= 270);
-//    }
-//
-//    private void computeRightRotation() {
-//        degreesRotation += length;
-//    }
-//
-//    private void computeLeftRotation() {
-//        degreesRotation -= length;
-//    }
-//
-//    private void setRotation() {
-//        degreesRotation %= 360;
-//        myTurtleView.setRotate(degreesRotation);
-//    }
 
     public void setDegreesRotation(int degreesRotation) {
         this.degreesRotation = degreesRotation;
@@ -195,6 +99,8 @@ public class Turtle {
         return myTurtleView;
     }
 
-
-
+    public void updateCoordinates() {
+        oldX = newX;
+        oldY = newY;
+    }
 }
