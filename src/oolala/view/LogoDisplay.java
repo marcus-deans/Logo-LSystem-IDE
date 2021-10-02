@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -108,7 +109,7 @@ public class LogoDisplay extends Application {
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
   private ComboBox turtleDropdown;
-  private int penOpacity;
+  private double penOpacity = 100.0;
   private int turtleHomeX;
   private int turtleHomeY;
 
@@ -425,8 +426,8 @@ public class LogoDisplay extends Application {
   private void performInstruction(Instruction currentInstruction) {
     int commandPixels = currentInstruction.pixels;
     switch (currentInstruction.order) {
-      case PENUP -> penOpacity = 0;
-      case PENDOWN -> penOpacity = 100;
+      case PENUP -> penOpacity = 0.0;
+      case PENDOWN -> penOpacity = 100.0;
       case TELL -> tellTurtle(commandPixels);
       case FORWARD -> new ForwardCommand(myTurtle, commandPixels);
       case BACKWARD -> new BackwardCommand(myTurtle, commandPixels);
@@ -444,8 +445,12 @@ public class LogoDisplay extends Application {
 
   private void drawTurtleLine() {
     Coordinates turtleCoordinates = myTurtle.getTurtleCoordinates();
-    Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleNewY,
+    Rectangle connector = new Rectangle(turtleCoordinates.turtleOldX, turtleCoordinates.turtleNewY,
         turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
+    connector.setOpacity(penOpacity);
+    connector.setFill(Color.RED);
+    connector.setWidth(2.0);
+    root.getChildren().add(connector);
   }
 
 }
