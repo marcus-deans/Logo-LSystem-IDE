@@ -4,7 +4,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -28,6 +27,7 @@ import java.io.IOException;
 import java.util.*;
 import oolala.model.commands.movements.BackwardCommand;
 import oolala.model.commands.movements.ForwardCommand;
+import oolala.model.commands.movements.HomeCommand;
 import oolala.model.commands.rotations.RotateLeftCommand;
 import oolala.model.commands.rotations.RotateRightCommand;
 import oolala.model.commands.visuals.HideCommand;
@@ -137,7 +137,8 @@ public class LogoDisplay extends Application {
   }
 
   private void spawnTurtle() {
-    myTurtle = new Turtle(FRAME_WIDTH/2, FRAME_HEIGHT/2, 0); //spawns first turtle with ID 0
+//    myTurtle = new Turtle(FRAME_WIDTH/2, FRAME_HEIGHT/2, 0); //spawns first turtle with ID 0
+    myTurtle = new Turtle(0);
     //turtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
     //turtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
     if(myTurtle.getMyTurtleView()!=null){
@@ -259,7 +260,7 @@ public class LogoDisplay extends Application {
       //TODO: switch to this turtle
       int id = Integer.parseInt(historyPrograms.getSelectionModel().getSelectedItem().toString());
       for(Turtle turtle : allTurtles){
-        if(turtle.myId == id){
+        if(turtle.myTurtleId == id){
           myTurtle = turtle;
         }
       }
@@ -348,7 +349,8 @@ public class LogoDisplay extends Application {
         commandLine.clear();
         historyPrograms.getItems().clear();
         turtleDropdown.getItems().clear();
-        myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //TODO: make sure this spawns correctly, should reset program
+//        myTurtle = new Turtle(turtleHomeX, turtleHomeY, 0); //TODO: make sure this spawns correctly, should reset program
+        myTurtle = new Turtle(0);
       }
     });
   }
@@ -385,18 +387,19 @@ public class LogoDisplay extends Application {
     //loop through allTurtles - if ID exists, switch to this turtle
     boolean exists = false;
     for(Turtle turtle: allTurtles){
-      if(turtle.myId == id){
+      if(turtle.myTurtleId == id){
         myTurtle = turtle; //switch current turtle to this turtle
         exists = true;
-        turtleDropdown.setValue(turtle.myId); //TODO: make sure this works, java being laggy
+        turtleDropdown.setValue(turtle.myTurtleId); //TODO: make sure this works, java being laggy
         //TODO: inform user that turtle has switched
       }
     }
     if(!exists){//id doesn't exist - create new turtle with this ID
-        myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
+//        myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
+        myTurtle = new Turtle(id);
         allTurtles.add(myTurtle);
-        turtleDropdown.getItems().add(myTurtle.myId);
-        turtleDropdown.setValue(myTurtle.myId); //TODO: make sure this works, java being laggy
+        turtleDropdown.getItems().add(myTurtle.myTurtleId);
+        turtleDropdown.setValue(myTurtle.myTurtleId); //TODO: make sure this works, java being laggy
         //TODO: inform user that a new turtle has been spawned
     }
   }
@@ -430,6 +433,7 @@ public class LogoDisplay extends Application {
       case HIDE -> new HideCommand(myTurtle);
       case SHOW -> new ShowCommand(myTurtle);
       case STAMP -> new StampCommand(myTurtle, root);
+      case HOME -> new HomeCommand(myTurtle, 0);
       default -> {
       }
 //      default -> myTurtle.execute(currentInstruction, root, lineRoot);

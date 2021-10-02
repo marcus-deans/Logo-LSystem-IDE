@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 public class TurtleComputeTests {
   Instruction inst = new Instruction("fd", 50);
 //  Turtle turt = new Turtle(0,0,0);'
+  Turtle turt = new Turtle(1);
 
   @Test
   void checkVector45() {
@@ -25,7 +26,7 @@ public class TurtleComputeTests {
   void checkVector225() {
     LogoDisplay logod = new LogoDisplay();
 //    Turtle turt = logod.myTurtle;
-    Turtle turt = new Turtle(100,100,1);
+//    Turtle turt = new Turtle(100,100,1);
     turt.setDegreesRotation(225);
 //    Assertions.assertTrue(turt.checkVectors());
   }

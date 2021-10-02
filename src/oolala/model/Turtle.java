@@ -1,6 +1,9 @@
 package oolala.model;
 
-import javafx.scene.Group;
+import static oolala.view.LogoDisplay.COMMAND_HEIGHT;
+import static oolala.view.LogoDisplay.FRAME_HEIGHT;
+import static oolala.view.LogoDisplay.FRAME_WIDTH;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,27 +19,34 @@ public class Turtle {
     private int yVector;
     private int xVector;
 
-    private double TurtleHomeX;
-    private double TurtleHomeY;
+    private int TurtleHomeX;
+    private int TurtleHomeY;
 
-    public int myId;
+    public int myTurtleId;
 
     private ImageView myTurtleView;
 
     private static final String TURTLE_IMAGE = "turtle-picture.png";
     private final double TURTLE_SIZE = 70;
 
-    public Turtle(int homeX, int homeY, int id) {
-        TurtleHomeX = homeX;
-        TurtleHomeY = homeY;
-        myId = id;
+//    public Turtle(int homeX, int homeY, int id) {
+    public Turtle(int id){
+        myTurtleId = id;
         degreesRotation = 0;
-        this.oldX = homeX;
-        this.oldY = homeY;
-        this.newX = homeX;
-        this.newY = homeY;
+
+        TurtleHomeX = (FRAME_WIDTH/2);
+        TurtleHomeY = ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2);
+
         // make turtle shape and set property
         initializeTurtleView();
+
+        oldX = TurtleHomeX;
+        oldY = TurtleHomeY;
+
+        myTurtleView.setX(FRAME_WIDTH/2);
+        myTurtleView.setY(FRAME_HEIGHT/2);
+//        TurtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - this.myTurtleView.getFitHeight()/2);
+//        TurtleHomeX = (int) (FRAME_WIDTH/2 - this.myTurtleView.getFitWidth()/2);
     }
 
     private void initializeTurtleView() {

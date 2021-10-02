@@ -8,27 +8,16 @@ import oolala.model.Turtle;
 import oolala.model.commands.Commands;
 
 public class HomeCommand extends MovementCommand{
-  int myTurtleHomeX;
-  int myTurtleHomeY;
-
   public HomeCommand(Turtle myTurtle, int pixels) {
     super(myTurtle, pixels);
     myCommandName = Commands.HOME;
-    determineHomeCoordinates();
     computeHomeCoordinates();
     setNewCoordinates();
     performMovement();
   }
 
-  private void determineHomeCoordinates(){
-//    myTurtleHomeX = frameWidth/2;
-//    myTurtleHomeY = frameWidth/2;
-    myTurtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
-    myTurtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
-  }
-
-  private void computeHomeCoordinates() {
-    myNewX = 0;
-    myNewY = 0;
+  private void computeHomeCoordinates(){
+    myNewX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
+    myNewY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
   }
 }
