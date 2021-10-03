@@ -90,6 +90,12 @@ public class Logo {
     }
   }
 
+  public String getWord(Locale curLoc, String key) {
+    ResourceBundle words = ResourceBundle.getBundle("resources/words", curLoc);
+    String value = words.getString(key);
+    return value;
+  }
+
   public void saveHistory(String historyElement) {
     myHistory.add(historyElement);
   }

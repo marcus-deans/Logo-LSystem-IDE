@@ -62,19 +62,23 @@ public class LogoDisplay extends Application {
   public static final int GAME_TITLE_Y = 17;
   public static final int GAME_DROPDOWN_X = 100;
   public static final int GAME_DROPDOWN_Y = 0;
-  public static final int SAVED_TITLE_X = 210;
+  public static final int SAVED_TITLE_X = 160; //210
   public static final int SAVED_TITLE_Y = 17;
-  public static final int SAVED_DROPDOWN_X = 320;
+  public static final int SAVED_DROPDOWN_X = 260; //320
   public static final int SAVED_DROPDOWN_Y = 0;
-  public static final int HISTORY_TITLE_X = 445;
+  public static final int HISTORY_TITLE_X = 325; //445
   public static final int HISTORY_TITLE_Y = 17;
-  public static final int HISTORY_DROPDOWN_X = 495;
+  public static final int HISTORY_DROPDOWN_X = 375; //495
   public static final int HISTORY_DROPDOWN_Y = 0;
+  public static final int LANGUAGES_TITLE_X = 440;
+  public static final int LANGUAGES_TITLE_Y = 17;
+  public static final int LANGUAGES_DROPDOWN_X = 520;
+  public static final int LANGUAGES_DROPDOWN_Y = 0;
   public static final int TURTLES_TITLE_X = 620;
   public static final int TURTLES_TITLE_Y = 17;
   public static final int TURTLES_DROPDOWN_X = 680;
   public static final int TURTLES_DROPDOWN_Y = 0;
-  public static final int MAX_DROPDOWN_WIDTH = 120;
+  public static final int MAX_DROPDOWN_WIDTH = 50;
 
   //Bottom Layout
   public static final int COMMAND_WIDTH = 600;
@@ -108,6 +112,7 @@ public class LogoDisplay extends Application {
   private ComboBox gameSetting;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
+  private ComboBox languagesPrograms;
   private ComboBox turtleDropdown;
   private double penOpacity = 100.0;
   private int turtleHomeX;
@@ -132,6 +137,7 @@ public class LogoDisplay extends Application {
     initializeGameSetting(); //game type dropdown
     initializeSavedPrograms(); //saved programs dropdown
     initializeHistory(); //program history dropdown
+    initializeLanguages();
     initializeTurtleOptions(); //dropdown of all turtles and current running turtle
     initializeCommandLine(); //initialize the command line
     initializeRunButton(); //initialize the program run button
@@ -262,6 +268,19 @@ public class LogoDisplay extends Application {
     for (String element : myLogo.getHistory()) {
       historyPrograms.getItems().add(element);
     }
+  }
+
+  private void initializeLanguages() {
+    Text languages = new Text("Languages: ");
+    languages.setLayoutX(LANGUAGES_TITLE_X);
+    languages.setLayoutY(LANGUAGES_TITLE_Y);
+    root.getChildren().add(languages);
+    languagesPrograms = new ComboBox();
+    languagesPrograms.setOnAction((event) -> {});
+    languagesPrograms.setLayoutX(LANGUAGES_DROPDOWN_X);
+    languagesPrograms.setLayoutY(LANGUAGES_DROPDOWN_Y);
+    languagesPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    root.getChildren().add(languagesPrograms);
   }
 
   private void initializeTurtleOptions() {
