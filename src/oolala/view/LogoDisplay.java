@@ -43,6 +43,10 @@ import oolala.model.commands.visuals.HideCommand;
 import oolala.model.commands.visuals.ShowCommand;
 import oolala.model.commands.visuals.StampCommand;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
 
 /**
  * JavaFX View class
@@ -103,6 +107,7 @@ public class LogoDisplay extends Application {
   //Languages
   private final List<String> languageTypes = new ArrayList<>(
       Arrays.asList("English", "Spanish", "French"));
+  private final String[] langTypes = {"English", "Spanish", "French"};
   //Turtles
   private final List<Turtle> allTurtles = new ArrayList<>();
   // public for testing
@@ -280,20 +285,29 @@ public class LogoDisplay extends Application {
     languages.setLayoutY(LANGUAGES_TITLE_Y);
     root.getChildren().add(languages);
     languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
-    languagesPrograms.setOnAction((event) -> {});
+    languagesPrograms.setOnAction((event) -> {
+      String lang = (String)languagesPrograms.getValue();
+      switch (lang) {
+        case "English": System.out.println(lang);
+          break;
+        case "Spanish": System.out.println(lang);
+          break;
+        case "French": System.out.println(lang);
+          break;
+      }
+    });
     languagesPrograms.setLayoutX(LANGUAGES_DROPDOWN_X);
     languagesPrograms.setLayoutY(LANGUAGES_DROPDOWN_Y);
     languagesPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
-//    populateLanguages();
     root.getChildren().add(languagesPrograms);
   }
 
 //  private void populateLanguages() {
-//    File[] files = new File("resources").listFiles();
-//    for (File file : files) {
-//      if (file.isFile()) {
-//        languagesPrograms.getItems().add(file.getName());
-//      }
+//    Properties properties = new Properties();
+//    try(FileReader fileReader = new FileReader("data/props.properties")){
+//      properties.load(fileReader);
+//    } catch (IOException e) {
+//      e.printStackTrace();
 //    }
 //  }
 

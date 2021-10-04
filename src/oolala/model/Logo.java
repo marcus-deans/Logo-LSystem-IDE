@@ -1,6 +1,7 @@
 package oolala.model;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -96,7 +97,18 @@ public class Logo {
     return value;
   }
 
+//  private void populateLanguages() {
+//    Properties properties = new Properties();
+//    try(FileReader fileReader = new FileReader("data/props.properties")){
+//      properties.load(fileReader);
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
+//  }
 
+//  public String updateLanguage(String lang) {
+//
+//  }
 
   public void saveHistory(String historyElement) {
     myHistory.add(historyElement);
