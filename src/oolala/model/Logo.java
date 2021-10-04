@@ -96,6 +96,8 @@ public class Logo {
     return value;
   }
 
+
+
   public void saveHistory(String historyElement) {
     myHistory.add(historyElement);
   }

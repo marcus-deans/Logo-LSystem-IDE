@@ -100,6 +100,9 @@ public class LogoDisplay extends Application {
   //Games
   private final List<String> gameTypes = new ArrayList<>(
       Arrays.asList("Logo", "L-System", "Darwin"));
+  //Languages
+  private final List<String> languageTypes = new ArrayList<>(
+      Arrays.asList("English", "Spanish", "French"));
   //Turtles
   private final List<Turtle> allTurtles = new ArrayList<>();
   // public for testing
@@ -138,6 +141,7 @@ public class LogoDisplay extends Application {
     initializeSavedPrograms(); //saved programs dropdown
     initializeHistory(); //program history dropdown
     initializeLanguages();
+//    languageButton();
     initializeTurtleOptions(); //dropdown of all turtles and current running turtle
     initializeCommandLine(); //initialize the command line
     initializeRunButton(); //initialize the program run button
@@ -275,13 +279,23 @@ public class LogoDisplay extends Application {
     languages.setLayoutX(LANGUAGES_TITLE_X);
     languages.setLayoutY(LANGUAGES_TITLE_Y);
     root.getChildren().add(languages);
-    languagesPrograms = new ComboBox();
+    languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
     languagesPrograms.setOnAction((event) -> {});
     languagesPrograms.setLayoutX(LANGUAGES_DROPDOWN_X);
     languagesPrograms.setLayoutY(LANGUAGES_DROPDOWN_Y);
     languagesPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
+//    populateLanguages();
     root.getChildren().add(languagesPrograms);
   }
+
+//  private void populateLanguages() {
+//    File[] files = new File("resources").listFiles();
+//    for (File file : files) {
+//      if (file.isFile()) {
+//        languagesPrograms.getItems().add(file.getName());
+//      }
+//    }
+//  }
 
   private void initializeTurtleOptions() {
     Text turtles = new Text("Turtles: ");
