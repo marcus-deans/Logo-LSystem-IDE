@@ -91,24 +91,15 @@ public class Logo {
     }
   }
 
-  public String getWord(Locale curLoc, String key) {
-    ResourceBundle words = ResourceBundle.getBundle("resources/words", curLoc);
+  public void updateLanguage(String lang) {
+
+  }
+
+  public String getWord(String key) {
+    ResourceBundle words = ResourceBundle.getBundle("words");
     String value = words.getString(key);
     return value;
   }
-
-//  private void populateLanguages() {
-//    Properties properties = new Properties();
-//    try(FileReader fileReader = new FileReader("data/props.properties")){
-//      properties.load(fileReader);
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-//  }
-
-//  public String updateLanguage(String lang) {
-//
-//  }
 
   public void saveHistory(String historyElement) {
     myHistory.add(historyElement);

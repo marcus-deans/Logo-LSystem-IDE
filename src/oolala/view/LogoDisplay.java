@@ -3,11 +3,9 @@ package oolala.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
-import java.util.Scanner;
+import java.lang.module.Configuration;
+import java.util.*;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -45,6 +43,7 @@ import oolala.model.commands.visuals.StampCommand;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 
 
@@ -190,6 +189,7 @@ public class LogoDisplay extends Application {
   }
 
   private void initializeGameSetting() {
+//    Text gameSettingTitle = new Text(myLogo.getWord("game_setting_title"));
     Text gameSettingTitle = new Text("Game Setting: ");
     gameSettingTitle.setLayoutX(GAME_TITLE_X);
     gameSettingTitle.setLayoutY(GAME_TITLE_Y);
@@ -288,11 +288,14 @@ public class LogoDisplay extends Application {
     languagesPrograms.setOnAction((event) -> {
       String lang = (String)languagesPrograms.getValue();
       switch (lang) {
-        case "English": System.out.println(lang);
+        case "English":
+          Locale.setDefault(new Locale("en", "US"));
           break;
-        case "Spanish": System.out.println(lang);
+        case "Spanish":
+          Locale.setDefault(new Locale("es", "ES"));
           break;
-        case "French": System.out.println(lang);
+        case "French":
+          Locale.setDefault(new Locale("fr", "FR"));
           break;
       }
     });
@@ -301,15 +304,6 @@ public class LogoDisplay extends Application {
     languagesPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
     root.getChildren().add(languagesPrograms);
   }
-
-//  private void populateLanguages() {
-//    Properties properties = new Properties();
-//    try(FileReader fileReader = new FileReader("data/props.properties")){
-//      properties.load(fileReader);
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-//  }
 
   private void initializeTurtleOptions() {
     Text turtles = new Text("Turtles: ");
