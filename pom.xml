@@ -73,9 +73,16 @@
         </plugin>
         <!-- check for violations of code style -->
         <plugin>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>8.45.1</version>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>3.1.2</version>
+            <dependencies>
+                <dependency>
+                    <groupId>com.puppycrawl.tools</groupId>
+                    <artifactId>checkstyle</artifactId>
+                    <version>8.45.1</version>
+                </dependency>
+            </dependencies>
             <configuration>
                 <configLocation>google_checks.xml</configLocation>
                 <encoding>UTF-8</encoding>
