@@ -28,7 +28,7 @@ public class Logo {
   private List<String> myHistory;
   private boolean isValidCommand;
 
-//  private LinkedHashMap<String, Integer> myInstructions;
+  //  private LinkedHashMap<String, Integer> myInstructions;
   private Queue<Instruction> myInstructions;
 
   public Logo(){
@@ -89,16 +89,6 @@ public class Logo {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public void updateLanguage(String lang) {
-
-  }
-
-  public String getWord(String key) {
-    ResourceBundle words = ResourceBundle.getBundle("words");
-    String value = words.getString(key);
-    return value;
   }
 
   public void saveHistory(String historyElement) {

@@ -1,6 +1,7 @@
 package oolala.view;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.module.Configuration;
@@ -52,7 +53,7 @@ import javax.swing.*;
  */
 public class LogoDisplay extends Application {
 
-//  public static final String TITLE = R.string.program_name;
+  //  public static final String TITLE = R.string.program_name;
   public static final String TITLE = "TRIAL";
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
@@ -102,11 +103,10 @@ public class LogoDisplay extends Application {
   public static final int CLEAR_Y = 600;
   //Games
   private final List<String> gameTypes = new ArrayList<>(
-      Arrays.asList("Logo", "L-System", "Darwin"));
+          Arrays.asList("Logo", "L-System", "Darwin"));
   //Languages
   private final List<String> languageTypes = new ArrayList<>(
-      Arrays.asList("English", "Spanish", "French"));
-  private final String[] langTypes = {"English", "Spanish", "French"};
+          Arrays.asList("English", "Spanish", "French"));
   //Turtles
   private final List<Turtle> allTurtles = new ArrayList<>();
   // public for testing
@@ -120,10 +120,18 @@ public class LogoDisplay extends Application {
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
   private ComboBox languagesPrograms;
+  private Locale langType;
+  private FileInputStream fis;
   private ComboBox turtleDropdown;
   private double penOpacity = 100.0;
   private int turtleHomeX;
   private int turtleHomeY;
+  private Text gameSettingTitle;
+  private Text savedTitle;
+  private Text history;
+  private Text languages;
+  private Text turtles;
+  private String runText;
 
   public void start(Stage stage) {
     //Variables
@@ -141,11 +149,15 @@ public class LogoDisplay extends Application {
     //Initialize the view classes
     myLogo = new Logo();
     spawnTurtle();
+    gameTitle();
     initializeGameSetting(); //game type dropdown
+    savedTitle();
     initializeSavedPrograms(); //saved programs dropdown
+    historyTitle();
     initializeHistory(); //program history dropdown
+    languagesTitle();
     initializeLanguages();
-//    languageButton();
+    turtleTitle();
     initializeTurtleOptions(); //dropdown of all turtles and current running turtle
     initializeCommandLine(); //initialize the command line
     initializeRunButton(); //initialize the program run button
@@ -157,7 +169,7 @@ public class LogoDisplay extends Application {
 
     //https://docs.oracle.com/javafx/2/get_started/css.htm
     scene.getStylesheets().add
-        (LogoDisplay.class.getResource("LogoDisplay.css").toExternalForm());
+            (LogoDisplay.class.getResource("LogoDisplay.css").toExternalForm());
     //https://tomsondev.bestsolution.at/2013/08/07/using-less-in-javafx/
 //    LessCSSLoader ls = new LessCSSLoader();
 //    scene.getStylesheets().add(ls.loadLess(getClass().getResource("logo.less")).toExternalForm());
@@ -188,12 +200,14 @@ public class LogoDisplay extends Application {
     root.getChildren().add(bottomLine);
   }
 
-  private void initializeGameSetting() {
-//    Text gameSettingTitle = new Text(myLogo.getWord("game_setting_title"));
-    Text gameSettingTitle = new Text("Game Setting: ");
+  private void gameTitle() {
+    gameSettingTitle = new Text(getWord("game_setting_title"));
     gameSettingTitle.setLayoutX(GAME_TITLE_X);
     gameSettingTitle.setLayoutY(GAME_TITLE_Y);
     root.getChildren().add(gameSettingTitle);
+  }
+
+  private void initializeGameSetting() {
     gameSetting = new ComboBox<>(FXCollections.observableList(gameTypes));
     gameSetting.setLayoutX(GAME_DROPDOWN_X);
     gameSetting.setLayoutY(GAME_DROPDOWN_Y);
@@ -204,11 +218,14 @@ public class LogoDisplay extends Application {
     root.getChildren().add(gameSetting);
   }
 
+  private void savedTitle() {
+    savedTitle = new Text(getWord("saved_program_title"));
+    savedTitle.setLayoutX(SAVED_TITLE_X);
+    savedTitle.setLayoutY(SAVED_TITLE_Y);
+    root.getChildren().add(savedTitle);
+  }
+
   private void initializeSavedPrograms() {
-    Text savedProgramTitle = new Text("Saved Programs: ");
-    savedProgramTitle.setLayoutX(SAVED_TITLE_X);
-    savedProgramTitle.setLayoutY(SAVED_TITLE_Y);
-    root.getChildren().add(savedProgramTitle);
     savedPrograms = new ComboBox();
     savedPrograms.setLayoutX(SAVED_DROPDOWN_X);
     savedPrograms.setLayoutY(SAVED_DROPDOWN_Y);
@@ -257,11 +274,14 @@ public class LogoDisplay extends Application {
     }
   }
 
-  private void initializeHistory() {
-    Text history = new Text("History: ");
+  private void historyTitle() {
+    history = new Text(getWord("history_text"));
     history.setLayoutX(HISTORY_TITLE_X);
     history.setLayoutY(HISTORY_TITLE_Y);
     root.getChildren().add(history);
+  }
+
+  private void initializeHistory() {
     historyPrograms = new ComboBox();
     historyPrograms.setOnAction((event) -> {
       commandLine.setText(historyPrograms.getSelectionModel().getSelectedItem().toString());
@@ -279,23 +299,29 @@ public class LogoDisplay extends Application {
     }
   }
 
-  private void initializeLanguages() {
-    Text languages = new Text("Languages: ");
+  private void languagesTitle() {
+    languages = new Text(getWord("language_text"));
     languages.setLayoutX(LANGUAGES_TITLE_X);
     languages.setLayoutY(LANGUAGES_TITLE_Y);
     root.getChildren().add(languages);
+  }
+
+  private void initializeLanguages() {
     languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
     languagesPrograms.setOnAction((event) -> {
       String lang = (String)languagesPrograms.getValue();
       switch (lang) {
         case "English":
-          Locale.setDefault(new Locale("en", "US"));
+          Locale.setDefault(new Locale("en"));
+          updateLanguage();
           break;
         case "Spanish":
-          Locale.setDefault(new Locale("es", "ES"));
+          Locale.setDefault(new Locale("es"));
+          updateLanguage();
           break;
         case "French":
-          Locale.setDefault(new Locale("fr", "FR"));
+          Locale.setDefault(new Locale("fr"));
+          updateLanguage();
           break;
       }
     });
@@ -305,11 +331,39 @@ public class LogoDisplay extends Application {
     root.getChildren().add(languagesPrograms);
   }
 
-  private void initializeTurtleOptions() {
-    Text turtles = new Text("Turtles: ");
+  private String getWord(String key) {
+    ResourceBundle words = ResourceBundle.getBundle("words");
+    String value = words.getString(key);
+    return value;
+  }
+
+  private void clearText() {
+    gameSettingTitle.setText("");
+    savedTitle.setText("");
+    history.setText("");
+    languages.setText("");
+    turtles.setText("");
+    runText = "";
+  }
+
+  private void updateLanguage() {
+    clearText();
+    gameTitle();
+    savedTitle();
+    historyTitle();
+    languagesTitle();
+    turtleTitle();
+    runTitle();
+  }
+
+  private void turtleTitle() {
+    turtles = new Text(getWord("turtles_text"));
     turtles.setLayoutX(TURTLES_TITLE_X);
     turtles.setLayoutY(TURTLES_TITLE_Y);
     root.getChildren().add(turtles);
+  }
+
+  private void initializeTurtleOptions() {
     turtleDropdown = new ComboBox();
     turtleDropdown.setOnAction((event) -> {
       //TODO: switch to this turtle
@@ -336,8 +390,12 @@ public class LogoDisplay extends Application {
     root.getChildren().add(commandLine);
   }
 
+  private String runTitle() {
+    return runText = getWord("run_text");
+  }
+
   private void initializeRunButton() {
-    Button runCommands = new Button("Run");
+    Button runCommands = new Button(runTitle());
     runCommands.setPrefWidth(RUN_WIDTH);
     runCommands.setPrefHeight(RUN_HEIGHT);
     runCommands.setLayoutX(RUN_X);
@@ -494,7 +552,7 @@ public class LogoDisplay extends Application {
   private void drawTurtleLine() {
     Coordinates turtleCoordinates = myTurtle.getTurtleCoordinates();
     Rectangle connector = new Rectangle(turtleCoordinates.turtleOldX, turtleCoordinates.turtleNewY,
-        turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
+            turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
     connector.setOpacity(penOpacity);
     connector.setFill(Color.RED);
     connector.setWidth(2.0);
