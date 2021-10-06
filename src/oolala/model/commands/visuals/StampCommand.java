@@ -14,7 +14,7 @@ public class StampCommand extends VisualCommand {
   }
 
   private void stampTurtle(Group root) {
-    ImageView stampTurtleView = myTurtle.createTurtleView();
+    ImageView stampTurtleView = myViewTurtle.createTurtleView();
     stampTurtleView.setRotate(myTurtle.getDegreesRotation());
     root.getChildren().add(stampTurtleView);
   }

@@ -12,6 +12,6 @@ public abstract class RotateCommand extends Command {
 
   protected void setRotation() {
     myTurtle.setDegreesRotation(myTurtle.getDegreesRotation() % FULL_CIRCLE);
-    myTurtle.performRotate();
+//    myTurtle.performRotate();
   }
 }

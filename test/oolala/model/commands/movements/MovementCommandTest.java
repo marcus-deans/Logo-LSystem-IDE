@@ -10,6 +10,7 @@ class MovementCommandTest {
 
   @Test
   void rightFacing() {
+
   }
 
   @Test

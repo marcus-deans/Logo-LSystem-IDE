@@ -10,7 +10,7 @@ public class ForwardCommand extends MovementCommand {
     myCommandName = Commands.FORWARD;
     computeForwardCoordinates();
     setNewCoordinates();
-    performMovement();
+//    performMovement();
   }
 
   public void computeForwardCoordinates() {

@@ -44,9 +44,9 @@ public abstract class MovementCommand extends Command {
     return (myDegreesRotation <= EAST) || (myDegreesRotation >= WEST);
   }
 
-  protected void performMovement() {
-    myTurtle.performMovement();
-  }
+//  protected void performMovement() {
+//    myTurtle.performMovement();
+//  }
 
   protected void computeVectors() {
     int sinLength = (int) Math.abs(Math.sin(myDegreesRotation) * pixels);

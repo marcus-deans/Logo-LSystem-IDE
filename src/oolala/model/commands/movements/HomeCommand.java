@@ -1,9 +1,5 @@
 package oolala.model.commands.movements;
 
-import static oolala.view.LogoDisplay.COMMAND_HEIGHT;
-import static oolala.view.LogoDisplay.FRAME_HEIGHT;
-import static oolala.view.LogoDisplay.FRAME_WIDTH;
-
 import oolala.model.Turtle;
 import oolala.model.commands.Commands;
 
@@ -17,12 +13,14 @@ public class HomeCommand extends MovementCommand {
     myCommandName = Commands.HOME;
     computeHomeCoordinates();
     setNewCoordinates();
-    performMovement();
+//    performMovement();
   }
 
   private void computeHomeCoordinates() {
-    myNewX = (int) (FRAME_WIDTH / 2 - myTurtle.getMyTurtleView().getFitWidth() / 2);
-    myNewY = (int) ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2
-        - myTurtle.getMyTurtleView().getFitHeight() / 2);
+    myNewX = myTurtle.TurtleHomeX;
+    myNewY = myTurtle.TurtleHomeY;
+//    myNewX = (int) (FRAME_WIDTH / 2 - myTurtle.getMyTurtleView().getFitWidth() / 2);
+//    myNewY = (int) ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2
+//        - myTurtle.getMyTurtleView().getFitHeight() / 2);
   }
 }

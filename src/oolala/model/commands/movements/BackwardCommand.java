@@ -10,7 +10,7 @@ public class BackwardCommand extends MovementCommand {
     myCommandName = Commands.BACKWARD;
     computeBackwardCoordinates();
     setNewCoordinates();
-    performMovement();
+//    performMovement();
   }
 
   private void computeBackwardCoordinates() {
