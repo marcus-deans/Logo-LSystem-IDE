@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -116,12 +115,10 @@ public class LogoDisplay extends Application {
   private final List<Turtle> allTurtles = new ArrayList<>();
   // public for testing
   public Turtle myTurtle;
-  private Group root;
+  public Group root;
   private Group lineRoot;
   private Logo myLogo;
   private TextArea commandLine;
-  private String fileName;
-  private ComboBox gameSetting;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
   private ComboBox languagesPrograms;
@@ -211,7 +208,7 @@ public class LogoDisplay extends Application {
   }
 
   private void initializeGameSetting() {
-    gameSetting = new ComboBox<>(FXCollections.observableList(gameTypes));
+    ComboBox gameSetting = new ComboBox<>(FXCollections.observableList(gameTypes));
     gameSetting.setLayoutX(GAME_DROPDOWN_X);
     gameSetting.setLayoutY(GAME_DROPDOWN_Y);
     gameSetting.setMaxWidth(MAX_DROPDOWN_WIDTH);
@@ -313,20 +310,28 @@ public class LogoDisplay extends Application {
     languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
     languagesPrograms.setOnAction((event) -> {
       String lang = (String) languagesPrograms.getValue();
-      switch (lang) {
-        case "English":
-          Locale.setDefault(new Locale("en"));
-          updateLanguage();
-          break;
-        case "Spanish":
-          Locale.setDefault(new Locale("es"));
-          updateLanguage();
-          break;
-        case "French":
-          Locale.setDefault(new Locale("fr"));
-          updateLanguage();
-          break;
+//      switch (lang) {
+//        case "English":
+//          Locale.setDefault(new Locale("en"));
+//          updateLanguage();
+//          break;
+//        case "Spanish":
+//          Locale.setDefault(new Locale("es"));
+//          updateLanguage();
+//          break;
+//        case "French":
+//          Locale.setDefault(new Locale("fr"));
+//          updateLanguage();
+//          break;
+//      }
+
+      Language langu = (Language) languagesPrograms.getValue();
+      switch (langu) {
+        case ENGLISH -> Locale.setDefault(new Locale("en"));
+        case SPANISH -> Locale.setDefault(new Locale("es"));
+        case FRENCH -> Locale.setDefault(new Locale("fr"));
       }
+      updateLanguage();
     });
     languagesPrograms.setLayoutX(LANGUAGES_DROPDOWN_X);
     languagesPrograms.setLayoutY(LANGUAGES_DROPDOWN_Y);
@@ -474,7 +479,7 @@ public class LogoDisplay extends Application {
   private String getUserFileName() {
     TextInputDialog getUserInput = new TextInputDialog();
     getUserInput.setHeaderText("Enter a filename:");
-    fileName = getUserInput.showAndWait().toString();
+    String fileName = getUserInput.showAndWait().toString();
     if (validateStringFilenameUsingIO(fileName)) {
       return fileName;
     } else {

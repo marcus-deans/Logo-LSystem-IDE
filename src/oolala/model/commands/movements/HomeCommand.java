@@ -9,6 +9,9 @@ import oolala.model.commands.Commands;
 
 public class HomeCommand extends MovementCommand {
 
+  private static final int OFFSET_Y = 15;
+  private static final int OFFSET_Y_TOP = 26;
+
   public HomeCommand(Turtle myTurtle, int pixels) {
     super(myTurtle, pixels);
     myCommandName = Commands.HOME;
@@ -19,7 +22,7 @@ public class HomeCommand extends MovementCommand {
 
   private void computeHomeCoordinates() {
     myNewX = (int) (FRAME_WIDTH / 2 - myTurtle.getMyTurtleView().getFitWidth() / 2);
-    myNewY = (int) ((FRAME_HEIGHT - 26 - COMMAND_HEIGHT + 15) / 2
+    myNewY = (int) ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2
         - myTurtle.getMyTurtleView().getFitHeight() / 2);
   }
 }

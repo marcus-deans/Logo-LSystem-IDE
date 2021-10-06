@@ -16,12 +16,14 @@ public abstract class MovementCommand extends Command {
   public static final int SOUTHWEST = 225;
   public static final int SOUTHEAST = 135;
 
-  Coordinates myTurtleCoordinates;
-  int myDegreesRotation;
-  int myXVector;
-  int myYVector;
-  int myNewX;
-  int myNewY;
+  protected Coordinates myTurtleCoordinates;
+  protected int myDegreesRotation;
+  protected int myXVector;
+  protected int myYVector;
+
+  //public for testing, protected normally
+  public int myNewX;
+  public int myNewY;
 
   public MovementCommand(Turtle myTurtle, int pixels) {
     super(myTurtle, pixels);
@@ -47,8 +49,8 @@ public abstract class MovementCommand extends Command {
   }
 
   protected void computeVectors() {
-    int sinLength = (int) Math.sin(myDegreesRotation) * pixels;
-    int cosLength = (int) Math.cos(myDegreesRotation) * pixels;
+    int sinLength = (int) Math.abs(Math.sin(myDegreesRotation) * pixels);
+    int cosLength = (int) Math.abs(Math.cos(myDegreesRotation) * pixels);
     myXVector = checkVectorAngles() ? sinLength : cosLength;
     myYVector = checkVectorAngles() ? cosLength : sinLength;
   }

@@ -13,7 +13,7 @@ public class ForwardCommand extends MovementCommand {
     performMovement();
   }
 
-  private void computeForwardCoordinates() {
+  public void computeForwardCoordinates() {
     int myTurtleOldX = myTurtleCoordinates.turtleOldX;
     int myTurtleOldY = myTurtleCoordinates.turtleOldY;
     myNewX = rightFacing() ? myTurtleOldX + myXVector : myTurtleOldX - myXVector;
