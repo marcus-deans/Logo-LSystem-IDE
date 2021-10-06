@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.module.Configuration;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Queue;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -41,11 +45,6 @@ import oolala.model.commands.rotations.RotateRightCommand;
 import oolala.model.commands.visuals.HideCommand;
 import oolala.model.commands.visuals.ShowCommand;
 import oolala.model.commands.visuals.StampCommand;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
-import javax.swing.*;
 
 
 /**
@@ -101,12 +100,18 @@ public class LogoDisplay extends Application {
   public static final int CLEAR_HEIGHT = 30;
   public static final int CLEAR_X = 620;
   public static final int CLEAR_Y = 600;
+
+  //Line drawings
+  public static final double LINE_WIDTH = 2.0;
+  public static final double FULL_OPACITY = 100.0;
+  public static final double NO_OPACITY = 0.0;
+
   //Games
   private final List<String> gameTypes = new ArrayList<>(
-          Arrays.asList("Logo", "L-System", "Darwin"));
+      Arrays.asList("Logo", "L-System", "Darwin"));
   //Languages
   private final List<String> languageTypes = new ArrayList<>(
-          Arrays.asList("English", "Spanish", "French"));
+      Arrays.asList("English", "Spanish", "French"));
   //Turtles
   private final List<Turtle> allTurtles = new ArrayList<>();
   // public for testing
@@ -123,9 +128,7 @@ public class LogoDisplay extends Application {
   private Locale langType;
   private FileInputStream fis;
   private ComboBox turtleDropdown;
-  private double penOpacity = 100.0;
-  private int turtleHomeX;
-  private int turtleHomeY;
+  private double penOpacity = FULL_OPACITY;
   private Text gameSettingTitle;
   private Text savedTitle;
   private Text history;
@@ -169,7 +172,7 @@ public class LogoDisplay extends Application {
 
     //https://docs.oracle.com/javafx/2/get_started/css.htm
     scene.getStylesheets().add
-            (LogoDisplay.class.getResource("LogoDisplay.css").toExternalForm());
+        (LogoDisplay.class.getResource("LogoDisplay.css").toExternalForm());
     //https://tomsondev.bestsolution.at/2013/08/07/using-less-in-javafx/
 //    LessCSSLoader ls = new LessCSSLoader();
 //    scene.getStylesheets().add(ls.loadLess(getClass().getResource("logo.less")).toExternalForm());
@@ -185,8 +188,8 @@ public class LogoDisplay extends Application {
       root = new Group(myTurtle.getMyTurtleView());
     }
     allTurtles.add(myTurtle);
-    myTurtle.getMyTurtleView().setX(turtleHomeX);
-    myTurtle.getMyTurtleView().setY(turtleHomeY);
+//    myTurtle.getMyTurtleView().setX(turtleHomeX);
+//    myTurtle.getMyTurtleView().setY(turtleHomeY);
   }
 
   private void initializeBoundaries() {
@@ -309,7 +312,7 @@ public class LogoDisplay extends Application {
   private void initializeLanguages() {
     languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
     languagesPrograms.setOnAction((event) -> {
-      String lang = (String)languagesPrograms.getValue();
+      String lang = (String) languagesPrograms.getValue();
       switch (lang) {
         case "English":
           Locale.setDefault(new Locale("en"));
@@ -474,7 +477,7 @@ public class LogoDisplay extends Application {
     fileName = getUserInput.showAndWait().toString();
     if (validateStringFilenameUsingIO(fileName)) {
       return fileName;
-    } else{
+    } else {
       //TODO: throw error - invalid filename, make user try again
       return "";
     }
@@ -532,8 +535,8 @@ public class LogoDisplay extends Application {
   private void performInstruction(Instruction currentInstruction) {
     int commandPixels = currentInstruction.pixels;
     switch (currentInstruction.order) {
-      case PENUP -> penOpacity = 0.0;
-      case PENDOWN -> penOpacity = 100.0;
+      case PENUP -> penOpacity = NO_OPACITY;
+      case PENDOWN -> penOpacity = FULL_OPACITY;
       case TELL -> tellTurtle(commandPixels);
       case FORWARD -> new ForwardCommand(myTurtle, commandPixels);
       case BACKWARD -> new BackwardCommand(myTurtle, commandPixels);
@@ -552,10 +555,10 @@ public class LogoDisplay extends Application {
   private void drawTurtleLine() {
     Coordinates turtleCoordinates = myTurtle.getTurtleCoordinates();
     Rectangle connector = new Rectangle(turtleCoordinates.turtleOldX, turtleCoordinates.turtleNewY,
-            turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
+        turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
     connector.setOpacity(penOpacity);
     connector.setFill(Color.RED);
-    connector.setWidth(2.0);
+    connector.setWidth(LINE_WIDTH);
     root.getChildren().add(connector);
   }
 

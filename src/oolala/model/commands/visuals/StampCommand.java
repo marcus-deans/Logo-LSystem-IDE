@@ -1,13 +1,13 @@
 package oolala.model.commands.visuals;
 
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oolala.model.Turtle;
 import oolala.model.commands.Commands;
 
-public class StampCommand extends VisualCommand{
-  public StampCommand(Turtle myTurtle, Group root){
+public class StampCommand extends VisualCommand {
+
+  public StampCommand(Turtle myTurtle, Group root) {
     super(myTurtle);
     myCommandName = Commands.STAMP;
     stampTurtle(root);

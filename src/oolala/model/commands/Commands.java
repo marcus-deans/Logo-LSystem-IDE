@@ -1,21 +1,20 @@
 package oolala.model.commands;
 
 public enum Commands {
-  FORWARD ("fd"),
-  BACKWARD ("bk"),
-  RIGHT ("rt"),
-  LEFT ("lt"),
-  HOME ("home"),
-  HIDE ("ht"),
-  SHOW ("st"),
+  FORWARD("fd"),
+  BACKWARD("bk"),
+  RIGHT("rt"),
+  LEFT("lt"),
+  HOME("home"),
+  HIDE("ht"),
+  SHOW("st"),
   STAMP("stamp"),
   TELL("tell"),
   PENUP("pu"),
   PENDOWN("pd"),
-  OOPS("oops")
-  ;
+  OOPS("oops");
 
-  private String commandString;
+  private final String commandString;
 
   Commands(String commandString) {
     this.commandString = commandString;

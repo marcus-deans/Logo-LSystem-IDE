@@ -5,6 +5,7 @@ import oolala.model.Turtle;
 import oolala.model.commands.Command;
 
 public abstract class MovementCommand extends Command {
+
   Coordinates myTurtleCoordinates;
   int myDegreesRotation;
   int myXVector;
@@ -12,14 +13,14 @@ public abstract class MovementCommand extends Command {
   int myNewX;
   int myNewY;
 
-  public MovementCommand(Turtle myTurtle, int pixels){
+  public MovementCommand(Turtle myTurtle, int pixels) {
     super(myTurtle, pixels);
     getTurtleCoordinates();
     myDegreesRotation = myTurtle.getDegreesRotation();
     computeVectors();
   }
 
-  protected void getTurtleCoordinates(){
+  protected void getTurtleCoordinates() {
     myTurtleCoordinates = myTurtle.getTurtleCoordinates();
   }
 
@@ -31,7 +32,7 @@ public abstract class MovementCommand extends Command {
     return (myDegreesRotation <= 90) || (myDegreesRotation >= 270);
   }
 
-  protected void performMovement(){
+  protected void performMovement() {
     myTurtle.performMovement();
   }
 
@@ -43,10 +44,11 @@ public abstract class MovementCommand extends Command {
   }
 
   protected boolean checkVectorAngles() {
-    return (myDegreesRotation <= 45) || (myDegreesRotation >= 315) || ((myDegreesRotation >= 135) && (myDegreesRotation <= 225));
+    return (myDegreesRotation <= 45) || (myDegreesRotation >= 315) || ((myDegreesRotation >= 135)
+        && (myDegreesRotation <= 225));
   }
 
-  protected void setNewCoordinates(){
+  protected void setNewCoordinates() {
     myTurtle.setNewX(myNewX);
     myTurtle.setNewY(myNewY);
   }
