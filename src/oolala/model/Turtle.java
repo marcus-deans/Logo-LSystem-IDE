@@ -12,8 +12,9 @@ public class Turtle {
   private static final String TURTLE_IMAGE = "turtle-picture.png";
   private static final double TURTLE_SIZE = 70;
 
-  private final int TurtleHomeX;
-  private final int TurtleHomeY;
+  private static final int TurtleHomeX = (FRAME_WIDTH / 2);
+  private static final int TurtleHomeY = ((FRAME_HEIGHT - 26 - COMMAND_HEIGHT + 15) / 2);
+
   public int myTurtleId;
   private int oldX;
   private int oldY;
@@ -27,17 +28,14 @@ public class Turtle {
     myTurtleId = id;
     degreesRotation = 0;
 
-    TurtleHomeX = (FRAME_WIDTH / 2);
-    TurtleHomeY = ((FRAME_HEIGHT - 26 - COMMAND_HEIGHT + 15) / 2);
-
     // make turtle shape and set property
     initializeTurtleView();
 
     oldX = TurtleHomeX;
     oldY = TurtleHomeY;
 
-    myTurtleView.setX(FRAME_WIDTH / 2);
-    myTurtleView.setY(FRAME_HEIGHT / 2);
+    myTurtleView.setX(FRAME_WIDTH / 2.0);
+    myTurtleView.setY(FRAME_HEIGHT / 2.0);
 //        TurtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - this.myTurtleView.getFitHeight()/2);
 //        TurtleHomeX = (int) (FRAME_WIDTH/2 - this.myTurtleView.getFitWidth()/2);
   }
