@@ -58,4 +58,8 @@ public class Turtle {
     oldX = newX;
     oldY = newY;
   }
+
+  //TODO: create map inside model (here)
+  // then ViewTurtle can get the value from the map
+  // as model updates values -> view gets updated values automatically (from binding)
 }

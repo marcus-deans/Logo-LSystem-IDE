@@ -533,6 +533,7 @@ public class LogoDisplay extends Application {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       performInstruction(currentInstruction);
       myTurtleLinkage.update();
+      //TODO: create map (possibly global) ->
       drawTurtleLine();
       myTurtle.updateCoordinates();
     }

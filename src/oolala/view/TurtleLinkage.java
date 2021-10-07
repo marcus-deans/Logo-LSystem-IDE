@@ -9,6 +9,7 @@ public class TurtleLinkage {
   private final ViewTurtle myViewTurtle;
 
   public TurtleLinkage(int id) {
+    2
     myID = id;
     myTurtle = new Turtle(id);
     myViewTurtle = new ViewTurtle(id);
