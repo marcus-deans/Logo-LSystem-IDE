@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -52,7 +53,7 @@ import oolala.model.commands.visuals.StampCommand;
 public class LogoDisplay extends Application {
 
   //  public static final String TITLE = R.string.program_name;
-  public static final String TITLE = "TRIAL";
+  public static final String TITLE = "LogoDisplay";
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
@@ -81,6 +82,9 @@ public class LogoDisplay extends Application {
   public static final int TURTLES_DROPDOWN_X = 680;
   public static final int TURTLES_DROPDOWN_Y = 0;
   public static final int MAX_DROPDOWN_WIDTH = 50;
+  public static final int OFFSET_X = 10;
+  public static final int OFFSET_Y = 15;
+  public static final int OFFSET_Y_TOP = 26;
 
   //Bottom Layout
   public static final int COMMAND_WIDTH = 600;
@@ -115,7 +119,10 @@ public class LogoDisplay extends Application {
   private final List<Turtle> allTurtles = new ArrayList<>();
   // public for testing
   public Turtle myTurtle;
-  public Group root;
+  private TurtleLinkage myTurtleLinkage;
+
+
+  private Group root;
   private Group lineRoot;
   private Logo myLogo;
   private TextArea commandLine;
@@ -132,6 +139,9 @@ public class LogoDisplay extends Application {
   private Text languages;
   private Text turtles;
   private String runText;
+  private int turtleHomeX;
+  private int turtleHomeY;
+
 
   public void start(Stage stage) {
     //Variables
@@ -179,21 +189,25 @@ public class LogoDisplay extends Application {
   private void spawnTurtle() {
 //    myTurtle = new Turtle(FRAME_WIDTH/2, FRAME_HEIGHT/2, 0); //spawns first turtle with ID 0
     myTurtle = new Turtle(0);
-    //turtleHomeX = (int) (FRAME_WIDTH/2 - myTurtle.getMyTurtleView().getFitWidth()/2);
-    //turtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - myTurtle.getMyTurtleView().getFitHeight()/2);
+    turtleHomeX = (int) (FRAME_WIDTH / 2 - myTurtle.getMyTurtleView().getFitWidth() / 2);
+    turtleHomeY = (int) ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2
+        - myTurtle.getMyTurtleView().getFitHeight() / 2);
     if (myTurtle.getMyTurtleView() != null) {
       root = new Group(myTurtle.getMyTurtleView());
     }
     allTurtles.add(myTurtle);
-//    myTurtle.getMyTurtleView().setX(turtleHomeX);
-//    myTurtle.getMyTurtleView().setY(turtleHomeY);
+    myTurtle.getMyTurtleView().setX(turtleHomeX);
+    myTurtle.getMyTurtleView().setY(turtleHomeY);
+    myTurtleLinkage = new TurtleLinkage(0);
   }
 
   private void initializeBoundaries() {
-    Line topLine = new Line(10, 26, FRAME_WIDTH - 10, 26);
-    Line leftLine = new Line(10, 26, 10, COMMAND_Y - 15);
-    Line rightLine = new Line(FRAME_WIDTH - 10, 26, FRAME_WIDTH - 10, COMMAND_Y - 15);
-    Line bottomLine = new Line(10, COMMAND_Y - 15, FRAME_WIDTH - 10, COMMAND_Y - 15);
+    Line topLine = new Line(OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP);
+    Line leftLine = new Line(OFFSET_X, OFFSET_Y_TOP, OFFSET_X, COMMAND_Y - OFFSET_Y);
+    Line rightLine = new Line(FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X,
+        COMMAND_Y - OFFSET_Y);
+    Line bottomLine = new Line(OFFSET_X, COMMAND_Y - OFFSET_Y, FRAME_WIDTH - OFFSET_X,
+        COMMAND_Y - OFFSET_Y);
     root.getChildren().add(topLine);
     root.getChildren().add(leftLine);
     root.getChildren().add(rightLine);
@@ -310,28 +324,20 @@ public class LogoDisplay extends Application {
     languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
     languagesPrograms.setOnAction((event) -> {
       String lang = (String) languagesPrograms.getValue();
-//      switch (lang) {
-//        case "English":
-//          Locale.setDefault(new Locale("en"));
-//          updateLanguage();
-//          break;
-//        case "Spanish":
-//          Locale.setDefault(new Locale("es"));
-//          updateLanguage();
-//          break;
-//        case "French":
-//          Locale.setDefault(new Locale("fr"));
-//          updateLanguage();
-//          break;
-//      }
-
-      Language langu = (Language) languagesPrograms.getValue();
-      switch (langu) {
-        case ENGLISH -> Locale.setDefault(new Locale("en"));
-        case SPANISH -> Locale.setDefault(new Locale("es"));
-        case FRENCH -> Locale.setDefault(new Locale("fr"));
+      switch (lang) {
+        case "English":
+          Locale.setDefault(new Locale("en"));
+          updateLanguage();
+          break;
+        case "Spanish":
+          Locale.setDefault(new Locale("es"));
+          updateLanguage();
+          break;
+        case "French":
+          Locale.setDefault(new Locale("fr"));
+          updateLanguage();
+          break;
       }
-      updateLanguage();
     });
     languagesPrograms.setLayoutX(LANGUAGES_DROPDOWN_X);
     languagesPrograms.setLayoutY(LANGUAGES_DROPDOWN_Y);
