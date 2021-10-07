@@ -2,7 +2,7 @@ package oolala.model.commands.movements;
 
 import org.junit.jupiter.api.Test;
 
-class MovementCommandTest {
+class MovementModelCommandTest {
 
   @Test
   void getTurtleCoordinates() {

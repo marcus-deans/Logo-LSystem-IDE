@@ -1,12 +1,12 @@
 package oolala.model.commands.movements;
 
-import oolala.model.Turtle;
+import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 
-public class ForwardCommand extends MovementCommand {
+public class ForwardModelCommand extends MovementModelCommand {
 
-  public ForwardCommand(Turtle myTurtle, int pixels) {
-    super(myTurtle, pixels);
+  public ForwardModelCommand(ModelTurtle myModelTurtle, int pixels) {
+    super(myModelTurtle, pixels);
     myCommandName = Commands.FORWARD;
     computeForwardCoordinates();
     setNewCoordinates();

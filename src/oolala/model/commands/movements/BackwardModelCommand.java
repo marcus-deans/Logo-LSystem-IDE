@@ -1,12 +1,12 @@
 package oolala.model.commands.movements;
 
-import oolala.model.Turtle;
+import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 
-public class BackwardCommand extends MovementCommand {
+public class BackwardModelCommand extends MovementModelCommand {
 
-  public BackwardCommand(Turtle myTurtle, int pixels) {
-    super(myTurtle, pixels);
+  public BackwardModelCommand(ModelTurtle myModelTurtle, int pixels) {
+    super(myModelTurtle, pixels);
     myCommandName = Commands.BACKWARD;
     computeBackwardCoordinates();
     setNewCoordinates();

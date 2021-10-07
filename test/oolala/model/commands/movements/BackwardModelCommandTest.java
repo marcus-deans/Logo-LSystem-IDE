@@ -2,15 +2,15 @@ package oolala.model.commands.movements;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import oolala.model.Turtle;
+import oolala.model.ModelTurtle;
 import org.junit.jupiter.api.Test;
 
-class BackwardCommandTest {
+class BackwardModelCommandTest {
 
-  Turtle myTurtle = new Turtle(0);
+  ModelTurtle myModelTurtle = new ModelTurtle(0);
 
   @Test
   void checkPositiveBackwardMovement() {
-    assertEquals(myTurtle.getTurtleCoordinates().turtleNewX, 100);
+    assertEquals(myModelTurtle.getTurtleCoordinates().turtleNewX, 100);
   }
 }

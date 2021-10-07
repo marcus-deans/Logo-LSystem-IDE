@@ -1,7 +1,8 @@
 OOLALA
 ====
 
-This project implements a variety of applications that take advantage of drawing using a turtle.
+This project implements a variety of applications that take advantage of drawing using a
+modelTurtle.
 
 Names:
 

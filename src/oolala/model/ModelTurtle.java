@@ -4,13 +4,13 @@ import static oolala.view.LogoDisplay.COMMAND_HEIGHT;
 import static oolala.view.LogoDisplay.FRAME_HEIGHT;
 import static oolala.view.LogoDisplay.FRAME_WIDTH;
 
-public class Turtle {
+public class ModelTurtle {
 
   private static final String TURTLE_IMAGE = "turtle-picture.png";
   private static final double TURTLE_SIZE = 70;
 
-  private static final int TurtleHomeX = (FRAME_WIDTH / 2);
-  private static final int TurtleHomeY = ((FRAME_HEIGHT - 26 - COMMAND_HEIGHT + 15) / 2);
+  public static final int TurtleHomeX = (FRAME_WIDTH / 2);
+  public static final int TurtleHomeY = ((FRAME_HEIGHT - 26 - COMMAND_HEIGHT + 15) / 2);
 
   public int myTurtleId;
   private int oldX;
@@ -20,7 +20,7 @@ public class Turtle {
   private int degreesRotation;
 
   //    public Turtle(int homeX, int homeY, int id) {
-  public Turtle(int id) {
+  public ModelTurtle(int id) {
     myTurtleId = id;
     degreesRotation = 0;
 
@@ -57,6 +57,10 @@ public class Turtle {
   public void updateCoordinates() {
     oldX = newX;
     oldY = newY;
+  }
+
+  public Coordinates getHomeCoordinates() {
+    return new Coordinates(TurtleHomeX, TurtleHomeY);
   }
 
   //TODO: create map inside model (here)

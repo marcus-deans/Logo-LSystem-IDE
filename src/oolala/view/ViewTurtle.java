@@ -7,7 +7,7 @@ import static oolala.view.LogoDisplay.FRAME_WIDTH;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import oolala.model.Turtle;
+import oolala.model.ModelTurtle;
 
 public class ViewTurtle {
 
@@ -62,11 +62,15 @@ public class ViewTurtle {
     myTurtleView.setY(myY);
   }
 
-  public void update(Turtle linkedTurtle) {
-    myX = linkedTurtle.getTurtleCoordinates().turtleNewX;
-    myY = linkedTurtle.getTurtleCoordinates().turtleNewY;
-    myDegreesRotation = linkedTurtle.getDegreesRotation();
+  public void update(ModelTurtle linkedModelTurtle) {
+    myX = linkedModelTurtle.getTurtleCoordinates().turtleNewX;
+    myY = linkedModelTurtle.getTurtleCoordinates().turtleNewY;
+    myDegreesRotation = linkedModelTurtle.getDegreesRotation();
     performMovement();
     performRotate();
+  }
+
+  public int getMyDegreesRotation() {
+    return myDegreesRotation;
   }
 }

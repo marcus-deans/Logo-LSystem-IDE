@@ -1,10 +1,10 @@
 package oolala.model.commands.movements;
 
 import oolala.model.Coordinates;
-import oolala.model.Turtle;
-import oolala.model.commands.Command;
+import oolala.model.ModelTurtle;
+import oolala.model.commands.ModelCommand;
 
-public abstract class MovementCommand extends Command {
+public abstract class MovementModelCommand extends ModelCommand {
 
   //Direction quantifiers in degrees, named via compass
   public static final int NORTH = 0;
@@ -25,15 +25,15 @@ public abstract class MovementCommand extends Command {
   public int myNewX;
   public int myNewY;
 
-  public MovementCommand(Turtle myTurtle, int pixels) {
-    super(myTurtle, pixels);
+  public MovementModelCommand(ModelTurtle myModelTurtle, int pixels) {
+    super(myModelTurtle, pixels);
     getTurtleCoordinates();
-    myDegreesRotation = myTurtle.getDegreesRotation();
+    myDegreesRotation = myModelTurtle.getDegreesRotation();
     computeVectors();
   }
 
   protected void getTurtleCoordinates() {
-    myTurtleCoordinates = myTurtle.getTurtleCoordinates();
+    myTurtleCoordinates = myModelTurtle.getTurtleCoordinates();
   }
 
   protected boolean rightFacing() {
@@ -62,7 +62,7 @@ public abstract class MovementCommand extends Command {
   }
 
   protected void setNewCoordinates() {
-    myTurtle.setNewX(myNewX);
-    myTurtle.setNewY(myNewY);
+    myModelTurtle.setNewX(myNewX);
+    myModelTurtle.setNewY(myNewY);
   }
 }

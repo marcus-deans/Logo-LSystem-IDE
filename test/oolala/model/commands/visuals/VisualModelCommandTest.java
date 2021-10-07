@@ -2,7 +2,7 @@ package oolala.model.commands.visuals;
 
 import org.junit.jupiter.api.Test;
 
-class VisualCommandTest {
+class VisualModelCommandTest {
 
   @Test
   void displayTurtle() {

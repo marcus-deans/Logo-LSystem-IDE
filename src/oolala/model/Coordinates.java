@@ -13,4 +13,9 @@ public class Coordinates {
     turtleNewX = newX;
     turtleNewY = newY;
   }
+
+  public Coordinates(int newX, int newY) {
+    turtleNewX = newX;
+    turtleNewY = newY;
+  }
 }
