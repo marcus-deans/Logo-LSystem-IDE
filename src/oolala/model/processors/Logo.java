@@ -68,6 +68,16 @@ public class Logo {
     }
   }
 
+  private void createDoubleCommand(String command, List<String> inputCommands, int index) {
+  }
+
+  private boolean nextCommandIsInteger(int index, List<String> inputCommands) {
+    return true;
+  }
+
+  private void createSingleCommand(String command) {
+  }
+
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename) {
     //TODO: don't use absolute path, figure out general path

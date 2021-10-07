@@ -3,6 +3,7 @@ package oolala.view.displays;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -21,6 +22,8 @@ public abstract class Display extends Application {
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
+  private static final String TITLE = "LOL";
+
   public void start(Stage stage) {
     //Variables
     Scene scene = setupGame(FRAME_WIDTH, FRAME_HEIGHT, BACKGROUND);
@@ -35,6 +38,7 @@ public abstract class Display extends Application {
 
   private Scene setupGame(int width, int height, Paint background) {
     //Set the scene
+    Group root = new Group();
     Scene scene = new Scene(root, width, height, background);
 
     //https://docs.oracle.com/javafx/2/get_started/css.htm
@@ -44,6 +48,10 @@ public abstract class Display extends Application {
 //    LessCSSLoader ls = new LessCSSLoader();
 //    scene.getStylesheets().add(ls.loadLess(getClass().getResource("logo.less")).toExternalForm());
     return scene;
+  }
+
+  private void step() {
+
   }
 
 }

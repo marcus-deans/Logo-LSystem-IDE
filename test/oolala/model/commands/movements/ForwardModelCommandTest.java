@@ -3,14 +3,10 @@ package oolala.model.commands.movements;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oolala.model.ModelTurtle;
-import oolala.view.displays.LogoDisplay;
 import org.junit.jupiter.api.Test;
 
 class ForwardModelCommandTest {
-
-  LogoDisplay myLogoDisplay = new LogoDisplay();
-  //  Turtle myTurtle = new Turtle(1);
-  ModelTurtle myModelTurtle = myLogoDisplay.myModelTurtle;
+  ModelTurtle myModelTurtle = new ModelTurtle(0);
   int expected = 100;
 
   @Test
@@ -46,8 +42,8 @@ class ForwardModelCommandTest {
   void computeForwardWithSouthEast100() {
     myModelTurtle.setDegreesRotation(225);
     ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-    assertEquals(fc.myNewY, 50);
-    assertEquals(fc.myNewX, 50);
+    assertEquals(50, fc.myNewY);
+    assertEquals(50, fc.myNewX);
   }
 
   @Test
