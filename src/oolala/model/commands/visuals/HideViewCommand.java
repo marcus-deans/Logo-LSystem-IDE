@@ -4,11 +4,11 @@ import oolala.model.commands.Commands;
 import oolala.model.commands.ViewCommand;
 import oolala.view.ViewTurtle;
 
-public class ShowModelCommand extends ViewCommand {
+public class HideViewCommand extends ViewCommand {
 
-  public ShowModelCommand(ViewTurtle viewTurtle) {
+  public HideViewCommand(ViewTurtle viewTurtle) {
     super(viewTurtle);
-    myCommandName = Commands.SHOW;
+    myCommandName = Commands.HIDE;
     displayTurtle();
   }
 }

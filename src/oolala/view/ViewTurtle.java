@@ -25,7 +25,7 @@ public class ViewTurtle {
   private int myX;
   private int myY;
   private int myDegreesRotation;
-  private boolean penState;
+  private boolean penOpacity;
 
   public ViewTurtle(int id) {
     myID = id;
@@ -72,5 +72,9 @@ public class ViewTurtle {
 
   public int getMyDegreesRotation() {
     return myDegreesRotation;
+  }
+
+  public void changePenOpacity() {
+    penOpacity = !penOpacity;
   }
 }

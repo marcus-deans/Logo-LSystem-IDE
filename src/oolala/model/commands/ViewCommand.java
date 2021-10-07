@@ -18,4 +18,8 @@ public abstract class ViewCommand {
   protected void displayTurtle() {
     myTurtleView.setVisible(!myTurtleView.isVisible());
   }
+
+  protected void updateTurtleOpacity() {
+    myViewTurtle.changePenOpacity();
+  }
 }

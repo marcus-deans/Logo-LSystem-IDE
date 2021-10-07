@@ -4,11 +4,11 @@ import oolala.model.commands.Commands;
 import oolala.model.commands.ViewCommand;
 import oolala.view.ViewTurtle;
 
-public class HideModelCommand extends ViewCommand {
+public class PenUpViewCommand extends ViewCommand {
 
-  public HideModelCommand(ViewTurtle viewTurtle) {
+  public PenUpViewCommand(ViewTurtle viewTurtle) {
     super(viewTurtle);
-    myCommandName = Commands.HIDE;
-    displayTurtle();
+    myCommandName = Commands.PENUP;
+    updateTurtleOpacity();
   }
 }

@@ -35,16 +35,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.Coordinates;
 import oolala.model.Instruction;
-import oolala.model.Logo;
 import oolala.model.ModelTurtle;
-import oolala.model.commands.movements.BackwardModelCommand;
-import oolala.model.commands.movements.ForwardModelCommand;
-import oolala.model.commands.movements.HomeModelCommand;
-import oolala.model.commands.rotations.RotateLeftModelCommand;
-import oolala.model.commands.rotations.RotateRightModelCommand;
-import oolala.model.commands.visuals.HideModelCommand;
-import oolala.model.commands.visuals.ShowModelCommand;
-import oolala.model.commands.visuals.StampModelCommand;
+import oolala.model.commands.Commands;
+import oolala.model.processors.InstructionProcessor;
+import oolala.model.processors.Logo;
 
 
 /**
@@ -116,10 +110,13 @@ public class LogoDisplay extends Application {
   private final List<String> languageTypes = new ArrayList<>(
       Arrays.asList("English", "Spanish", "French"));
   //Turtles
+  private final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
   private final List<ModelTurtle> allModelTurtles = new ArrayList<>();
-  // public for testing
-  public ModelTurtle myModelTurtle;
+  private final List<ViewTurtle> allViewTurtles = new ArrayList<>();
+
   private TurtleLinkage myTurtleLinkage;
+  private ModelTurtle myModelTurtle;
+  private ViewTurtle myViewTurtle;
 
 
   private Group root;
@@ -132,7 +129,7 @@ public class LogoDisplay extends Application {
   private Locale langType;
   private FileInputStream fis;
   private ComboBox turtleDropdown;
-  private double penOpacity = FULL_OPACITY;
+  private final double penOpacity = FULL_OPACITY;
   private Text gameSettingTitle;
   private Text savedTitle;
   private Text history;
@@ -158,7 +155,7 @@ public class LogoDisplay extends Application {
   private Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
     myLogo = new Logo();
-    spawnTurtle();
+    spawnTurtle(0);
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();
@@ -186,19 +183,15 @@ public class LogoDisplay extends Application {
     return scene;
   }
 
-  private void spawnTurtle() {
-//    myTurtle = new Turtle(FRAME_WIDTH/2, FRAME_HEIGHT/2, 0); //spawns first turtle with ID 0
-    myModelTurtle = new ModelTurtle(0);
-    turtleHomeX = (int) (FRAME_WIDTH / 2 - myModelTurtle.getMyTurtleView().getFitWidth() / 2);
-    turtleHomeY = (int) ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2
-        - myModelTurtle.getMyTurtleView().getFitHeight() / 2);
-    if (myModelTurtle.getMyTurtleView() != null) {
-      root = new Group(myModelTurtle.getMyTurtleView());
-    }
+  private void spawnTurtle(int id) {
+    myTurtleLinkage = new TurtleLinkage(id);
+
+    myModelTurtle = myTurtleLinkage.myModelTurtle;
+    myViewTurtle = myTurtleLinkage.myViewTurtle;
+
+    allTurtleLinkages.add(myTurtleLinkage);
     allModelTurtles.add(myModelTurtle);
-    myModelTurtle.getMyTurtleView().setX(turtleHomeX);
-    myModelTurtle.getMyTurtleView().setY(turtleHomeY);
-    myTurtleLinkage = new TurtleLinkage(0);
+    allViewTurtles.add(myViewTurtle);
   }
 
   private void initializeBoundaries() {
@@ -382,9 +375,14 @@ public class LogoDisplay extends Application {
     turtleDropdown.setOnAction((event) -> {
       //TODO: switch to this turtle
       int id = Integer.parseInt(historyPrograms.getSelectionModel().getSelectedItem().toString());
-      for (ModelTurtle modelTurtle : allModelTurtles) {
-        if (modelTurtle.myTurtleId == id) {
-          myModelTurtle = modelTurtle;
+//      for (ModelTurtle modelTurtle : allModelTurtles) {
+//        if (modelTurtle.myTurtleId == id) {
+//          myModelTurtle = modelTurtle;
+//        }
+//      }
+      for (TurtleLinkage turtleLinkage : allTurtleLinkages) {
+        if (turtleLinkage.myID == id) {
+          switchTurtleLinkage(turtleLinkage);
         }
       }
       //TODO: clear previous lines?
@@ -513,25 +511,50 @@ public class LogoDisplay extends Application {
   private void tellTurtle(int id) {
     //loop through allTurtles - if ID exists, switch to this turtle
     boolean exists = false;
-    for (ModelTurtle modelTurtle : allModelTurtles) {
-      if (modelTurtle.myTurtleId == id) {
-        myModelTurtle = modelTurtle; //switch current turtle to this turtle
+//    for (ModelTurtle modelTurtle : allModelTurtles) {
+//      if (modelTurtle.myTurtleId == id) {
+//        myModelTurtle = modelTurtle; //switch current turtle to this turtle
+//        exists = true;
+//        turtleDropdown.setValue(
+//            modelTurtle.myTurtleId); //TODO: make sure this works, java being laggy
+//        turtleDropdown.setValue(
+//            modelTurtle.myTurtleId); //TODO: make sure this works, java being laggy
+//      }
+//    }
+//    if (!exists) {//id doesn't exist - create new turtle with this ID
+////        myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
+//      myModelTurtle = new ModelTurtle(id);
+//      allModelTurtles.add(myModelTurtle);
+//      turtleDropdown.getItems().add(myModelTurtle.myTurtleId);
+//      turtleDropdown.setValue(
+//          myModelTurtle.myTurtleId); //TODO: make sure this works, java being laggy
+//      //TODO: inform user that a new turtle has been spawned
+//    }
+    for (TurtleLinkage turtleLinkage : allTurtleLinkages) {
+      if (turtleLinkage.myID == id) {
+        switchTurtleLinkage(turtleLinkage);
         exists = true;
         turtleDropdown.setValue(
-            modelTurtle.myTurtleId); //TODO: make sure this works, java being laggy
+            turtleLinkage.myID); //TODO: make sure this works, java being laggy
         turtleDropdown.setValue(
-            modelTurtle.myTurtleId); //TODO: make sure this works, java being laggy
+            turtleLinkage.myID); //TODO: make sure this works, java being laggy
       }
     }
     if (!exists) {//id doesn't exist - create new turtle with this ID
 //        myTurtle = new Turtle(turtleHomeX,turtleHomeY,id);
-      myModelTurtle = new ModelTurtle(id);
-      allModelTurtles.add(myModelTurtle);
-      turtleDropdown.getItems().add(myModelTurtle.myTurtleId);
+//      myModelTurtle = new ModelTurtle(id);
+      spawnTurtle(id);
+      turtleDropdown.getItems().add(myTurtleLinkage.myID);
       turtleDropdown.setValue(
-          myModelTurtle.myTurtleId); //TODO: make sure this works, java being laggy
+          myTurtleLinkage.myID); //TODO: make sure this works, java being laggy
       //TODO: inform user that a new turtle has been spawned
     }
+  }
+
+  private void switchTurtleLinkage(TurtleLinkage turtleLinkage) {
+    myTurtleLinkage = turtleLinkage;
+    myModelTurtle = turtleLinkage.myModelTurtle;
+    myViewTurtle = turtleLinkage.myViewTurtle;
   }
 
   //Create method that passes in queue of commands to Logo
@@ -540,33 +563,23 @@ public class LogoDisplay extends Application {
     Queue<Instruction> instructions = myLogo.getMyInstructions();
     if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
-      performInstruction(currentInstruction);
-      myTurtleLinkage.update();
+      executeInstruction(currentInstruction, myTurtleLinkage, root);
+//      myTurtleLinkage.update();
       //TODO: create map (possibly global) ->
       drawTurtleLine();
       myModelTurtle.updateCoordinates();
     }
   }
 
-  private void performInstruction(Instruction currentInstruction) {
-    int commandPixels = currentInstruction.pixels;
-    switch (currentInstruction.order) {
-      case PENUP -> penOpacity = NO_OPACITY;
-      case PENDOWN -> penOpacity = FULL_OPACITY;
-      case TELL -> tellTurtle(commandPixels);
-      case FORWARD -> new ForwardModelCommand(myModelTurtle, commandPixels);
-      case BACKWARD -> new BackwardModelCommand(myModelTurtle, commandPixels);
-      case RIGHT -> new RotateRightModelCommand(myModelTurtle, commandPixels);
-      case LEFT -> new RotateLeftModelCommand(myModelTurtle, commandPixels);
-      case HIDE -> new HideModelCommand(myModelTurtle);
-      case SHOW -> new ShowModelCommand(myModelTurtle);
-      case STAMP -> new StampModelCommand(myModelTurtle, root);
-      case HOME -> new HomeModelCommand(myModelTurtle, 0);
-      default -> {
-      }
-//      default -> myTurtle.execute(currentInstruction, root, lineRoot);
+  private void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
+      Group root) {
+    if (currentInstruction.order == Commands.TELL) {
+      tellTurtle(turtleLinkage.myID);
     }
+    InstructionProcessor instructionProcessor = new InstructionProcessor(currentInstruction,
+        turtleLinkage, root);
   }
+
 
   private void drawTurtleLine() {
     Coordinates turtleCoordinates = myModelTurtle.getTurtleCoordinates();

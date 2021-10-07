@@ -1,4 +1,4 @@
-package oolala.model;
+package oolala.model.processors;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import oolala.model.Instruction;
 
 public class Logo {
 

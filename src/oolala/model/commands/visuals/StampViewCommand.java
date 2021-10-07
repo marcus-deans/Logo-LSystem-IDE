@@ -6,9 +6,9 @@ import oolala.model.commands.Commands;
 import oolala.model.commands.ViewCommand;
 import oolala.view.ViewTurtle;
 
-public class StampModelCommand extends ViewCommand {
+public class StampViewCommand extends ViewCommand {
 
-  public StampModelCommand(ViewTurtle viewTurtle, Group root) {
+  public StampViewCommand(ViewTurtle viewTurtle, Group root) {
     super(viewTurtle);
     myCommandName = Commands.STAMP;
     stampTurtle(root);
