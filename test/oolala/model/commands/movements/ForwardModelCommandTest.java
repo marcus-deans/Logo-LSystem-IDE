@@ -3,7 +3,7 @@ package oolala.model.commands.movements;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oolala.model.ModelTurtle;
-import oolala.view.LogoDisplay;
+import oolala.view.displays.LogoDisplay;
 import org.junit.jupiter.api.Test;
 
 class ForwardModelCommandTest {

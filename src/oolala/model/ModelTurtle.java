@@ -1,8 +1,8 @@
 package oolala.model;
 
-import static oolala.view.LogoDisplay.COMMAND_HEIGHT;
-import static oolala.view.LogoDisplay.FRAME_HEIGHT;
-import static oolala.view.LogoDisplay.FRAME_WIDTH;
+import static oolala.view.displays.LogoDisplay.COMMAND_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_WIDTH;
 
 public class ModelTurtle {
 

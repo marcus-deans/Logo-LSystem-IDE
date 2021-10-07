@@ -1,9 +1,9 @@
 package oolala.view;
 
 
-import static oolala.view.LogoDisplay.COMMAND_HEIGHT;
-import static oolala.view.LogoDisplay.FRAME_HEIGHT;
-import static oolala.view.LogoDisplay.FRAME_WIDTH;
+import static oolala.view.displays.LogoDisplay.COMMAND_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_WIDTH;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

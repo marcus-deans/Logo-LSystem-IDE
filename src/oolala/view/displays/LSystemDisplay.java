@@ -1,4 +1,4 @@
-package oolala.view;
+package oolala.view.displays;
 
 public class LSystemDisplay {
 

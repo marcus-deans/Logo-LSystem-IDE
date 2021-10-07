@@ -1,4 +1,4 @@
-package oolala.view;
+package oolala.view.displays;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,6 +39,9 @@ import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 import oolala.model.processors.InstructionProcessor;
 import oolala.model.processors.Logo;
+import oolala.view.Language;
+import oolala.view.TurtleLinkage;
+import oolala.view.ViewTurtle;
 
 
 /**
@@ -316,21 +319,30 @@ public class LogoDisplay extends Application {
   private void initializeLanguages() {
     languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
     languagesPrograms.setOnAction((event) -> {
-      String lang = (String) languagesPrograms.getValue();
+//      String lang = (String) languagesPrograms.getValue();
+//      switch (lang) {
+//        case "English":
+//          Locale.setDefault(new Locale("en"));
+//          updateLanguage();
+//          break;
+//        case "Spanish":
+//          Locale.setDefault(new Locale("es"));
+//          updateLanguage();
+//          break;
+//        case "French":
+//          Locale.setDefault(new Locale("fr"));
+//          updateLanguage();
+//          break;
+//      }
+//    });
+      Language lang = (Language) languagesPrograms.getValue();
       switch (lang) {
-        case "English":
-          Locale.setDefault(new Locale("en"));
-          updateLanguage();
-          break;
-        case "Spanish":
-          Locale.setDefault(new Locale("es"));
-          updateLanguage();
-          break;
-        case "French":
-          Locale.setDefault(new Locale("fr"));
-          updateLanguage();
-          break;
+        case ENGLISH -> Locale.setDefault(new Locale("en"));
+        case SPANISH -> Locale.setDefault(new Locale("es"));
+        case FRENCH -> Locale.setDefault(new Locale("fr"));
+        default -> throw new IllegalStateException("Unexpected value: " + lang);
       }
+      updateLanguage();
     });
     languagesPrograms.setLayoutX(LANGUAGES_DROPDOWN_X);
     languagesPrograms.setLayoutY(LANGUAGES_DROPDOWN_Y);

@@ -1,4 +1,4 @@
-package oolala.view;
+package oolala.view.displays;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
