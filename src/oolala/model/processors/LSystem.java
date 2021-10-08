@@ -8,6 +8,10 @@ import java.util.*;
 public class LSystem {
 
     public ArrayList<String> validCommands;
+    public ArrayList<String> doubleAngleCommands;
+    public ArrayList<String> doubleLengthCommands;
+    public ArrayList<String> singleCommands;
+    public Map<String, List<String>> commandConversion;
 
     public Instruction myCurrentInstruction;
     private final List<String> myHistory;
@@ -19,59 +23,61 @@ public class LSystem {
         myInstructions = new LinkedList<>();
         myHistory = new ArrayList<>();
         validCommands = new ArrayList<>(Arrays.asList("F", "f", "G", "g", "A", "a", "B", "b", "X", "x", "+", "-"));
-        Map<String, String> commandConversion = new HashMap<>();
+        doubleAngleCommands = new ArrayList<>(Arrays.asList("lt", "rt"));
+        doubleLengthCommands = new ArrayList<>(Arrays.asList("fd", "bk"));
+        singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp"));
+        initializeCommandConversions();
         isValidCommand = true;
+    }
+
+    //TODO: change the commands to enum values? not sure how to do that
+    private void initializeCommandConversions() {
+        commandConversion = new HashMap<>();
+        commandConversion.put("F", Arrays.asList("pd", "fd"));
+        commandConversion.put("G", Arrays.asList("pu", "fd"));
+        commandConversion.put("A", Arrays.asList("pu", "bk"));
+        commandConversion.put("B", Arrays.asList("pd", "bk"));
+        commandConversion.put("X", Arrays.asList("stamp"));
+        commandConversion.put("+", Arrays.asList("rt"));
+        commandConversion.put("-", Arrays.asList("lt"));
     }
 
     //Method to parse the input
     public void inputParser(int levels, int angle, int length, List<String> inputStreams){
         int level=0;
         for(String thisLevelStream : inputStreams){
-            List<String> inputCommands = Arrays.asList(thisLevelStream.split("\\s+")); //split by any space or tab
+            List<String> inputCommands = Arrays.asList(thisLevelStream.split("")); //split by every character
             isValidCommand = true;
             for(String command : inputCommands){
                 if(validCommands.contains(command)){
                     createCommand(level, command, angle, length);
                 }else{
                     //TODO: error handling - warn user
+                    isValidCommand = false;
+                    break;
                 }
             }
             level++;
         }
     }
 
-    //TODO: don't use a switch case - use a map
     private void createCommand(int level, String command, int angle, int length) {
-        switch(command){
-            case "f" : case "F" : {
-                Instruction penDown = new Instruction(level, "pd");
-                myInstructions.add(penDown);
-                Instruction forward = new Instruction(level, "fd", length);
-                myInstructions.add(forward);
-            } case "g" : case "G":{
-                Instruction penUp = new Instruction(level, "pu");
-                myInstructions.add(penUp);
-                Instruction forward = new Instruction(level, "fd", length);
-                myInstructions.add(forward);
-            } case "a" : case "A" : {
-                Instruction penUp = new Instruction(level, "pu");
-                myInstructions.add(penUp);
-                Instruction back = new Instruction(level, "bk", length);
-                myInstructions.add(back);
-            } case "b" : case "B" : {
-                Instruction penDown = new Instruction(level, "pd");
-                myInstructions.add(penDown);
-                Instruction back = new Instruction(level, "bk", length);
-                myInstructions.add(back);
-            } case "+": {
-                Instruction right = new Instruction(level, "rt", angle);
-                myInstructions.add(right);
-            } case "-":{
-                Instruction left = new Instruction(level, "lt", angle);
-                myInstructions.add(left);
-            } case "X":{
-                Instruction stamp = new Instruction(level, "stamp");
-                myInstructions.add(stamp);
+        List<String> commands;
+        if(command.matches("[a-zA-Z]+")){ //Handles case sensitivity for alphabetic LSystem commands
+            commands = commandConversion.get(command.toUpperCase());
+        }else{
+            commands = commandConversion.get(command);
+        }
+        for(String thisCommand : commands){
+            if(singleCommands.contains(thisCommand)){ //if this is single command
+                Instruction singleInst = new Instruction(level, thisCommand);
+                myInstructions.add(singleInst);
+            }else if(doubleAngleCommands.contains(thisCommand)){ //double command
+                Instruction doubleAngleInst = new Instruction(level, thisCommand, angle);
+                myInstructions.add(doubleAngleInst);
+            }else{
+                Instruction doubleLenInst = new Instruction(level, thisCommand, length);
+                myInstructions.add(doubleLenInst);
             }
         }
     }
