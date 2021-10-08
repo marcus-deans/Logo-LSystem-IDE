@@ -1,5 +1,6 @@
 package oolala.model.commands.conditionals;
 
+import java.util.ArrayList;
 import java.util.List;
 import oolala.model.Coordinates;
 import oolala.model.ModelCreature;
@@ -8,7 +9,7 @@ import oolala.view.displays.DarwinDisplay;
 
 public abstract class IfEntityConditionalCommand extends ConditionalCommand{
   protected int mySpeciesIdentifier;
-  protected final int halfFieldOfView = 30;
+  protected final int halfFieldOfView = 20;
 
   public IfEntityConditionalCommand(ModelCreature modelCreature, int nextCommand){
     super(modelCreature, nextCommand);
@@ -16,8 +17,7 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand{
   }
 
   protected boolean determineEntityPresentAndNature(boolean checkingSameType){
-    //TODO: check whether there is entity present in front
-    List<ModelCreature> allModelCreatures = DarwinDisplay.getAllModelCreatures();
+    ArrayList<ModelCreature> allModelCreatures = DarwinDisplay.getAllModelCreatures();
     for(ModelCreature checkModelCreature : allModelCreatures){
       if(compareWithinCircle(checkModelCreature) && compareWithinFieldOfView(checkModelCreature)){
         if(checkingSameType && mySpeciesIdentifier == checkModelCreature.getMySpeciesIdentifier()){
@@ -54,5 +54,6 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand{
     else if (startAngle > endAngle){ //explanatory
       return ((checkAngle > startAngle)||(checkAngle < endAngle));
     }
+    return false;
   }
 }

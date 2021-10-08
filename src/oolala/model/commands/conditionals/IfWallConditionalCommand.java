@@ -16,5 +16,8 @@ public class IfWallConditionalCommand extends ConditionalCommand {
   }
 
   private boolean checkWall() {
+    //TODO: check whether htere is a wall present
+    return true;
+  }
 
 }
