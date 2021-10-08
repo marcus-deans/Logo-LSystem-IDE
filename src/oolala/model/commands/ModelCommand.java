@@ -16,4 +16,5 @@ public abstract class ModelCommand {
   public ModelCommand(ModelTurtle myModelTurtle) {
     this.myModelTurtle = myModelTurtle;
   }
+
 }

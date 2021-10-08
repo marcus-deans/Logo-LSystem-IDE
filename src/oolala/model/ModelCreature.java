@@ -9,7 +9,7 @@ public class ModelCreature extends ModelTurtle {
   private final List<Instruction> myCreatureInstructions = new ArrayList<>();
   private final int myNearbyThreshold;
   private int myNextInstructionIndex;
-  private final int mySpeciesIdentifier;
+  private int mySpeciesIdentifier;
 
   public ModelCreature(int id, int nearbyThreshold, int speciesIdentifier) {
     super(id);
@@ -23,5 +23,9 @@ public class ModelCreature extends ModelTurtle {
 
   public int getMySpeciesIdentifier() {
     return mySpeciesIdentifier;
+  }
+
+  public void setMySpeciesIdentifier(int mySpeciesIdentifier) {
+    this.mySpeciesIdentifier = mySpeciesIdentifier;
   }
 }
