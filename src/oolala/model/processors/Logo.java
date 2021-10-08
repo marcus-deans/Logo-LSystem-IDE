@@ -41,26 +41,20 @@ public class Logo {
   }
 
   //Method to parse the input
-  public void inputParser(String inputStream) {
-    List<String> inputCommands = Arrays.asList(
-        inputStream.split("\\s+")); //split by any space or tab
+  public void inputParser(String inputStream){
+    List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
     isValidCommand = true;
     boolean isIntegerAndPreviousWasCommand = false;
     int index = 0;
-    for (String command : inputCommands) {
-      if (singleCommands.contains(command.toLowerCase())) { //Valid single command
+    for(String command : inputCommands){
+      if(singleCommands.contains(command)){ //Valid single command
         createSingleCommand(command);
-      } else if (doubleCommands.contains(command.toLowerCase())) { //Valid double command
-        if (index < inputCommands.size()) {
-          if (nextCommandIsInteger(index,
-              inputCommands)) { //First command is valid AND second command is valid number
-            createDoubleCommand(command, inputCommands, index);
-            isIntegerAndPreviousWasCommand = true;
-          }
-        }
-      } else if (isIntegerAndPreviousWasCommand) {
+      }else if(doubleCommands.contains(command) && index < inputCommands.size() && nextCommandIsInt(index, inputCommands)){ //Valid double command (requires a second number)
+        createDoubleCommand(command, Integer.valueOf(inputCommands.get(index+1)));
+        isIntegerAndPreviousWasCommand = true;
+      }else if(isIntegerAndPreviousWasCommand){
         isIntegerAndPreviousWasCommand = false;
-      } else { //Not a valid command stream
+      }else{ //Not a valid command stream
         isValidCommand = false;
         break;
       }
@@ -68,14 +62,24 @@ public class Logo {
     }
   }
 
-  private void createDoubleCommand(String command, List<String> inputCommands, int index) {
-  }
-
-  private boolean nextCommandIsInteger(int index, List<String> inputCommands) {
-    return true;
+  private void createDoubleCommand(String command, Integer number) {
+    Instruction newInstruction = new Instruction(command, number);
+    myInstructions.add(newInstruction);
   }
 
   private void createSingleCommand(String command) {
+    Instruction newInstruction = new Instruction(command);
+    myInstructions.add(newInstruction);
+  }
+
+  private boolean nextCommandIsInt(int index, List<String> inputCommands) {
+    boolean nextCommandIsInteger = true;
+    try{
+      Integer.parseInt(inputCommands.get(index+1));
+    }catch(NumberFormatException e){
+      nextCommandIsInteger = false;
+    }
+    return nextCommandIsInteger;
   }
 
   //Method to save the user input commands to a fle
