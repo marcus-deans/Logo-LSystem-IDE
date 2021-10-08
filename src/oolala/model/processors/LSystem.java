@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+
 import oolala.model.instructions.LSystemInstruction;
 
 public class LSystem {
@@ -88,7 +89,6 @@ public class LSystem {
       }
     }
   }
-
 
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename) {
