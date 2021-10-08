@@ -82,7 +82,7 @@ public class LSystem {
         }
     }
 
-
+    //TODO: each new line should be a new level
     //Method to save the user input commands to a fle
     public void saveCommand(String inputStream, String filename) {
         String path = "data/examples/lsystem" + filename + ".txt";
