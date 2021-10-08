@@ -7,11 +7,13 @@ public abstract class ConditionalCommand extends ModelCommand {
 
   protected int myNextCommand;
   protected ModelCreature myModelCreature;
+  protected int myNearbyThreshold;
 
   public ConditionalCommand(ModelCreature modelCreature, int nextCommand) {
     super(modelCreature);
     myModelCreature = modelCreature;
     myNextCommand = nextCommand;
+    myNearbyThreshold = myModelCreature.getMyNearbyThreshold();
   }
 
   protected void executeSpecifiedInstruction() {
