@@ -14,7 +14,7 @@ public class IfEnemyConditionalCommand extends IfEntityConditionalCommand {
   }
 
   private void checkEnemy() {
-    if(determineEntityPresentAndNature(NOT_CHECKING_SAME_TYPE)){
+    if (determineEntityPresentAndNature(NOT_CHECKING_SAME_TYPE)) {
       executeSpecifiedInstruction();
     }
   }

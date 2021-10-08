@@ -12,7 +12,7 @@ public class GoConditionalCommand extends ConditionalCommand {
   }
 
   private void checkPresent() {
-    //TODO: check that there is a valid next instruction specified
+    //TODO: check that there is a valid next instruction specified -> maybe already be error-checked
     executeSpecifiedInstruction();
   }
 }

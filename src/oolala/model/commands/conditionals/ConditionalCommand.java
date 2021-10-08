@@ -5,13 +5,13 @@ import oolala.model.commands.ModelCommand;
 
 public abstract class ConditionalCommand extends ModelCommand {
 
+  protected static final int FULL_CIRCLE = 360;
   protected int myNextCommand;
   protected ModelCreature myModelCreature;
   protected int myNearbyThreshold;
   protected int myModelCreatureX;
   protected int myModelCreatureY;
   protected int myDegreesRotation;
-  protected static final int FULL_CIRCLE = 360;
 
   public ConditionalCommand(ModelCreature modelCreature, int nextCommand) {
     super(modelCreature);

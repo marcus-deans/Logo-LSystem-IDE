@@ -14,7 +14,7 @@ public class IfSameConditionalCommand extends IfEntityConditionalCommand {
   }
 
   private void checkSame() {
-    if(determineEntityPresentAndNature(CHECKING_SAME_TYPE)){
+    if (determineEntityPresentAndNature(CHECKING_SAME_TYPE)) {
       executeSpecifiedInstruction();
     }
   }

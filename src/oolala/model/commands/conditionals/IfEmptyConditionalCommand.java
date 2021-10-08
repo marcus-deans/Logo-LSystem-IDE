@@ -16,7 +16,8 @@ public class IfEmptyConditionalCommand extends IfEntityConditionalCommand {
   }
 
   private void checkEmpty() {
-    if ((!determineEntityPresentAndNature(CHECKING_SAME_TYPE)) && (!determineEntityPresentAndNature(NOT_CHECKING_SAME_TYPE))) {
+    if ((!determineEntityPresentAndNature(CHECKING_SAME_TYPE)) && (!determineEntityPresentAndNature(
+        NOT_CHECKING_SAME_TYPE))) {
       executeSpecifiedInstruction();
     }
   }
