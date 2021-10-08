@@ -12,6 +12,13 @@ public enum Commands {
   TELL("tell"),
   PENUP("pu"),
   PENDOWN("pd"),
+  INFECT("infect"),
+  IFEMPTY("ifempty"),
+  IFWALL("ifempty"),
+  IFSAME("ifsame"),
+  IFENEMY("ifenemy"),
+  IFRANDOM("ifrandom"),
+  GO("go"),
   OOPS("oops");
 
   private final String commandString;
