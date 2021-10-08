@@ -2,6 +2,7 @@ package oolala.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import oolala.model.instructions.CreatureInstruction;
 
 //For darwin class
 public class ModelCreature extends ModelTurtle {

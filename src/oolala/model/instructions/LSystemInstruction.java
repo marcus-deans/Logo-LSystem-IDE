@@ -1,4 +1,4 @@
-package oolala.model;
+package oolala.model.instructions;
 
 public class LSystemInstruction extends Instruction{
   public int level;
