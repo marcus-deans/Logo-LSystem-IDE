@@ -4,7 +4,7 @@
 # set angle to 60
 
 start  : T
-rule T 	 U−T−U
+rule T 	 U-T-U
 rule U	 T+U+T
 
 set T "pd fd LENGTH"

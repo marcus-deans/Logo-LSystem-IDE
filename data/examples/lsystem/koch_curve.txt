@@ -1,4 +1,4 @@
 # draw a diamond shaped curve
  
 start F
-rule F F+F−F−F+F
+rule F F+F-F-F+F

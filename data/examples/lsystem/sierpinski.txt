@@ -4,8 +4,8 @@
 # set angle to 120
 
 start  : T
-rule T 	 F−G−G
-rule F 	 F−G+F+G−F
+rule T 	 F-G-G
+rule F 	 F-G+F+G-F
 rule G 	 GG
 
 set G "pd fd LENGTH"
