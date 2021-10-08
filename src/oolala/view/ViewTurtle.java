@@ -77,4 +77,8 @@ public class ViewTurtle {
   public void changePenOpacity() {
     penOpacity = !penOpacity;
   }
+
+  public double getPenOpacity() {
+    return penOpacity ? 100.0 : 0.0;
+  }
 }

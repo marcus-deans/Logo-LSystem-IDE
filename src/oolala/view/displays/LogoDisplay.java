@@ -597,7 +597,7 @@ public class LogoDisplay extends Application {
     Coordinates turtleCoordinates = myModelTurtle.getTurtleCoordinates();
     Rectangle connector = new Rectangle(turtleCoordinates.turtleOldX, turtleCoordinates.turtleNewY,
         turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
-    connector.setOpacity(penOpacity);
+    connector.setOpacity(myViewTurtle.getPenOpacity());
     connector.setFill(Color.RED);
     connector.setWidth(LINE_WIDTH);
     root.getChildren().add(connector);
