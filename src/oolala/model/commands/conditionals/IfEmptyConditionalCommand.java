@@ -11,5 +11,6 @@ public class IfEmptyConditionalCommand extends ConditionalCommand {
 
   private void checkEmpty() {
     //TODO: check whether space nearby ahead of creature is empty and inside world's boundary
+    executeSpecifiedInstruction();
   }
 }
