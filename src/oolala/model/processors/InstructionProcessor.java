@@ -1,7 +1,7 @@
 package oolala.model.processors;
 
 import javafx.scene.Group;
-import oolala.model.Instruction;
+import oolala.model.instructions.Instruction;
 import oolala.model.commands.movements.BackwardModelCommand;
 import oolala.model.commands.movements.ForwardModelCommand;
 import oolala.model.commands.movements.HomeModelCommand;

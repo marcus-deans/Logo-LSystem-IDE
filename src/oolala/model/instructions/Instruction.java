@@ -1,4 +1,4 @@
-package oolala.model;
+package oolala.model.instructions;
 
 import oolala.model.commands.Commands;
 
@@ -7,7 +7,6 @@ public class Instruction {
   public int pixels;
   public String command;
   public Commands order;
-  public int level;
 
   public Instruction(String inCommand, int inPixels) {
     this(inCommand);
@@ -17,19 +16,6 @@ public class Instruction {
   public Instruction(String inCommand) {
     this.command = inCommand;
     computeCommands();
-  }
-
-  public Instruction(int inLevel, String inCommand){
-    this.command = inCommand;
-    this.level = inLevel;
-    //TODO: compute commands?
-  }
-
-  public Instruction(int inLevel, String inCommand, int inPixels){
-    this.level = inLevel;
-    this.command = inCommand;
-    this.pixels = inPixels;
-    //TODO: compute commands?
   }
 
   private void computeCommands() {

@@ -34,7 +34,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.Coordinates;
-import oolala.model.Instruction;
+import oolala.model.instructions.Instruction;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 import oolala.model.processors.InstructionProcessor;
