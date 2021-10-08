@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LSystemInstruction;
 
 public class LSystem {
 
@@ -71,13 +72,13 @@ public class LSystem {
         }
         for(String thisCommand : commands){
             if(singleCommands.contains(thisCommand)){ //if this is single command
-                Instruction singleInst = new Instruction(level, thisCommand);
+                LSystemInstruction singleInst = new LSystemInstruction(level, thisCommand);
                 myInstructions.add(singleInst);
             }else if(doubleAngleCommands.contains(thisCommand)){ //double command
-                Instruction doubleAngleInst = new Instruction(level, thisCommand, angle);
+                LSystemInstruction doubleAngleInst = new LSystemInstruction(level, thisCommand, angle);
                 myInstructions.add(doubleAngleInst);
             }else{
-                Instruction doubleLenInst = new Instruction(level, thisCommand, length);
+                LSystemInstruction doubleLenInst = new LSystemInstruction(level, thisCommand, length);
                 myInstructions.add(doubleLenInst);
             }
         }
