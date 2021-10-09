@@ -40,6 +40,7 @@ public class Logo {
     isValidCommand = true;
   }
 
+  //TODO: ignore any commended lines in the input parsing - make method that filters out those lines
   //Method to parse the input
   public void inputParser(String inputStream){
     List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab

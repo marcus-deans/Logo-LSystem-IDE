@@ -13,7 +13,12 @@ public class LSystem {
     public ArrayList<String> doubleAngleCommands;
     public ArrayList<String> doubleLengthCommands;
     public ArrayList<String> singleCommands;
-    public Map<String, List<String>> commandConversion;
+
+    public Map<String, String> userRules; //RULE command
+    public Map<String, List<String>> commandConversion; //SET command
+
+    public List<String> expansionLevels; //expansions in LSystem language
+    public List<List<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
 
     public Instruction myCurrentInstruction;
     private final List<String> myHistory;
@@ -28,6 +33,10 @@ public class LSystem {
         doubleAngleCommands = new ArrayList<>(Arrays.asList("lt", "rt"));
         doubleLengthCommands = new ArrayList<>(Arrays.asList("fd", "bk"));
         singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp"));
+        userRules = new HashMap<>();
+        commandConversion = new HashMap<>();
+        expansionLevels = new ArrayList<>();
+        convertedInstructionLevels = new ArrayList<>();
         initializeCommandConversions();
         isValidCommand = true;
     }
@@ -45,42 +54,94 @@ public class LSystem {
     }
 
     //Method to parse the input
-    public void inputParser(int levels, int angle, int length, List<String> inputStreams){
-        int level=0;
-        for(String thisLevelStream : inputStreams){
-            List<String> inputCommands = Arrays.asList(thisLevelStream.split("")); //split by every character
-            isValidCommand = true;
-            for(String command : inputCommands){
-                if(validCommands.contains(command)){
-                    createCommand(level, command, angle, length);
-                }else{
-                    //TODO: error handling - warn user
-                    isValidCommand = false;
-                    break;
+    public void inputParser(int levels, int angle, int length, String inputStream){
+        List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
+        int skip = 0;
+        for(int i=0; i<inputCommands.size(); i++){
+            if(skip > 0){
+                skip--;
+                continue;
+            }
+            if(inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i).toLowerCase().equals("start")){ //TODO: make string global
+                expansionLevels.add(inputCommands.get(i+1)); //first letter to expand on
+                skip++;
+            }else if(inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i).toLowerCase().equals("rule")){//TODO: make string global
+                userRules.put(inputCommands.get(i+1), inputCommands.get(i+2));
+                skip+=2;
+            }else if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i).toLowerCase().equals("set")){//TODO: make string global
+                List<String> instructionDefinition = getInstructionsInsideQuotes(i+2, inputCommands);
+                commandConversion.put(inputCommands.get(i+1), instructionDefinition);
+                skip+=instructionDefinition.size()+1; //skip letter and definition
+            }
+        }
+        expandLSystemCommands(levels, angle, length); //now, create the expansion
+    }
+
+    //Method that fills the expansionLevels ArrayList, which expands levels into LSystem langugae
+    private void expandLSystemCommands(int levels, int angle, int length) {
+        for(int level=1; level<levels; level++){ //level 0 already added in inputParser with "start" parsing
+            List<String> commandsToExpand = Arrays.asList(expansionLevels.get(level-1).split("")); //previous level to expand on
+            StringBuilder expansion = new StringBuilder();
+            for(int currCommand=0; currCommand<commandsToExpand.size(); currCommand++){
+                if(userRules.keySet().contains(commandsToExpand.get(currCommand))){ //if there is a rule for this character, append the rule
+                    expansion.append(userRules.get(commandsToExpand.get(currCommand)));
+                }else{//otherwise, append the character
+                    expansion.append(commandsToExpand.get(currCommand));
                 }
             }
-            level++;
+            expansionLevels.add(expansion.toString()); //add this expansion to the index of its level
+        }
+        convertToLogoCommands(levels, angle, length); //now, convert the LSystem expansion into Logo commands
+    }
+
+    private void convertToLogoCommands(int levels, int angle, int length) {
+        for(int i=0; i<expansionLevels.size(); i++){ //each expansion level
+            List<Instruction> thisLevelInstructions = createCommandsFromLSystem(levels, angle, length, expansionLevels.get(i));
+            convertedInstructionLevels.add(thisLevelInstructions);
         }
     }
 
-    private void createCommand(int level, String command, int angle, int length) {
-        List<String> commands;
-        if(command.matches("[a-zA-Z]+")){ //Handles case sensitivity for alphabetic LSystem commands
-            commands = commandConversion.get(command.toUpperCase());
-        }else{
-            commands = commandConversion.get(command);
-        }
-        for(String thisCommand : commands){
-            if(singleCommands.contains(thisCommand)){ //if this is single command
-                LSystemInstruction singleInst = new LSystemInstruction(level, thisCommand);
-                myInstructions.add(singleInst);
-            }else if(doubleAngleCommands.contains(thisCommand)){ //double command
-                LSystemInstruction doubleAngleInst = new LSystemInstruction(level, thisCommand, angle);
-                myInstructions.add(doubleAngleInst);
+
+    private List<String> getInstructionsInsideQuotes(int startingIndex, List<String> inputCommands) {
+        List<String> instructions = new ArrayList<>();
+        for(int i=startingIndex; i<inputCommands.size(); i++){
+            if(inputCommands.get(i).startsWith("\"")){
+                instructions.add(inputCommands.get(i).substring(1));
+            }else if(inputCommands.get(i).endsWith("\"")){
+                instructions.add(inputCommands.get(i).substring(0,inputCommands.get(i).length())); //TODO: make sure this properly indexes
+                break;
             }else{
-                LSystemInstruction doubleLenInst = new LSystemInstruction(level, thisCommand, length);
-                myInstructions.add(doubleLenInst);
+                instructions.add(inputCommands.get(i));
             }
+        }
+        return instructions;
+    }
+
+
+    private List<Instruction> createCommandsFromLSystem(int level, int angle, int length, String commandStream) {
+        List<String> commandStreamSplit = Arrays.asList(commandStream.split(""));
+        List<Instruction> instructions = new ArrayList<>();
+        for(String currentLSystemCommand : commandStreamSplit){
+            List<String> logoCommands; //equivalent logo commands for this LSystem character
+            if(currentLSystemCommand.matches("[a-zA-Z]+")){ //Handles case sensitivity for alphabetic LSystem commands
+                logoCommands = commandConversion.get(currentLSystemCommand.toUpperCase());
+            }else{
+                logoCommands = commandConversion.get(currentLSystemCommand);
+            }
+            for(String currentLogoCommand : logoCommands){
+                instructions.add(convertLogoCommandToInstruction(level, angle, length, currentLogoCommand));
+            }
+        }
+        return instructions;
+    }
+
+    private Instruction convertLogoCommandToInstruction(int level, int angle, int length, String thisCommand) {
+        if(singleCommands.contains(thisCommand)){ //if this is single command
+            return new LSystemInstruction(level, thisCommand);
+        }else if(doubleAngleCommands.contains(thisCommand)){ //double command
+            return new LSystemInstruction(level, thisCommand, angle);
+        }else{
+            return new LSystemInstruction(level, thisCommand, length);
         }
     }
 
