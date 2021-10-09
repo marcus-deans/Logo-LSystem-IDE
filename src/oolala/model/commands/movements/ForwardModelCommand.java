@@ -9,6 +9,7 @@ public class ForwardModelCommand extends MovementModelCommand {
     super(myModelTurtle, pixels);
     myCommandName = Commands.FORWARD;
     computeForwardCoordinates();
+    //TODO: only update coordinates if they are actually within bounds (also used for Creatures)
     setNewCoordinates();
 //    performMovement();
   }

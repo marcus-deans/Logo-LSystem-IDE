@@ -3,8 +3,14 @@ package oolala.model.processors;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
-import oolala.model.instructions.Instruction;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+
 import oolala.model.instructions.LSystemInstruction;
 
 public class LSystem {
@@ -24,7 +30,17 @@ public class LSystem {
     private final List<String> myHistory;
     private boolean isValidCommand;
 
-    private final Queue<Instruction> myInstructions;
+  public LSystem() {
+    myInstructions = new LinkedList<>();
+    myHistory = new ArrayList<>();
+    validCommands = new ArrayList<>(
+        Arrays.asList("F", "f", "G", "g", "A", "a", "B", "b", "X", "x", "+", "-"));
+    doubleAngleCommands = new ArrayList<>(Arrays.asList("lt", "rt"));
+    doubleLengthCommands = new ArrayList<>(Arrays.asList("fd", "bk"));
+    singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp"));
+    initializeCommandConversions();
+    isValidCommand = true;
+  }
 
     public LSystem() {
         myInstructions = new LinkedList<>();
@@ -93,6 +109,7 @@ public class LSystem {
         }
         convertToLogoCommands(levels, angle, length); //now, convert the LSystem expansion into Logo commands
     }
+  }
 
     private void convertToLogoCommands(int levels, int angle, int length) {
         for(int i=0; i<expansionLevels.size(); i++){ //each expansion level
@@ -144,27 +161,39 @@ public class LSystem {
             return new LSystemInstruction(level, thisCommand, length);
         }
     }
-
-    //TODO: each new line should be a new level
-    //Method to save the user input commands to a fle
-    public void saveCommand(String inputStream, String filename) {
-        String path = "data/examples/lsystem" + filename + ".txt";
-        File newProgram = new File(path);
-        try {
-            if (newProgram.createNewFile()) {
-                FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
-                writeToFile.write(inputStream);
-                writeToFile.close();
-            } else { //TODO: error handling instead of a sys.out.print statement
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    for (String thisCommand : commands) {
+      if (singleCommands.contains(thisCommand)) { //if this is single command
+        LSystemInstruction singleInst = new LSystemInstruction(level, thisCommand);
+        myInstructions.add(singleInst);
+      } else if (doubleAngleCommands.contains(thisCommand)) { //double command
+        LSystemInstruction doubleAngleInst = new LSystemInstruction(level, thisCommand, angle);
+        myInstructions.add(doubleAngleInst);
+      } else {
+        LSystemInstruction doubleLenInst = new LSystemInstruction(level, thisCommand, length);
+        myInstructions.add(doubleLenInst);
+      }
     }
+  }
 
-    public Queue<Instruction> getMyInstructions() {
-        return myInstructions;
+  //Method to save the user input commands to a fle
+  public void saveCommand(String inputStream, String filename) {
+    String path = "data/examples/lsystem" + filename + ".txt";
+    File newProgram = new File(path);
+    try {
+      if (newProgram.createNewFile()) {
+        FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
+        writeToFile.write(inputStream);
+        writeToFile.close();
+      } else { //TODO: error handling instead of a sys.out.print statement
+        System.out.println("File already exists.");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
+
+  public Queue<LSystemInstruction> getMyInstructions() {
+    return myInstructions;
+  }
 }
 

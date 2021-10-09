@@ -3,7 +3,9 @@ package oolala.model.commands.conditionals;
 import oolala.model.ModelCreature;
 import oolala.model.commands.Commands;
 
-public class IfSameConditionalCommand extends ConditionalCommand {
+public class IfSameConditionalCommand extends IfEntityConditionalCommand {
+
+  boolean CHECKING_SAME_TYPE = true;
 
   public IfSameConditionalCommand(ModelCreature modelCreature, int nextCommand) {
     super(modelCreature, nextCommand);
@@ -12,7 +14,8 @@ public class IfSameConditionalCommand extends ConditionalCommand {
   }
 
   private void checkSame() {
-    //TODO: check whether space nearby ahead of creature is occupied by creature of same species
-    executeSpecifiedInstruction();
+    if (determineEntityPresentAndNature(CHECKING_SAME_TYPE)) {
+      executeSpecifiedInstruction();
+    }
   }
 }

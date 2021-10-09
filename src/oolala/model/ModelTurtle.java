@@ -63,6 +63,12 @@ public class ModelTurtle {
     return new Coordinates(TurtleHomeX, TurtleHomeY);
   }
 
+  public void setTurtleCoordinates(Coordinates newTurtleCoordinates){
+    this.oldX = newTurtleCoordinates.turtleOldX;
+    this.oldY = newTurtleCoordinates.turtleOldY;
+    this.newX = newTurtleCoordinates.turtleNewX;
+    this.newY = newTurtleCoordinates.turtleNewY;
+  }
   //TODO: create map inside model (here)
   // then ViewTurtle can get the value from the map
   // as model updates values -> view gets updated values automatically (from binding)

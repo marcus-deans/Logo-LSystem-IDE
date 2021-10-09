@@ -5,6 +5,8 @@ import oolala.model.commands.Commands;
 
 public class IfRandomConditionalCommand extends ConditionalCommand {
 
+  double RANDOMNESS_THRESHOLD = 0.5;
+
   public IfRandomConditionalCommand(ModelCreature modelCreature, int nextCommand) {
     super(modelCreature, nextCommand);
     myCommandName = Commands.IFRANDOM;
@@ -12,7 +14,9 @@ public class IfRandomConditionalCommand extends ConditionalCommand {
   }
 
   private void checkRandom() {
-    //TODO: perform the given instruction next half of the time (otherwise continue with the next instruction half the time)
-    executeSpecifiedInstruction();
+    double randomSelection = Math.random();
+    if (randomSelection >= RANDOMNESS_THRESHOLD) {
+      executeSpecifiedInstruction();
+    }
   }
 }
