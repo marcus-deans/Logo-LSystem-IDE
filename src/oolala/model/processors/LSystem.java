@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
 
 public class LSystem {
