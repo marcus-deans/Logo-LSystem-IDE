@@ -8,7 +8,7 @@ import oolala.model.commands.ModelCommand;
  *
  * Purpose: Create a rotation command that will be used to rotate object's orietnation on screen
  * Assumptions: Functioning ModelTurtle with defined rotation on screen; other values error-checked
- * Dependencies: ModelTurtle, Command
+ * Dependencies: ModelTurtle, ModelCommand
  * Example Usage: used for 'lt' and 'rt' commands
  * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
  */
