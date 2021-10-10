@@ -3,6 +3,11 @@ package oolala.model.commands.rotations;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.ModelCommand;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ */
 public abstract class RotateModelCommand extends ModelCommand {
 
   private static final int FULL_CIRCLE = 360;

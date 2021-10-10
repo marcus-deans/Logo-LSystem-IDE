@@ -4,6 +4,11 @@ import oolala.model.Coordinates;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ */
 public class ForwardModelCommand extends MovementModelCommand {
 
   /**

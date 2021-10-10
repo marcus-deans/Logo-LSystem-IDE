@@ -4,6 +4,11 @@ import oolala.model.Coordinates;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.ModelCommand;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ */
 public abstract class MovementModelCommand extends ModelCommand {
 
   //Direction quantifiers in degrees, named via compass

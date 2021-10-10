@@ -6,6 +6,11 @@ import oolala.view.ViewTurtle;
 
 public class HideViewCommand extends ViewCommand {
 
+  /**
+   * Create a new Hide command to hide the turtle object from view on screen
+   *
+   * @param viewTurtle the turtle on which the action will be imparted
+   */
   public HideViewCommand(ViewTurtle viewTurtle) {
     super(viewTurtle);
     myCommandName = Commands.HIDE;

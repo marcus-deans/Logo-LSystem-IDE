@@ -6,6 +6,11 @@ import oolala.view.ViewTurtle;
 
 public class PenUpViewCommand extends ViewCommand {
 
+  /**
+   * Create a new PenUp command to set the lines for this turtle as pen up (i.e., don't draw them)
+   *
+   * @param viewTurtle the turtle on which the action will be imparted
+   */
   public PenUpViewCommand(ViewTurtle viewTurtle) {
     super(viewTurtle);
     myCommandName = Commands.PENUP;
