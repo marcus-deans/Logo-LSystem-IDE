@@ -1,9 +1,12 @@
 package oolala.model.processors;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
 
@@ -19,7 +22,7 @@ public class LSystem extends GameProcessor{
 
     public List<String> expansionLevels; //expansions in LSystem language
     public List<List<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
-    private Queue<Instruction> myInstructions; //TODO: do we need this?
+    private final Queue<Instruction> myInstructions; //TODO: do we need this?
 
     private List<String> myHistory;
     private boolean isValidCommand;
@@ -53,27 +56,30 @@ public class LSystem extends GameProcessor{
 
     //TODO: ignore lines that start with #
     //Method to parse the input
-    public void inputParser(int levels, int angle, int length, String inputStream){
-        isValidCommand = true;
-        List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
+    public void inputParser(int levels, int angle, int length, String inputStream) {
+        List<String> inputCommands = Arrays.asList(
+            inputStream.split("\\s+")); //split by any space or tab
         int skip = 0;
-        for(int i=0; i<inputCommands.size(); i++){
-            if(skip > 0){
+        for (int i = 0; i < inputCommands.size(); i++) {
+            if (skip > 0) {
                 skip--;
                 continue;
             }
-            if(inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i).toLowerCase().equals("start")){ //TODO: make string global
-                expansionLevels.add(inputCommands.get(i+1)); //first letter to expand on
+            if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i)
+                .equalsIgnoreCase("start")) { //TODO: make string global
+                expansionLevels.add(inputCommands.get(i + 1)); //first letter to expand on
                 skip++;
-            }else if(inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i).toLowerCase().equals("rule")){//TODO: make string global
-                userRules.put(inputCommands.get(i+1), inputCommands.get(i+2));
-                skip+=2;
-            }else if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i).toLowerCase().equals("set")){//TODO: make string global
-                List<String> instructionDefinition = getInstructionsInsideQuotes(i+2, inputCommands);
-                commandConversion.put(inputCommands.get(i+1), instructionDefinition);
-                skip+=instructionDefinition.size()+1; //skip letter and definition
-            }else{ //TODO: error handling - invalid command stream
-                isValidCommand = false;
+            } else if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i)
+                .equalsIgnoreCase("rule")) {//TODO: make string global
+                userRules.put(inputCommands.get(i + 1), inputCommands.get(i + 2));
+                skip += 2;
+            } else if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i)
+                .equalsIgnoreCase("set")) {//TODO: make string global
+                List<String> instructionDefinition = getInstructionsInsideQuotes(i + 2,
+                    inputCommands);
+                commandConversion.put(inputCommands.get(i + 1), instructionDefinition);
+                skip += instructionDefinition.size() + 1; //skip letter and definition
+            } else { //TODO: error handling - invalid command stream
                 break;
             }
         }
@@ -86,9 +92,10 @@ public class LSystem extends GameProcessor{
             List<String> commandsToExpand = Arrays.asList(expansionLevels.get(level-1).split("")); //previous level to expand on
             StringBuilder expansion = new StringBuilder();
             for(int currCommand=0; currCommand<commandsToExpand.size(); currCommand++){
-                if(userRules.keySet().contains(commandsToExpand.get(currCommand))){ //if there is a rule for this character, append the rule
+                if (userRules.containsKey(commandsToExpand.get(
+                    currCommand))) { //if there is a rule for this character, append the rule
                     expansion.append(userRules.get(commandsToExpand.get(currCommand)));
-                }else{//otherwise, append the character
+                } else {//otherwise, append the character
                     expansion.append(commandsToExpand.get(currCommand));
                 }
             }
@@ -111,7 +118,7 @@ public class LSystem extends GameProcessor{
             if(inputCommands.get(i).startsWith("\"")){
                 instructions.add(inputCommands.get(i).substring(1));
             }else if(inputCommands.get(i).endsWith("\"")){
-                instructions.add(inputCommands.get(i).substring(0,inputCommands.get(i).length())); //TODO: make sure this properly indexes
+                instructions.add(inputCommands.get(i)); //TODO: make sure this properly indexes
                 break;
             }else{
                 instructions.add(inputCommands.get(i));
@@ -122,7 +129,7 @@ public class LSystem extends GameProcessor{
 
 
     private List<Instruction> createCommandsFromLSystem(int level, int angle, int length, String commandStream) {
-        List<String> commandStreamSplit = Arrays.asList(commandStream.split(""));
+        String[] commandStreamSplit = commandStream.split("");
         List<Instruction> instructions = new ArrayList<>();
         for(String currentLSystemCommand : commandStreamSplit){
             List<String> logoCommands; //equivalent logo commands for this LSystem character
@@ -152,5 +159,4 @@ public class LSystem extends GameProcessor{
         String path = "data/examples/lsystem" + filename + ".txt";
         saveCommandGivenPath(inputStream, path);
     }
-
 }

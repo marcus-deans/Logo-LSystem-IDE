@@ -1,56 +1,68 @@
 package oolala.model.commands.movements;
 
+import static oolala.view.displays.LogoDisplay.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oolala.model.ModelTurtle;
 import org.junit.jupiter.api.Test;
 
 class ForwardModelCommandTest {
+
+  private static final int TESTING_PIXELS = 100;
+
+  private static final int OFFSET_Y = 15;
+  private static final int OFFSET_Y_TOP = 26;
+
+  private static final int TurtleHomeX = (FRAME_WIDTH / 2);
+  private static final int TurtleHomeY = ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2);
+
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  int expected = 100;
 
   @Test
-  void computeForwardWithUpward100() {
-    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-//    assertEquals(fc.computeForwardCoordinates, expected);
+  void computeForwardWithNorth100() {
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, TESTING_PIXELS);
+    assertEquals(TurtleHomeX, fc.myNewX);
+    assertEquals(TurtleHomeY-TESTING_PIXELS, fc.myNewY);
+  }
+
+  @Test
+  void computeForwardWithSouth100() {
+    myModelTurtle.setDegreesRotation(180);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, TESTING_PIXELS);
+    assertEquals(TurtleHomeX, fc.myNewX);
+    assertEquals(TurtleHomeY+TESTING_PIXELS, fc.myNewY);
   }
 
   @Test
   void computeForwardWithNortheast100() {
     myModelTurtle.setDegreesRotation(45);
     ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-//    assertEquals(fc.computeForwar);
+    assertEquals(TurtleHomeX + 70, fc.myNewX);
+    assertEquals(TurtleHomeY - 70, fc.myNewY);
   }
 
   @Test
   void computeForwardWithNorthwest100() {
-    myModelTurtle.setDegreesRotation(45);
+    myModelTurtle.setDegreesRotation(315);
     ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-    assertEquals(fc.myNewX, 50);
-    assertEquals(fc.myNewY, -50);
-  }
-
-  @Test
-  void computeForwardWithSouth100() {
-    myModelTurtle.setDegreesRotation(180);
-    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-    assertEquals(fc.myNewX, 0);
-    assertEquals(fc.myNewY, 100);
+    assertEquals(TurtleHomeX - 70, fc.myNewX);
+    assertEquals(TurtleHomeY - 70, fc.myNewY);
   }
 
   @Test
   void computeForwardWithSouthEast100() {
     myModelTurtle.setDegreesRotation(225);
     ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-    assertEquals(50, fc.myNewY);
-    assertEquals(50, fc.myNewX);
+    assertEquals(TurtleHomeX + 70, fc.myNewX);
+    assertEquals(TurtleHomeY - 70, fc.myNewY);
   }
 
   @Test
   void computeForwardWithDegrees295Length100() {
     myModelTurtle.setDegreesRotation(295);
     ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-    assertEquals(fc.myNewX, 91); //sin
-    assertEquals(fc.myNewY, 42); //cos
+    assertEquals(TurtleHomeX - 90, fc.myNewX);
+    assertEquals(TurtleHomeY - 42, fc.myNewY);
   }
+
 }
