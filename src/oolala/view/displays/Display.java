@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.GameProcessor;
+import oolala.model.processors.Logo;
 import oolala.view.Language;
 import oolala.view.TurtleLinkage;
 
@@ -93,33 +94,40 @@ public class Display extends Application {
   public static final int CLEAR_X = 620;
   public static final int CLEAR_Y = 600;
 
+  //Line drawings
+  public static final double LINE_WIDTH = 2.0;
+  public static final double FULL_OPACITY = 100.0;
+  public static final double NO_OPACITY = 0.0;
+
   //Games
-  protected final List<String> gameTypes = new ArrayList<>(
+  private final List<String> gameTypes = new ArrayList<>(
       Arrays.asList("Logo", "L-System", "Darwin"));
   //Languages
-  protected final List<String> languageTypes = new ArrayList<>(
+  private final List<String> languageTypes = new ArrayList<>(
       Arrays.asList("English", "Spanish", "French"));
 
-  protected Group root = new Group();
-  protected Scene scene;
 
-  protected GameProcessor myGameProcessor;
-
-  protected TextArea commandLine;
-  protected ComboBox savedPrograms;
-  protected ComboBox historyPrograms;
-  protected ComboBox languagesPrograms;
-  protected Locale langType;
-  protected FileInputStream fis;
-  protected ComboBox turtleDropdown;
-  protected Text gameSettingTitle;
-  protected Text savedTitle;
-  protected Text history;
-  protected Text languages;
-  protected Text turtles;
-  protected String runText;
-  protected int turtleHomeX;
-  protected int turtleHomeY;
+  public static final Paint LINE_COLOUR = Color.INDIANRED;
+  private Group root;
+  private Scene scene;
+  private Group lineRoot;
+  private GameProcessor myProcessor;
+  private TextArea commandLine;
+  private ComboBox savedPrograms;
+  private ComboBox historyPrograms;
+  private ComboBox languagesPrograms;
+  private Locale langType;
+  private FileInputStream fis;
+  private ComboBox turtleDropdown;
+  private final double penOpacity = FULL_OPACITY;
+  private Text gameSettingTitle;
+  private Text savedTitle;
+  private Text history;
+  private Text languages;
+  private Text turtles;
+  private String runText;
+  private int turtleHomeX;
+  private int turtleHomeY;
 
 
   public void start(Stage stage) {
@@ -136,8 +144,8 @@ public class Display extends Application {
 
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-//    myLogo = new Logo();
-//    this.root = new Group();
+    myProcessor = new Logo();
+    root = new Group();
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();
@@ -147,7 +155,7 @@ public class Display extends Application {
     languagesTitle();
     initializeLanguages();
     initializeCommandLine(); //initialize the command line
-//    initializeRunButton(); //initialize the program run button
+    initializeRunButton(); //initialize the program run button
     initializeSaveButton(); //initializes the program save button
     initializeClearScreen();
     initializeBoundaries(); // sets up program boundaries for where the turtle will move
@@ -175,7 +183,7 @@ public class Display extends Application {
     gameSettingTitle = new Text(getWord("game_setting_title"));
     gameSettingTitle.setLayoutX(GAME_TITLE_X);
     gameSettingTitle.setLayoutY(GAME_TITLE_Y);
-    this.root.getChildren().add(gameSettingTitle);
+    root.getChildren().add(gameSettingTitle);
   }
 
   protected void initializeGameSetting() {
@@ -341,7 +349,7 @@ public class Display extends Application {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Invalid command stream!");
       alert.show();
-      myGameProcessor.setValidCommand(true);
+      myProcessor.setValidCommand(true);
     }
   }
 
@@ -356,7 +364,7 @@ public class Display extends Application {
       @Override
       public void handle(ActionEvent event) {
         String filename = getUserFileName();
-        myGameProcessor.saveCommand(commandLine.getText(), filename);
+        myProcessor.saveCommand(commandLine.getText(), filename);
         updateSavedDropdown();
       }
     });
@@ -418,7 +426,7 @@ public class Display extends Application {
   //Create method that passes in queue of commands to Logo
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
+    Queue<Instruction> instructions = myProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
 
     }

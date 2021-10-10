@@ -27,8 +27,6 @@ public class Instruction {
       case "home" -> this.order = Commands.HOME;
       case "ht" -> this.order = Commands.HIDE;
       case "st" -> this.order = Commands.SHOW;
-      case "pd" -> this.order = Commands.PENDOWN;
-      case "pu" -> this.order = Commands.PENUP;
       case "stamp" -> this.order = Commands.STAMP;
       case "tell" -> this.order = Commands.TELL;
       default -> this.order = Commands.OOPS;
