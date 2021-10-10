@@ -3,6 +3,15 @@ package oolala.model.commands.rotations;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 
+/**
+ * @author marcusdeans
+ *
+ * Purpose: Create a rotation command that will be used to rotate object left
+ * Assumptions: Functioning ModelTurtle with defined rotation on screen; other values error-checked
+ * Dependencies: ModelTurtle, RotateModelCommand, ModelCommand
+ * Example Usage: used for 'lt' command
+ * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
+ */
 public class RotateLeftModelCommand extends RotateModelCommand {
 
   /**
