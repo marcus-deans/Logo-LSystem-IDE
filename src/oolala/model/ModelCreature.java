@@ -2,11 +2,12 @@ package oolala.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import oolala.model.instructions.CreatureInstruction;
 
 //For darwin class
 public class ModelCreature extends ModelTurtle {
 
-  private final List<Instruction> myCreatureInstructions = new ArrayList<>();
+  private List<CreatureInstruction> myCreatureInstructions = new ArrayList<>();
   private final int myNearbyThreshold;
   private int myNextInstructionIndex;
   private int mySpeciesIdentifier;
@@ -27,5 +28,13 @@ public class ModelCreature extends ModelTurtle {
 
   public void setMySpeciesIdentifier(int mySpeciesIdentifier) {
     this.mySpeciesIdentifier = mySpeciesIdentifier;
+  }
+
+  public void addNewCreatureInstruction(CreatureInstruction newCreatureInstruction){
+    myCreatureInstructions.add(newCreatureInstruction);
+  }
+
+  public int getMyNearbyThreshold() {
+    return myNearbyThreshold;
   }
 }

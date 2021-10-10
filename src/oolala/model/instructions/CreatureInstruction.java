@@ -1,4 +1,4 @@
-package oolala.model;
+package oolala.model.instructions;
 
 import oolala.model.commands.Commands;
 

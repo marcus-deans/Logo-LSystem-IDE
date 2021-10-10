@@ -28,15 +28,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.Coordinates;
-import oolala.model.Instruction;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
+import oolala.model.instructions.Instruction;
 import oolala.model.processors.InstructionProcessor;
 import oolala.model.processors.Logo;
 import oolala.view.Language;
@@ -121,7 +120,7 @@ public class LogoDisplay extends Application {
   private ModelTurtle myModelTurtle;
   private ViewTurtle myViewTurtle;
 
-
+  public static final Paint LINE_COLOUR = Color.INDIANRED;
   private Group root;
   private Group lineRoot;
   private Logo myLogo;
@@ -158,6 +157,7 @@ public class LogoDisplay extends Application {
   private Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
     myLogo = new Logo();
+    root = new Group();
     spawnTurtle(0);
     gameTitle();
     initializeGameSetting(); //game type dropdown
@@ -195,6 +195,8 @@ public class LogoDisplay extends Application {
     allTurtleLinkages.add(myTurtleLinkage);
     allModelTurtles.add(myModelTurtle);
     allViewTurtles.add(myViewTurtle);
+
+    root.getChildren().add(myViewTurtle.getMyTurtleView());
   }
 
   private void initializeBoundaries() {
@@ -594,12 +596,11 @@ public class LogoDisplay extends Application {
 
 
   private void drawTurtleLine() {
-    Coordinates turtleCoordinates = myModelTurtle.getTurtleCoordinates();
-    Rectangle connector = new Rectangle(turtleCoordinates.turtleOldX, turtleCoordinates.turtleNewY,
+    Coordinates turtleCoordinates = myTurtleLinkage.myModelTurtle.getTurtleVisualCoordinates();
+    Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleOldY,
         turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
-    connector.setOpacity(myViewTurtle.getPenOpacity());
-    connector.setFill(Color.RED);
-    connector.setWidth(LINE_WIDTH);
+    connector.setOpacity(myTurtleLinkage.myViewTurtle.getPenOpacity());
+    connector.setId("turtle-line");
     root.getChildren().add(connector);
   }
 
