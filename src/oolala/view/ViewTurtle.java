@@ -26,10 +26,11 @@ public class ViewTurtle {
   private int myY;
 
   private int myDegreesRotation;
-  private boolean penOpacity = true;
+  private boolean penOpacity;
 
   public ViewTurtle(int id) {
     myID = id;
+    penOpacity = true;
     // make turtle shape and set property
     initializeTurtleView();
 
@@ -77,10 +78,10 @@ public class ViewTurtle {
   }
 
   public void changePenOpacity() {
-    penOpacity = !penOpacity;
+    this.penOpacity = !(this.penOpacity);
   }
 
   public double getPenOpacity() {
-    return penOpacity ? 100.0 : 0.0;
+    return penOpacity ? 1.0 : 0.0;
   }
 }

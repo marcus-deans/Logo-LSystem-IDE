@@ -56,12 +56,14 @@ public abstract class GameProcessor {
         Instruction newInstruction = new Instruction(command);
     }
 
-    public void saveHistory(String historyElement) {
-        myHistory.add(historyElement);
-    }
+    public abstract void inputParser(int levels, int angle, int length, String inputStream);
 
     public List<String> getHistory() {
         return myHistory;
+    }
+
+    public void saveHistory(String historyElement) {
+        myHistory.add(historyElement);
     }
 
     public boolean getValidCommand() {
@@ -71,6 +73,10 @@ public abstract class GameProcessor {
     public void setValidCommand(Boolean status) {
         isValidCommand = status;
     }
+
+
+    //Method to save the user input commands to a fle
+    public abstract void saveCommand(String inputStream, String filename);
 
     public Queue<Instruction> getMyInstructions() {
         return myInstructions;

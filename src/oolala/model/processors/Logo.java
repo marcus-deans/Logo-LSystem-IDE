@@ -2,9 +2,7 @@ package oolala.model.processors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import oolala.model.instructions.Instruction;
 
 public class Logo extends GameProcessor{
@@ -23,25 +21,15 @@ public class Logo extends GameProcessor{
   public ArrayList<String> doubleCommands;
   public ArrayList<String> singleCommands;
 
-  private final List<String> myHistory;
-  private boolean isValidCommand;
-
-  private final Queue<Instruction> myInstructions;
-
   public Logo() {
-    myInstructions = new LinkedList<>();
+    super();
     doubleCommands = new ArrayList<>(Arrays.asList(FORWARD, BACKWARD, LEFT, RIGHT, TELL));
-    singleCommands = new ArrayList<>(
-        Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
-    myHistory = new ArrayList<>();
-    isValidCommand = true;
+    singleCommands = new ArrayList<>(Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
   }
 
   //TODO: ignore lines that start with # - filter out before splitting inputCommands
   //Method to parse the input
-  // TODO: ignore lines that start with # - filter out before splitting inputCommands
-  @Override //TODO: do i need to override? do singleCommand and doubleCommand change?
-  public void inputParser(int levels, int angle, int length, String inputStream) {
+  public void inputParser(int dead1, int dead2, int dead3, String inputStream) {
     isValidCommand = true;
     List<String> inputCommands = Arrays.asList(
         inputStream.split("\\s+")); //split by any space or tab
@@ -71,35 +59,9 @@ public class Logo extends GameProcessor{
     myInstructions.add(newInstruction);
   }
 
-
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename) {
     String path = "data/examples/logo" + filename + ".txt";
     saveCommandGivenPath(inputStream, path);
-  }
-
-  @Override
-  public void saveHistory(String historyElement) {
-    myHistory.add(historyElement);
-  }
-
-  @Override
-  public List<String> getHistory() {
-    return myHistory;
-  }
-
-  @Override
-  public boolean getValidCommand() {
-    return isValidCommand;
-  }
-
-  @Override
-  public void setValidCommand(Boolean status) {
-    isValidCommand = status;
-  }
-
-  @Override
-  public Queue<Instruction> getMyInstructions() {
-    return myInstructions;
   }
 }

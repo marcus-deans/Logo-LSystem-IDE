@@ -57,7 +57,6 @@ public class LSystem extends GameProcessor{
     //TODO: ignore lines that start with #
     //Method to parse the input
     public void inputParser(int levels, int angle, int length, String inputStream) {
-        isValidCommand = true;
         List<String> inputCommands = Arrays.asList(
             inputStream.split("\\s+")); //split by any space or tab
         int skip = 0;
@@ -81,7 +80,6 @@ public class LSystem extends GameProcessor{
                 commandConversion.put(inputCommands.get(i + 1), instructionDefinition);
                 skip += instructionDefinition.size() + 1; //skip letter and definition
             } else { //TODO: error handling - invalid command stream
-                isValidCommand = false;
                 break;
             }
         }
@@ -161,5 +159,4 @@ public class LSystem extends GameProcessor{
         String path = "data/examples/lsystem" + filename + ".txt";
         saveCommandGivenPath(inputStream, path);
     }
-
 }
