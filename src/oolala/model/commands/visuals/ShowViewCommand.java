@@ -14,7 +14,7 @@ import oolala.view.ViewTurtle;
 public class ShowViewCommand extends VisibleViewCommand {
 
   /**
-   * Create a new Show command to shjow the turtle object on screen
+   * Create a new Show command to show the turtle object on screen
    *
    * @param viewTurtle the turtle on which the action will be imparted
    */
