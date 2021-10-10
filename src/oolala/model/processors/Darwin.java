@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class Darwin {
+public class Darwin extends GameProcessor{
 
     public static final String MOVE = "move";
     public static final String LEFT = "left";
@@ -52,41 +52,21 @@ public class Darwin {
         }
     }
 
-    private boolean nextCommandIsInt(int index, List<String> inputCommands) {
-        boolean nextCommandIsInteger = true;
-        try{
-            Integer.parseInt(inputCommands.get(index+1));
-        }catch(NumberFormatException e){
-            nextCommandIsInteger = false;
-        }
-        return nextCommandIsInteger;
-    }
-
-    private void createSingleCommand(String command) {
+    @Override
+    protected void createSingleCommand(String command) {
         CreatureInstruction singleInstruction = new CreatureInstruction(command);
         myInstructions.add(singleInstruction);
     }
 
-    private void createDoubleCommand(String command, Integer valueOf) {
+    @Override
+    protected void createDoubleCommand(String command, Integer valueOf) {
         CreatureInstruction doubleInstruction = new CreatureInstruction(command, valueOf);
         myInstructions.add(doubleInstruction);
     }
 
-    //Method to save the user input commands to a fle
     public void saveCommand(String inputStream, String filename) {
         String path = "data/examples/darwin" + filename + ".txt";
-        File newProgram = new File(path);
-        try {
-            if (newProgram.createNewFile()) {
-                FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
-                writeToFile.write(inputStream);
-                writeToFile.close();
-            } else { //TODO: error handling instead of a sys.out.print statement
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveCommandGivenPath(inputStream, path);
     }
 
     public void saveHistory(String historyElement) {
