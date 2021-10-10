@@ -1,12 +1,12 @@
 package oolala.model.processors;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
 
 public class Darwin extends GameProcessor{
 
@@ -24,7 +24,7 @@ public class Darwin extends GameProcessor{
     public ArrayList<String> doubleCommands;
     public ArrayList<String> singleCommands;
     public Queue<Instruction> myInstructions;
-    private List<String> myHistory;
+    private final List<String> myHistory;
     boolean isValidCommand;
 
     public Darwin() {
@@ -45,7 +45,7 @@ public class Darwin extends GameProcessor{
                 createSingleCommand(inputCommands.get(i));
             }else if(inputCommands.get(i).matches("[a-zA-Z]+") && doubleCommands.contains(inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i, inputCommands)){ //Valid double command (requires a second number)
                 createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i+1)));
-                continue;
+                break;
             }else{ //Not a valid command stream
                 isValidCommand = false; //TODO: notify user that input was invalid
                 break;

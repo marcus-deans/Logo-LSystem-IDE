@@ -213,18 +213,6 @@ public class LogoDisplay extends Display {
     }
   }
 
-//  @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
-//  protected void validateCommandStream() {
-//    boolean valid = myGameProcessor.getValidCommand();
-//    if (!valid) { //TODO: make sure popup works
-//      Alert alert = new Alert(Alert.AlertType.ERROR);
-//      alert.setContentText("Invalid command stream!");
-//      alert.show();
-//      myGameProcessor.setValidCommand(true);
-//    }
-//  }
-
-
   private void tellTurtle(int id) {
     //loop through allTurtles - if ID exists, switch to this turtle
     boolean exists = false;
