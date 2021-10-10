@@ -153,7 +153,7 @@ public class Display extends Application {
     initializeBoundaries(); // sets up program boundaries for where the turtle will move
     //Set the scene
     scene = new Scene(root, width, height, background);
-    scene.getStylesheets().add(Display.class.getResource("Display.css").toExternalForm());
+    scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
     return scene;
   }
 
@@ -273,13 +273,6 @@ public class Display extends Application {
     root.getChildren().add(historyPrograms);
   }
 
-  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
-    historyPrograms.getItems().clear();
-    for (String element : myProcessor.getHistory()) {
-      historyPrograms.getItems().add(element);
-    }
-  }
-
   protected void languagesTitle() {
     languages = new Text(getWord("language_text"));
     languages.setLayoutX(LANGUAGES_TITLE_X);
@@ -342,26 +335,8 @@ public class Display extends Application {
     return runText = getWord("run_text");
   }
 
-  protected void initializeRunButton() {
-    Button runCommands = new Button(runTitle());
-    runCommands.setPrefWidth(RUN_WIDTH);
-    runCommands.setPrefHeight(RUN_HEIGHT);
-    runCommands.setLayoutX(RUN_X);
-    runCommands.setLayoutY(RUN_Y);
-    root.getChildren().add(runCommands);
-    runCommands.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        myProcessor.inputParser(0,0,0,commandLine.getText());
-        validateCommandStream();
-        myProcessor.saveHistory(commandLine.getText());
-        updateHistoryDropdown();
-      }
-    });
-  }
-
   protected void validateCommandStream() {
-    Boolean valid = myProcessor.getValidCommand();
+    Boolean valid = myGameProcessor.getValidCommand();
     if (!valid) { //TODO: make sure popup works
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Invalid command stream!");

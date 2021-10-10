@@ -24,8 +24,8 @@ public class LSystem extends GameProcessor{
     public List<List<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
     private final Queue<Instruction> myInstructions; //TODO: do we need this?
 
-    private List<String> myHistory;
-    private boolean isValidCommand;
+    private final List<String> myHistory;
+    private final boolean isValidCommand;
 
 
     public LSystem() {

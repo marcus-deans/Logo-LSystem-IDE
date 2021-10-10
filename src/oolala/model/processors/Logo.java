@@ -27,6 +27,7 @@ public class Logo extends GameProcessor{
     singleCommands = new ArrayList<>(Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
   }
 
+  //TODO: ignore lines that start with # - filter out before splitting inputCommands
   //Method to parse the input
   public void inputParser(int dead1, int dead2, int dead3, String inputStream) {
     isValidCommand = true;
