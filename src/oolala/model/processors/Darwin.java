@@ -36,7 +36,6 @@ public class Darwin extends GameProcessor{
     }
 
     //TODO: ignore lines that start with #
-    @Override
     public void inputParser(int radius, int angle, int length, String inputStream) {
         isValidCommand = true;
         List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab

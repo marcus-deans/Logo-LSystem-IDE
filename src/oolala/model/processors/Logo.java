@@ -1,8 +1,10 @@
 package oolala.model.processors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+
 import oolala.model.instructions.Instruction;
 
 public class Logo extends GameProcessor{
@@ -21,27 +23,31 @@ public class Logo extends GameProcessor{
   public ArrayList<String> doubleCommands;
   public ArrayList<String> singleCommands;
 
+  private final List<String> myHistory;
+  private boolean isValidCommand;
+
+  private final Queue<Instruction> myInstructions;
+
   public Logo() {
-    super();
+    myInstructions = new LinkedList<>();
     doubleCommands = new ArrayList<>(Arrays.asList(FORWARD, BACKWARD, LEFT, RIGHT, TELL));
     singleCommands = new ArrayList<>(Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
+    myHistory = new ArrayList<>();
+    isValidCommand = true;
   }
 
+  //TODO: ignore lines that start with # - filter out before splitting inputCommands
   //Method to parse the input
-  public void inputParser(int dead1, int dead2, int dead3, String inputStream) {
+  public void inputParser(String inputStream){
     isValidCommand = true;
-    List<String> inputCommands = Arrays.asList(
-        inputStream.split("\\s+")); //split by any space or tab
-    for (int i = 0; i < inputCommands.size(); i++) {
-      if (inputCommands.get(i).matches("[a-zA-Z]+") && singleCommands.contains(
-          inputCommands.get(i).toLowerCase())) { //Valid single command
+    List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
+    for(int i=0; i<inputCommands.size(); i++){
+      if(inputCommands.get(i).matches("[a-zA-Z]+") && singleCommands.contains(inputCommands.get(i).toLowerCase())){ //Valid single command
         createSingleCommand(inputCommands.get(i));
-      } else if (inputCommands.get(i).matches("[a-zA-Z]+") && doubleCommands.contains(
-          inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i,
-          inputCommands)) { //Valid double command (requires a second number)
-        createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i + 1)));
-        break;
-      } else { //Not a valid command stream
+      }else if(inputCommands.get(i).matches("[a-zA-Z]+") && doubleCommands.contains(inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i, inputCommands)){ //Valid double command (requires a second number)
+        createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i+1)));
+        continue;
+      }else{ //Not a valid command stream
         isValidCommand = false;
         break;
       }
@@ -58,9 +64,30 @@ public class Logo extends GameProcessor{
     myInstructions.add(newInstruction);
   }
 
+
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename) {
     String path = "data/examples/logo" + filename + ".txt";
     saveCommandGivenPath(inputStream, path);
+  }
+
+  public void saveHistory(String historyElement) {
+    myHistory.add(historyElement);
+  }
+
+  public List<String> getHistory() {
+    return myHistory;
+  }
+
+  public boolean getValidCommand() {
+    return isValidCommand;
+  }
+
+  public void setValidCommand(Boolean status) {
+    isValidCommand = status;
+  }
+
+  public Queue<Instruction> getMyInstructions() {
+    return myInstructions;
   }
 }

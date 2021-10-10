@@ -2,27 +2,39 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Queue;
-
+import java.util.ResourceBundle;
+import java.util.Scanner;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import oolala.model.Coordinates;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 import oolala.model.instructions.Instruction;
-import oolala.model.processors.GameProcessor;
 import oolala.model.processors.InstructionProcessor;
 import oolala.model.processors.Logo;
+import oolala.view.Language;
 import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
 
@@ -67,11 +79,34 @@ public class LogoDisplay extends Display {
   public static final int OFFSET_Y_TOP = 26;
 
   //Bottom Layout
+  public static final int COMMAND_WIDTH = 600;
+  public static final int COMMAND_HEIGHT = 130;
+  public static final int COMMAND_X = 10;
+  public static final int COMMAND_Y = 530;
   public static final int RUN_WIDTH = 100;
   public static final int RUN_HEIGHT = 30;
   public static final int RUN_X = 620;
   public static final int RUN_Y = 530;
+  public static final int SAVE_WIDTH = 100;
+  public static final int SAVE_HEIGHT = 30;
+  public static final int SAVE_X = 620;
+  public static final int SAVE_Y = 565;
+  public static final int CLEAR_WIDTH = 100;
+  public static final int CLEAR_HEIGHT = 30;
+  public static final int CLEAR_X = 620;
+  public static final int CLEAR_Y = 600;
 
+  //Line drawings
+  public static final double LINE_WIDTH = 2.0;
+  public static final double FULL_OPACITY = 100.0;
+  public static final double NO_OPACITY = 0.0;
+
+  //Games
+  private final List<String> gameTypes = new ArrayList<>(
+      Arrays.asList("Logo", "L-System", "Darwin"));
+  //Languages
+  private final List<String> languageTypes = new ArrayList<>(
+      Arrays.asList("English", "Spanish", "French"));
   //Turtles
   private final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
   private final List<ModelTurtle> allModelTurtles = new ArrayList<>();
@@ -81,12 +116,10 @@ public class LogoDisplay extends Display {
   private ModelTurtle myModelTurtle;
   private ViewTurtle myViewTurtle;
 
-
   public static final Paint LINE_COLOUR = Color.INDIANRED;
   private Group root;
-  private Scene scene;
   private Group lineRoot;
-  private GameProcessor myProcessor;
+  private Logo myLogo;
   private TextArea commandLine;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
@@ -94,17 +127,26 @@ public class LogoDisplay extends Display {
   private Locale langType;
   private FileInputStream fis;
   private ComboBox turtleDropdown;
+  private final double penOpacity = FULL_OPACITY;
+  private Text gameSettingTitle;
+  private Text savedTitle;
+  private Text history;
+  private Text languages;
+  private Text turtles;
+  private String runText;
+  private int turtleHomeX;
+  private int turtleHomeY;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-    myGameProcessor = new Logo();
-//    this.root = new Group();
+    myLogo = new Logo();
+    root = new Group();
     spawnTurtle(0);
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();
-    super.initializeSavedPrograms(); //saved programs dropdown
+    initializeSavedPrograms(); //saved programs dropdown
     historyTitle();
     initializeHistory(); //program history dropdown
     languagesTitle();
@@ -187,7 +229,7 @@ public class LogoDisplay extends Display {
     root.getChildren().add(turtleDropdown);
   }
 
-  //  @Override
+  @Override
   protected void initializeRunButton() {
     Button runCommands = new Button(runTitle());
     runCommands.setPrefWidth(RUN_WIDTH);
@@ -198,20 +240,25 @@ public class LogoDisplay extends Display {
     runCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        myGameProcessor.inputParser(0, 0, 0, commandLine.getText());
+        myLogo.inputParser(commandLine.getText());
         validateCommandStream();
-        myGameProcessor.saveHistory(commandLine.getText());
+        myLogo.saveHistory(commandLine.getText());
         updateHistoryDropdown();
       }
     });
   }
 
-  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
-    historyPrograms.getItems().clear();
-    for (String element : myGameProcessor.getHistory()) {
-      historyPrograms.getItems().add(element);
+  @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
+  protected void validateCommandStream() {
+    Boolean valid = myLogo.getValidCommand();
+    if (!valid) { //TODO: make sure popup works
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Invalid command stream!");
+      alert.show();
+      myLogo.setValidCommand(true);
     }
   }
+
 
   private void tellTurtle(int id) {
     //loop through allTurtles - if ID exists, switch to this turtle
@@ -266,7 +313,7 @@ public class LogoDisplay extends Display {
   @Override
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
+    Queue<Instruction> instructions = myLogo.getMyInstructions();
     if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);
