@@ -20,23 +20,17 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import oolala.model.Coordinates;
-import oolala.model.ModelTurtle;
-import oolala.model.commands.Commands;
 import oolala.model.instructions.Instruction;
-import oolala.model.processors.InstructionProcessor;
+import oolala.model.processors.GameProcessor;
 import oolala.model.processors.Logo;
 import oolala.view.Language;
 import oolala.view.TurtleLinkage;
-import oolala.view.ViewTurtle;
 
 
 /**
@@ -113,7 +107,7 @@ public class Display extends Application {
   private Group root;
   private Scene scene;
   private Group lineRoot;
-  private Logo myLogo;
+  private GameProcessor myProcessor;
   private TextArea commandLine;
   private ComboBox savedPrograms;
   private ComboBox historyPrograms;
@@ -146,7 +140,7 @@ public class Display extends Application {
 
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-    myLogo = new Logo();
+    myProcessor = new Logo();
     root = new Group();
     gameTitle();
     initializeGameSetting(); //game type dropdown
@@ -163,7 +157,7 @@ public class Display extends Application {
     initializeBoundaries(); // sets up program boundaries for where the turtle will move
     //Set the scene
     scene = new Scene(root, width, height, background);
-    scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
+    scene.getStylesheets().add(Display.class.getResource("Display.css").toExternalForm());
     return scene;
   }
 
@@ -285,7 +279,7 @@ public class Display extends Application {
 
   protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
     historyPrograms.getItems().clear();
-    for (String element : myLogo.getHistory()) {
+    for (String element : myProcessor.getHistory()) {
       historyPrograms.getItems().add(element);
     }
   }
@@ -362,21 +356,21 @@ public class Display extends Application {
     runCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        myLogo.inputParser(commandLine.getText());
+        myProcessor.inputParser(0,0,0,commandLine.getText());
         validateCommandStream();
-        myLogo.saveHistory(commandLine.getText());
+        myProcessor.saveHistory(commandLine.getText());
         updateHistoryDropdown();
       }
     });
   }
 
   protected void validateCommandStream() {
-    Boolean valid = myLogo.getValidCommand();
+    Boolean valid = myProcessor.getValidCommand();
     if (!valid) { //TODO: make sure popup works
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Invalid command stream!");
       alert.show();
-      myLogo.setValidCommand(true);
+      myProcessor.setValidCommand(true);
     }
   }
 
@@ -391,7 +385,7 @@ public class Display extends Application {
       @Override
       public void handle(ActionEvent event) {
         String filename = getUserFileName();
-        myLogo.saveCommand(commandLine.getText(), filename);
+        myProcessor.saveCommand(commandLine.getText(), filename);
         updateSavedDropdown();
       }
     });
@@ -453,7 +447,7 @@ public class Display extends Application {
   //Create method that passes in queue of commands to Logo
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myLogo.getMyInstructions();
+    Queue<Instruction> instructions = myProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
 
     }

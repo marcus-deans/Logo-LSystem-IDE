@@ -21,7 +21,7 @@ public class LSystem extends GameProcessor{
     public List<List<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
     private Queue<Instruction> myInstructions; //TODO: do we need this?
 
-    private final List<String> myHistory;
+    private List<String> myHistory;
     private boolean isValidCommand;
 
 
@@ -53,7 +53,8 @@ public class LSystem extends GameProcessor{
 
     //TODO: ignore lines that start with #
     //Method to parse the input
-    private void inputParser(int levels, int angle, int length, String inputStream){
+    public void inputParser(int levels, int angle, int length, String inputStream){
+        isValidCommand = true;
         List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
         int skip = 0;
         for(int i=0; i<inputCommands.size(); i++){
@@ -72,6 +73,7 @@ public class LSystem extends GameProcessor{
                 commandConversion.put(inputCommands.get(i+1), instructionDefinition);
                 skip+=instructionDefinition.size()+1; //skip letter and definition
             }else{ //TODO: error handling - invalid command stream
+                isValidCommand = false;
                 break;
             }
         }
@@ -151,23 +153,4 @@ public class LSystem extends GameProcessor{
         saveCommandGivenPath(inputStream, path);
     }
 
-    public void saveHistory(String historyElement) {
-        myHistory.add(historyElement);
-    }
-
-    public List<String> getHistory() {
-        return myHistory;
-    }
-
-    public boolean getValidCommand() {
-        return isValidCommand;
-    }
-
-    public void setValidCommand(Boolean status) {
-        isValidCommand = status;
-    }
-
-    public Queue<Instruction> getMyInstructions() {
-        return myInstructions;
-    }
 }

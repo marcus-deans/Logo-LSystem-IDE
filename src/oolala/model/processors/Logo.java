@@ -36,9 +36,10 @@ public class Logo extends GameProcessor{
     isValidCommand = true;
   }
 
-  //TODO: ignore lines that start with # - filter out before splitting inputCommands
   //Method to parse the input
-  public void inputParser(String inputStream){
+  // TODO: ignore lines that start with # - filter out before splitting inputCommands
+  @Override //TODO: do i need to override? do singleCommand and doubleCommand change?
+  public void inputParser(int levels, int angle, int length, String inputStream){
     isValidCommand = true;
     List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
     for(int i=0; i<inputCommands.size(); i++){
@@ -71,22 +72,27 @@ public class Logo extends GameProcessor{
     saveCommandGivenPath(inputStream, path);
   }
 
+  @Override
   public void saveHistory(String historyElement) {
     myHistory.add(historyElement);
   }
 
+  @Override
   public List<String> getHistory() {
     return myHistory;
   }
 
+  @Override
   public boolean getValidCommand() {
     return isValidCommand;
   }
 
+  @Override
   public void setValidCommand(Boolean status) {
     isValidCommand = status;
   }
 
+  @Override
   public Queue<Instruction> getMyInstructions() {
     return myInstructions;
   }

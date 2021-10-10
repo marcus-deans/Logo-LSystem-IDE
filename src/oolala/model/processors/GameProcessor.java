@@ -5,11 +5,43 @@ import oolala.model.instructions.Instruction;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class GameProcessor {
+    private ArrayList<String> doubleCommands;
+    private ArrayList<String> singleCommands;
+    private List<String> myHistory;
+    private boolean isValidCommand;
+    private Queue<Instruction> myInstructions;
+
+    public GameProcessor(){
+        myInstructions = new LinkedList<>();
+        doubleCommands = new ArrayList<>(Arrays.asList());
+        singleCommands = new ArrayList<>(Arrays.asList());
+        myHistory = new ArrayList<>();
+        isValidCommand = true;
+    }
+
+    public void inputParser(int levels, int angle, int length, String inputStream){
+        isValidCommand = true;
+        List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
+        for(int i=0; i<inputCommands.size(); i++){
+            if(inputCommands.get(i).matches("[a-zA-Z]+") && singleCommands.contains(inputCommands.get(i).toLowerCase())){ //Valid single command
+                createSingleCommand(inputCommands.get(i));
+            }else if(inputCommands.get(i).matches("[a-zA-Z]+") && doubleCommands.contains(inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i, inputCommands)){ //Valid double command (requires a second number)
+                createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i+1)));
+                continue;
+            }else{ //Not a valid command stream
+                isValidCommand = false;
+                break;
+            }
+        }
+    }
+
+    public void saveCommand(String inputStream, String filename) {
+        String path = "data/examples/lsystem" + filename + ".txt";
+        saveCommandGivenPath(inputStream, path);
+    }
 
     //TODO: each new line should be a new level
     //Method to save the user input commands to a fle
@@ -44,5 +76,25 @@ public class GameProcessor {
 
     protected void createSingleCommand(String command) {
         Instruction newInstruction = new Instruction(command);
+    }
+
+    public void saveHistory(String historyElement) {
+        myHistory.add(historyElement);
+    }
+
+    public List<String> getHistory() {
+        return myHistory;
+    }
+
+    public boolean getValidCommand() {
+        return isValidCommand;
+    }
+
+    public void setValidCommand(Boolean status) {
+        isValidCommand = status;
+    }
+
+    public Queue<Instruction> getMyInstructions() {
+        return myInstructions;
     }
 }
