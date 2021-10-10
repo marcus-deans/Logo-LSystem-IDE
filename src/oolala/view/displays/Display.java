@@ -19,24 +19,21 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import oolala.model.Coordinates;
-import oolala.model.ModelTurtle;
-import oolala.model.commands.Commands;
 import oolala.model.instructions.Instruction;
-import oolala.model.processors.InstructionProcessor;
 import oolala.model.processors.Logo;
 import oolala.view.Language;
 import oolala.view.TurtleLinkage;
-import oolala.view.ViewTurtle;
 
 
 /**
@@ -147,7 +144,7 @@ public class Display extends Application {
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
     myLogo = new Logo();
-    root = new Group();
+    this.root = new Group();
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();

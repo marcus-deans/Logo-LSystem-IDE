@@ -1,15 +1,12 @@
 package oolala.model.processors;
 
-import oolala.model.instructions.Instruction;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Queue;
+import oolala.model.instructions.Instruction;
 
-public class GameProcessor {
+public abstract class GameProcessor {
 
     //TODO: each new line should be a new level
     //Method to save the user input commands to a fle

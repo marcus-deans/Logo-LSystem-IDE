@@ -2,39 +2,29 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
-import java.util.ResourceBundle;
-import java.util.Scanner;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import oolala.model.Coordinates;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.InstructionProcessor;
 import oolala.model.processors.Logo;
-import oolala.view.Language;
 import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
 
@@ -141,7 +131,7 @@ public class LogoDisplay extends Display {
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
     myLogo = new Logo();
-    root = new Group();
+    this.root = new Group();
     spawnTurtle(0);
     gameTitle();
     initializeGameSetting(); //game type dropdown
