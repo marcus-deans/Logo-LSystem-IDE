@@ -22,8 +22,6 @@ public class Logo extends GameProcessor{
   public ArrayList<String> doubleCommands;
   public ArrayList<String> singleCommands;
 
-
-
   public Logo() {
     myInstructions = new LinkedList<>();
     doubleCommands = new ArrayList<>(Arrays.asList(FORWARD, BACKWARD, LEFT, RIGHT, TELL));

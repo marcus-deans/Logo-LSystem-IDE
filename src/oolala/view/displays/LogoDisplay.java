@@ -91,31 +91,12 @@ public class LogoDisplay extends Display {
   private ModelTurtle myModelTurtle;
   private ViewTurtle myViewTurtle;
 
-  public static final Paint LINE_COLOUR = Color.INDIANRED;
-  //  private Group root;
-//  private Group lineRoot;
-  public Logo myLogo;
-  //  private TextArea commandLine;
-//  private ComboBox savedPrograms;
-//  private ComboBox historyPrograms;
-//  private ComboBox languagesPrograms;
-//  private Locale langType;
-//  private FileInputStream fis;
   private ComboBox turtleDropdown;
-//  private final double penOpacity = FULL_OPACITY;
-//  private Text gameSettingTitle;
-//  private Text savedTitle;
-//  private Text history;
-//  private Text languages;
-//  private Text turtles;
-//  private String runText;
-//  private int turtleHomeX;
-//  private int turtleHomeY;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-    myLogo = new Logo();
+    myGameProcessor = new Logo();
 //    this.root = new Group();
     spawnTurtle(0);
     gameTitle();
@@ -215,9 +196,9 @@ public class LogoDisplay extends Display {
     runCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        myLogo.inputParser(0, 0, 0, commandLine.getText());
+        myGameProcessor.inputParser(0, 0, 0, commandLine.getText());
         validateCommandStream();
-        myLogo.saveHistory(commandLine.getText());
+        myGameProcessor.saveHistory(commandLine.getText());
         updateHistoryDropdown();
       }
     });
@@ -225,19 +206,19 @@ public class LogoDisplay extends Display {
 
   protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
     historyPrograms.getItems().clear();
-    for (String element : myLogo.getHistory()) {
+    for (String element : myGameProcessor.getHistory()) {
       historyPrograms.getItems().add(element);
     }
   }
 
   @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
   protected void validateCommandStream() {
-    Boolean valid = myLogo.getValidCommand();
+    boolean valid = myGameProcessor.getValidCommand();
     if (!valid) { //TODO: make sure popup works
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Invalid command stream!");
       alert.show();
-      myLogo.setValidCommand(true);
+      myGameProcessor.setValidCommand(true);
     }
   }
 
@@ -295,7 +276,7 @@ public class LogoDisplay extends Display {
   @Override
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myLogo.getMyInstructions();
+    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);

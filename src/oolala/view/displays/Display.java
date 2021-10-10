@@ -103,7 +103,7 @@ public class Display extends Application {
   protected Group root = new Group();
   protected Scene scene;
 
-  protected GameProcessor myLogo;
+  protected GameProcessor myGameProcessor;
 
   protected TextArea commandLine;
   protected ComboBox savedPrograms;
@@ -336,12 +336,12 @@ public class Display extends Application {
   }
 
   protected void validateCommandStream() {
-    Boolean valid = myLogo.getValidCommand();
+    Boolean valid = myGameProcessor.getValidCommand();
     if (!valid) { //TODO: make sure popup works
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Invalid command stream!");
       alert.show();
-      myLogo.setValidCommand(true);
+      myGameProcessor.setValidCommand(true);
     }
   }
 
@@ -356,7 +356,7 @@ public class Display extends Application {
       @Override
       public void handle(ActionEvent event) {
         String filename = getUserFileName();
-        myLogo.saveCommand(commandLine.getText(), filename);
+        myGameProcessor.saveCommand(commandLine.getText(), filename);
         updateSavedDropdown();
       }
     });
@@ -418,7 +418,7 @@ public class Display extends Application {
   //Create method that passes in queue of commands to Logo
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myLogo.getMyInstructions();
+    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
 
     }
