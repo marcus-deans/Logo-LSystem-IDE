@@ -8,9 +8,9 @@ public abstract class MovementModelCommand extends ModelCommand {
 
   //Direction quantifiers in degrees, named via compass
   public static final int NORTH = 0;
+  public static final int EAST = 90;
   public static final int SOUTH = 180;
   public static final int WEST = 270;
-  public static final int EAST = 90;
   public static final int NORTHEAST = 45;
   public static final int NORTHWEST = 315;
   public static final int SOUTHWEST = 225;
@@ -36,11 +36,11 @@ public abstract class MovementModelCommand extends ModelCommand {
     myTurtleCoordinates = myModelTurtle.getTurtleCoordinates();
   }
 
-  protected boolean rightFacing() {
+  public boolean rightFacing() {
     return (myDegreesRotation >= NORTH) && (myDegreesRotation <= SOUTH);
   }
 
-  protected boolean upwardFacing() {
+  public boolean upwardFacing() {
     return (myDegreesRotation <= EAST) || (myDegreesRotation >= WEST);
   }
 
@@ -49,8 +49,9 @@ public abstract class MovementModelCommand extends ModelCommand {
 //  }
 
   protected void computeVectors() {
-    int sinLength = (int) Math.abs(Math.sin(myDegreesRotation) * pixels);
-    int cosLength = (int) Math.abs(Math.cos(myDegreesRotation) * pixels);
+    Math.toRadians(myDegreesRotation);
+    int sinLength = (int) Math.sin(myDegreesRotation) * pixels;
+    int cosLength = (int) Math.cos(myDegreesRotation) * pixels;
     myXVector = checkVectorAngles() ? sinLength : cosLength;
     myYVector = checkVectorAngles() ? cosLength : sinLength;
   }
@@ -59,6 +60,10 @@ public abstract class MovementModelCommand extends ModelCommand {
     return (myDegreesRotation <= NORTHEAST) || (myDegreesRotation >= NORTHWEST) || (
         (myDegreesRotation >= SOUTHEAST)
             && (myDegreesRotation <= SOUTHWEST));
+  }
+
+  protected void recomputeAngles() {
+
   }
 
   protected void setNewCoordinates() {

@@ -11,7 +11,7 @@ public class RotateLeftModelCommand extends RotateModelCommand {
     setLeftRotation();
   }
 
-  private void setLeftRotation() {
+  public void setLeftRotation() { //public for testing purposes
     myModelTurtle.setDegreesRotation(myModelTurtle.getDegreesRotation() - pixels);
     setRotation();
   }
