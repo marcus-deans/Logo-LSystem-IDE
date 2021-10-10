@@ -6,6 +6,12 @@ import oolala.model.commands.Commands;
 
 public class BackwardModelCommand extends MovementModelCommand {
 
+  /**
+   * Construct a backward command to move backward
+   *
+   * @param myModelTurtle the turtle on which the action will be imparted
+   * @param pixels        the distance of movement
+   */
   public BackwardModelCommand(ModelTurtle myModelTurtle, int pixels) {
     super(myModelTurtle, pixels);
     myCommandName = Commands.BACKWARD;
@@ -14,7 +20,8 @@ public class BackwardModelCommand extends MovementModelCommand {
 //    performMovement();
   }
 
-  public void computeBackwardCoordinates() {
+  //compute the coordinates after the backward movement
+  private void computeBackwardCoordinates() {
     int myTurtleOldX = myTurtleCoordinates.turtleOldX;
     int myTurtleOldY = myTurtleCoordinates.turtleOldY;
     int myTurtleOldVisualX = myTurtleVisualCoordinates.turtleOldX;
@@ -30,6 +37,7 @@ public class BackwardModelCommand extends MovementModelCommand {
     myVisualNewY = newVisualCoordinates.turtleNewY;
   }
 
+  //perform the actual calculation of the coordinates based on vector mathematics
   private Coordinates calculateBackwardCoordinates(int oldX, int oldY) {
     int newX = rightFacing() ? oldX - myXVector : oldX + myXVector;
     int newY = upwardFacing() ? oldY + myYVector : oldY - myYVector;

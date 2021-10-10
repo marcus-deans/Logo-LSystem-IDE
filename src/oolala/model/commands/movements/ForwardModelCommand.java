@@ -6,15 +6,21 @@ import oolala.model.commands.Commands;
 
 public class ForwardModelCommand extends MovementModelCommand {
 
+  /**
+   * Construct a forward command to move forward
+   *
+   * @param myModelTurtle the turtle on which the action will be imparted
+   * @param pixels        the distance of movement
+   */
   public ForwardModelCommand(ModelTurtle myModelTurtle, int pixels) {
     super(myModelTurtle, pixels);
     myCommandName = Commands.FORWARD;
     computeForwardCoordinates();
     //TODO: only update coordinates if they are actually within bounds (also used for Creatures)
     setNewCoordinates();
-//    performMovement();
   }
 
+  //compute the coordinates after the forward movement
   public void computeForwardCoordinates() {
     int myTurtleOldX = myTurtleCoordinates.turtleOldX;
     int myTurtleOldY = myTurtleCoordinates.turtleOldY;
@@ -31,6 +37,7 @@ public class ForwardModelCommand extends MovementModelCommand {
     myVisualNewY = newVisualCoordinates.turtleNewY;
   }
 
+  //perform the actual calculation of the coordinates based on vector mathematics
   private Coordinates calculateForwardCoordinates(int oldX, int oldY) {
     int newX = rightFacing() ? oldX + myXVector : oldX - myXVector;
     int newY = upwardFacing() ? oldY - myYVector : oldY + myYVector;
