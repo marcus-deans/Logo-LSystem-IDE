@@ -11,15 +11,7 @@ import oolala.model.instructions.Instruction;
 
 public abstract class GameProcessor {
 
-    protected List<String> myHistory;
-    protected boolean isValidCommand;
-    protected Queue<Instruction> myInstructions;
-
-    public GameProcessor() {
-        isValidCommand = true;
-        myInstructions = new LinkedList<>();
-        myHistory = new ArrayList<>();
-    }
+    public GameProcessor() {}
 
     //TODO: each new line should be a new level
     //Method to save the user input commands to a fle
@@ -48,37 +40,22 @@ public abstract class GameProcessor {
         return nextCommandIsInteger;
     }
 
-    protected void createDoubleCommand(String command, Integer number) {
-        Instruction newInstruction = new Instruction(command, number);
-    }
+    protected abstract void createDoubleCommand(String command, Integer number);
 
-    protected void createSingleCommand(String command) {
-        Instruction newInstruction = new Instruction(command);
-    }
+    protected abstract void createSingleCommand(String command);
 
     public abstract void inputParser(int levels, int angle, int length, String inputStream);
 
-    public List<String> getHistory() {
-        return myHistory;
-    }
+    public abstract List<String> getHistory();
 
-    public void saveHistory(String historyElement) {
-        myHistory.add(historyElement);
-    }
+    public abstract void saveHistory(String historyElement);
 
-    public boolean getValidCommand() {
-        return isValidCommand;
-    }
+    public abstract boolean getValidCommand();
 
-    public void setValidCommand(Boolean status) {
-        isValidCommand = status;
-    }
-
+    public abstract void setValidCommand(Boolean status);
 
     //Method to save the user input commands to a fle
     public abstract void saveCommand(String inputStream, String filename);
 
-    public Queue<Instruction> getMyInstructions() {
-        return myInstructions;
-    }
+    public abstract Queue<Instruction> getMyInstructions();
 }

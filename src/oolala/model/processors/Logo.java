@@ -1,8 +1,7 @@
 package oolala.model.processors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
 import oolala.model.instructions.Instruction;
 
 public class Logo extends GameProcessor{
@@ -21,8 +20,15 @@ public class Logo extends GameProcessor{
   public ArrayList<String> doubleCommands;
   public ArrayList<String> singleCommands;
 
+  private boolean isValidCommand;
+  private Queue<Instruction> myInstructions;
+  private List<String> myHistory;
+
   public Logo() {
     super();
+    isValidCommand = true;
+    myInstructions = new LinkedList<>();
+    myHistory = new ArrayList<>();
     doubleCommands = new ArrayList<>(Arrays.asList(FORWARD, BACKWARD, LEFT, RIGHT, TELL));
     singleCommands = new ArrayList<>(Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
   }
@@ -64,4 +70,21 @@ public class Logo extends GameProcessor{
     String path = "data/examples/logo" + filename + ".txt";
     saveCommandGivenPath(inputStream, path);
   }
+
+  public List<String> getHistory() {
+    return myHistory;
+  }
+
+  public void saveHistory(String historyElement) {
+    myHistory.add(historyElement);
+  }
+
+  public boolean getValidCommand() {
+    return isValidCommand;
+  }
+
+  public void setValidCommand(Boolean status) {
+    isValidCommand = status;
+  }
+
 }
