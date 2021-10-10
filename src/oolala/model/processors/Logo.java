@@ -53,7 +53,7 @@ public class Logo extends GameProcessor{
           inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i,
           inputCommands)) { //Valid double command (requires a second number)
         createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i + 1)));
-        continue;
+        break;
       } else { //Not a valid command stream
         isValidCommand = false;
         break;
