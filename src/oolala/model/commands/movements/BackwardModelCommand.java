@@ -1,5 +1,6 @@
 package oolala.model.commands.movements;
 
+import oolala.model.Coordinates;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 
@@ -13,11 +14,26 @@ public class BackwardModelCommand extends MovementModelCommand {
 //    performMovement();
   }
 
-  private void computeBackwardCoordinates() {
+  public void computeBackwardCoordinates() {
     int myTurtleOldX = myTurtleCoordinates.turtleOldX;
     int myTurtleOldY = myTurtleCoordinates.turtleOldY;
-    myNewX = rightFacing() ? myTurtleOldX - myXVector : myTurtleOldX + myXVector;
-    myNewY = upwardFacing() ? myTurtleOldY + myYVector : myTurtleOldY - myYVector;
+    int myTurtleOldVisualX = myTurtleVisualCoordinates.turtleOldX;
+    int myTurtleOldVisualY = myTurtleVisualCoordinates.turtleOldY;
+
+    Coordinates newCoordinates = calculateBackwardCoordinates(myTurtleOldX, myTurtleOldY);
+    myNewX = newCoordinates.turtleNewX;
+    myNewY = newCoordinates.turtleNewY;
+
+    Coordinates newVisualCoordinates = calculateBackwardCoordinates(myTurtleOldVisualX,
+        myTurtleOldVisualY);
+    myVisualNewX = newVisualCoordinates.turtleNewX;
+    myVisualNewY = newVisualCoordinates.turtleNewY;
+  }
+
+  private Coordinates calculateBackwardCoordinates(int oldX, int oldY) {
+    int newX = rightFacing() ? oldX - myXVector : oldX + myXVector;
+    int newY = upwardFacing() ? oldY + myYVector : oldY - myYVector;
+    return new Coordinates(newX, newY);
   }
 }
 

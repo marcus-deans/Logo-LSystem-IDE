@@ -14,7 +14,7 @@ public class ViewTurtle {
   public int myID;
   private ImageView myTurtleView;
   private static final String TURTLE_IMAGE = "turtle-picture.png";
-  private static final double TURTLE_SIZE = 70;
+  public static final double TURTLE_SIZE = 40;
   private static final int OFFSET_Y = 15;
   private static final int OFFSET_Y_TOP = 26;
 
@@ -24,16 +24,17 @@ public class ViewTurtle {
 
   private int myX;
   private int myY;
+
   private int myDegreesRotation;
-  private boolean penOpacity;
+  private boolean penOpacity = true;
 
   public ViewTurtle(int id) {
     myID = id;
     // make turtle shape and set property
     initializeTurtleView();
 
-    myTurtleView.setX(FRAME_WIDTH / 2.0);
-    myTurtleView.setY(FRAME_HEIGHT / 2.0);
+//    myTurtleView.setX(FRAME_WIDTH / 2.0);
+//    myTurtleView.setY(FRAME_HEIGHT / 2.0);
   }
 
   private void initializeTurtleView() {
@@ -46,6 +47,7 @@ public class ViewTurtle {
     ImageView newTurtleView = new ImageView(new Image(TURTLE_IMAGE));
     newTurtleView.setFitHeight(TURTLE_SIZE);
     newTurtleView.setFitWidth(TURTLE_SIZE);
+
     return newTurtleView;
   }
 
