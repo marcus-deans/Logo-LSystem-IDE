@@ -3,15 +3,16 @@ package oolala.view.displays;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Queue;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
@@ -72,6 +73,17 @@ public class LogoDisplay extends Display {
   public static final int RUN_X = 620;
   public static final int RUN_Y = 530;
 
+  //Line drawings
+  public static final double LINE_WIDTH = 2.0;
+  public static final double FULL_OPACITY = 100.0;
+  public static final double NO_OPACITY = 0.0;
+
+  //Games
+  private final List<String> gameTypes = new ArrayList<>(
+      Arrays.asList("Logo", "L-System", "Darwin"));
+  //Languages
+  private final List<String> languageTypes = new ArrayList<>(
+      Arrays.asList("English", "Spanish", "French"));
   //Turtles
   private final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
   private final List<ModelTurtle> allModelTurtles = new ArrayList<>();
@@ -94,17 +106,26 @@ public class LogoDisplay extends Display {
   private Locale langType;
   private FileInputStream fis;
   private ComboBox turtleDropdown;
+  private final double penOpacity = FULL_OPACITY;
+  private Text gameSettingTitle;
+  private Text savedTitle;
+  private Text history;
+  private Text languages;
+  private Text turtles;
+  private String runText;
+  private int turtleHomeX;
+  private int turtleHomeY;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-    myGameProcessor = new Logo();
-//    this.root = new Group();
+    myProcessor = new Logo();
+    root = new Group();
     spawnTurtle(0);
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();
-    super.initializeSavedPrograms(); //saved programs dropdown
+    initializeSavedPrograms(); //saved programs dropdown
     historyTitle();
     initializeHistory(); //program history dropdown
     languagesTitle();
@@ -187,7 +208,7 @@ public class LogoDisplay extends Display {
     root.getChildren().add(turtleDropdown);
   }
 
-  //  @Override
+  @Override
   protected void initializeRunButton() {
     Button runCommands = new Button(runTitle());
     runCommands.setPrefWidth(RUN_WIDTH);
@@ -198,19 +219,12 @@ public class LogoDisplay extends Display {
     runCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        myGameProcessor.inputParser(0, 0, 0, commandLine.getText());
+        myProcessor.inputParser(0, 0, 0, commandLine.getText());
         validateCommandStream();
-        myGameProcessor.saveHistory(commandLine.getText());
+        myProcessor.saveHistory(commandLine.getText());
         updateHistoryDropdown();
       }
     });
-  }
-
-  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
-    historyPrograms.getItems().clear();
-    for (String element : myGameProcessor.getHistory()) {
-      historyPrograms.getItems().add(element);
-    }
   }
 
   private void tellTurtle(int id) {
@@ -266,7 +280,7 @@ public class LogoDisplay extends Display {
   @Override
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
+    Queue<Instruction> instructions = myProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);
