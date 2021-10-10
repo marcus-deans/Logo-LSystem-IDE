@@ -5,8 +5,12 @@ import oolala.model.commands.Commands;
 
 /**
  * @author marcusdeans
- * <p>
- * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ *
+ * Purpose: Create a home command to move the object home
+ * Assumptions: Functioning ModelTurtle with defined home position; other values error-checked
+ * Dependencies: ModelTurtle, MovementModelCommand, Command
+ * Example Usage: used for 'hm' command
+ * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
  */
 public class HomeModelCommand extends MovementModelCommand {
 

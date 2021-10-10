@@ -4,6 +4,11 @@ import oolala.model.commands.Commands;
 import oolala.model.commands.ViewCommand;
 import oolala.view.ViewTurtle;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ */
 public class ShowViewCommand extends ViewCommand {
 
   /**

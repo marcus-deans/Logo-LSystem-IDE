@@ -6,8 +6,12 @@ import oolala.model.commands.ModelCommand;
 
 /**
  * @author marcusdeans
- * <p>
- * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ *
+ * Purpose: Create a abstract movement command that will be used to move object around
+ * Assumptions: Functioning ModelTurtle with defined coordinates on screen; other values error-checked
+ * Dependencies: ModelTurtle, Command
+ * Example Usage: used for 'fd', 'bk', 'hm' commands to move Turtle around
+ * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
  */
 public abstract class MovementModelCommand extends ModelCommand {
 

@@ -6,8 +6,12 @@ import oolala.model.commands.Commands;
 
 /**
  * @author marcusdeans
- * <p>
- * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ *
+ * Purpose: Create a forward command to move the object forwards
+ * Assumptions: Functioning ModelTurtle and position; other values error-checked
+ * Dependencies: ModelTurtle, MovementModelCommand, Command
+ * Example Usage: used for 'fd' command
+ * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
  */
 public class ForwardModelCommand extends MovementModelCommand {
 

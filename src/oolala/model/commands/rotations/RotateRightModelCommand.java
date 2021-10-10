@@ -5,8 +5,12 @@ import oolala.model.commands.Commands;
 
 /**
  * @author marcusdeans
- * <p>
- * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ *
+ * Purpose: Create a rotation command that will be used to rotate object right
+ * Assumptions: Functioning ModelTurtle with defined rotation on screen; other values error-checked
+ * Dependencies: ModelTurtle, RotateModelCommand, Command
+ * Example Usage: used for 'rt' command
+ * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
  */
 public class RotateRightModelCommand extends RotateModelCommand {
 

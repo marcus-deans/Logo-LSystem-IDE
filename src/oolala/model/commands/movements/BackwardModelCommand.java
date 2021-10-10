@@ -6,8 +6,12 @@ import oolala.model.commands.Commands;
 
 /**
  * @author marcusdeans
- * <p>
- * Purpose: Assumptions: Dependencies: Example Usage: User Details:
+ *
+ * Purpose: Create a backward command to move the object backwards
+ * Assumptions: Functioning ModelTurtle and position; other values error-checked
+ * Dependencies: ModelTurtle, MovementModelCommand, Command
+ * Example Usage: used for 'bk' command
+ * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
  */
 public class BackwardModelCommand extends MovementModelCommand {
 
