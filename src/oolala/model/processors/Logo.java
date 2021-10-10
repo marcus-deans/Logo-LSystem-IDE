@@ -7,7 +7,7 @@ import java.util.*;
 
 import oolala.model.instructions.Instruction;
 
-public class Logo {
+public class Logo extends GameProcessor{
   public static final String FORWARD = "fd";
   public static final String BACKWARD = "bk";
   public static final String LEFT = "lt";
@@ -54,41 +54,21 @@ public class Logo {
     }
   }
 
-  private void createDoubleCommand(String command, Integer number) {
+  protected void createDoubleCommand(String command, Integer number) {
     Instruction newInstruction = new Instruction(command, number);
     myInstructions.add(newInstruction);
   }
 
-  private void createSingleCommand(String command) {
+  protected void createSingleCommand(String command) {
     Instruction newInstruction = new Instruction(command);
     myInstructions.add(newInstruction);
   }
 
-  private boolean nextCommandIsInt(int index, List<String> inputCommands) {
-    boolean nextCommandIsInteger = true;
-    try{
-      Integer.parseInt(inputCommands.get(index+1));
-    }catch(NumberFormatException e){
-      nextCommandIsInteger = false;
-    }
-    return nextCommandIsInteger;
-  }
 
   //Method to save the user input commands to a fle
   public void saveCommand(String inputStream, String filename) {
     String path = "data/examples/logo" + filename + ".txt";
-    File newProgram = new File(path);
-    try {
-      if (newProgram.createNewFile()) {
-        FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
-        writeToFile.write(inputStream);
-        writeToFile.close();
-      } else { //TODO: error handling instead of a sys.out.print statement
-        System.out.println("File already exists.");
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    saveCommandGivenPath(inputStream, path);
   }
 
   public void saveHistory(String historyElement) {
