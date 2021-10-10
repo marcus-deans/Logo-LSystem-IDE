@@ -3,6 +3,8 @@ package oolala.model.processors;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import oolala.model.instructions.Instruction;
@@ -13,6 +15,11 @@ public abstract class GameProcessor {
     protected boolean isValidCommand;
     protected Queue<Instruction> myInstructions;
 
+    public GameProcessor() {
+        isValidCommand = true;
+        myInstructions = new LinkedList<>();
+        myHistory = new ArrayList<>();
+    }
 
     //TODO: each new line should be a new level
     //Method to save the user input commands to a fle

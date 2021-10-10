@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
@@ -211,16 +210,16 @@ public class LogoDisplay extends Display {
     }
   }
 
-  @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
-  protected void validateCommandStream() {
-    boolean valid = myGameProcessor.getValidCommand();
-    if (!valid) { //TODO: make sure popup works
-      Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setContentText("Invalid command stream!");
-      alert.show();
-      myGameProcessor.setValidCommand(true);
-    }
-  }
+//  @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
+//  protected void validateCommandStream() {
+//    boolean valid = myGameProcessor.getValidCommand();
+//    if (!valid) { //TODO: make sure popup works
+//      Alert alert = new Alert(Alert.AlertType.ERROR);
+//      alert.setContentText("Invalid command stream!");
+//      alert.show();
+//      myGameProcessor.setValidCommand(true);
+//    }
+//  }
 
 
   private void tellTurtle(int id) {

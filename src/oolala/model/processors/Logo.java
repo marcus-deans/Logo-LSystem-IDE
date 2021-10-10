@@ -2,7 +2,6 @@ package oolala.model.processors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import oolala.model.instructions.Instruction;
 
@@ -23,11 +22,9 @@ public class Logo extends GameProcessor{
   public ArrayList<String> singleCommands;
 
   public Logo() {
-    myInstructions = new LinkedList<>();
+    super();
     doubleCommands = new ArrayList<>(Arrays.asList(FORWARD, BACKWARD, LEFT, RIGHT, TELL));
     singleCommands = new ArrayList<>(Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
-    myHistory = new ArrayList<>();
-    isValidCommand = true;
   }
 
   //TODO: ignore lines that start with # - filter out before splitting inputCommands
