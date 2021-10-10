@@ -2,7 +2,6 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import javafx.event.ActionEvent;
@@ -83,17 +82,6 @@ public class LogoDisplay extends Display {
   public static final int CLEAR_X = 620;
   public static final int CLEAR_Y = 600;
 
-  //Line drawings
-  public static final double LINE_WIDTH = 2.0;
-  public static final double FULL_OPACITY = 100.0;
-  public static final double NO_OPACITY = 0.0;
-
-  //Games
-  private final List<String> gameTypes = new ArrayList<>(
-      Arrays.asList("Logo", "L-System", "Darwin"));
-  //Languages
-  private final List<String> languageTypes = new ArrayList<>(
-      Arrays.asList("English", "Spanish", "French"));
   //Turtles
   private final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
   private final List<ModelTurtle> allModelTurtles = new ArrayList<>();

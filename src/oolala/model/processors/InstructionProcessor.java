@@ -25,9 +25,7 @@ public class InstructionProcessor {
     int commandPixels = currentInstruction.pixels;
     switch (currentInstruction.order) {
       case PENUP -> new PenUpViewCommand(myTurtLink.myViewTurtle);
-      //penOpacity = NO_OPACITY;
       case PENDOWN -> new PenDownViewCommand(myTurtLink.myViewTurtle);
-      //penOpacity = FULL_OPACITY;
       case FORWARD -> new ForwardModelCommand(myTurtLink.myModelTurtle, commandPixels);
       case BACKWARD -> new BackwardModelCommand(myTurtLink.myModelTurtle, commandPixels);
       case RIGHT -> new RotateRightModelCommand(myTurtLink.myModelTurtle, commandPixels);

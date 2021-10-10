@@ -93,11 +93,6 @@ public class Display extends Application {
   public static final int CLEAR_X = 620;
   public static final int CLEAR_Y = 600;
 
-  //Line drawings
-  public static final double LINE_WIDTH = 2.0;
-  public static final double FULL_OPACITY = 100.0;
-  public static final double NO_OPACITY = 0.0;
-
   //Games
   protected final List<String> gameTypes = new ArrayList<>(
       Arrays.asList("Logo", "L-System", "Darwin"));
@@ -105,11 +100,8 @@ public class Display extends Application {
   protected final List<String> languageTypes = new ArrayList<>(
       Arrays.asList("English", "Spanish", "French"));
 
-
-  public static final Paint LINE_COLOUR = Color.INDIANRED;
   protected Group root = new Group();
   protected Scene scene;
-  protected Group lineRoot;
 
   protected GameProcessor myLogo;
 
@@ -120,7 +112,6 @@ public class Display extends Application {
   protected Locale langType;
   protected FileInputStream fis;
   protected ComboBox turtleDropdown;
-  protected final double penOpacity = FULL_OPACITY;
   protected Text gameSettingTitle;
   protected Text savedTitle;
   protected Text history;
