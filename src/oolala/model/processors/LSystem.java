@@ -7,7 +7,7 @@ import java.util.*;
 import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
 
-public class LSystem {
+public class LSystem extends GameProcessor{
 
     public List<String> validCommands;
     public List<String> doubleAngleCommands;
@@ -53,7 +53,7 @@ public class LSystem {
 
     //TODO: ignore lines that start with #
     //Method to parse the input
-    public void inputParser(int levels, int angle, int length, String inputStream){
+    private void inputParser(int levels, int angle, int length, String inputStream){
         List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
         int skip = 0;
         for(int i=0; i<inputCommands.size(); i++){
@@ -146,22 +146,9 @@ public class LSystem {
         }
     }
 
-    //TODO: each new line should be a new level
-    //Method to save the user input commands to a fle
     public void saveCommand(String inputStream, String filename) {
         String path = "data/examples/lsystem" + filename + ".txt";
-        File newProgram = new File(path);
-        try {
-            if (newProgram.createNewFile()) {
-                FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
-                writeToFile.write(inputStream);
-                writeToFile.close();
-            } else { //TODO: error handling instead of a sys.out.print statement
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveCommandGivenPath(inputStream, path);
     }
 
     public void saveHistory(String historyElement) {
