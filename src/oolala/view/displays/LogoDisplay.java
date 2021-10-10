@@ -1,11 +1,9 @@
 package oolala.view.displays;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Queue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
@@ -107,36 +104,36 @@ public class LogoDisplay extends Display {
   private ViewTurtle myViewTurtle;
 
   public static final Paint LINE_COLOUR = Color.INDIANRED;
-  private Group root;
-  private Group lineRoot;
-  private Logo myLogo;
-  private TextArea commandLine;
-  private ComboBox savedPrograms;
-  private ComboBox historyPrograms;
-  private ComboBox languagesPrograms;
-  private Locale langType;
-  private FileInputStream fis;
+  //  private Group root;
+//  private Group lineRoot;
+  public Logo myLogo;
+  //  private TextArea commandLine;
+//  private ComboBox savedPrograms;
+//  private ComboBox historyPrograms;
+//  private ComboBox languagesPrograms;
+//  private Locale langType;
+//  private FileInputStream fis;
   private ComboBox turtleDropdown;
-  private final double penOpacity = FULL_OPACITY;
-  private Text gameSettingTitle;
-  private Text savedTitle;
-  private Text history;
-  private Text languages;
-  private Text turtles;
-  private String runText;
-  private int turtleHomeX;
-  private int turtleHomeY;
+//  private final double penOpacity = FULL_OPACITY;
+//  private Text gameSettingTitle;
+//  private Text savedTitle;
+//  private Text history;
+//  private Text languages;
+//  private Text turtles;
+//  private String runText;
+//  private int turtleHomeX;
+//  private int turtleHomeY;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
     myLogo = new Logo();
-    this.root = new Group();
+//    this.root = new Group();
     spawnTurtle(0);
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();
-    initializeSavedPrograms(); //saved programs dropdown
+    super.initializeSavedPrograms(); //saved programs dropdown
     historyTitle();
     initializeHistory(); //program history dropdown
     languagesTitle();
@@ -219,7 +216,7 @@ public class LogoDisplay extends Display {
     root.getChildren().add(turtleDropdown);
   }
 
-  @Override
+  //  @Override
   protected void initializeRunButton() {
     Button runCommands = new Button(runTitle());
     runCommands.setPrefWidth(RUN_WIDTH);
@@ -230,12 +227,19 @@ public class LogoDisplay extends Display {
     runCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        myLogo.inputParser(commandLine.getText());
+        myLogo.inputParser(0, 0, 0, commandLine.getText());
         validateCommandStream();
         myLogo.saveHistory(commandLine.getText());
         updateHistoryDropdown();
       }
     });
+  }
+
+  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
+    historyPrograms.getItems().clear();
+    for (String element : myLogo.getHistory()) {
+      historyPrograms.getItems().add(element);
+    }
   }
 
   @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
