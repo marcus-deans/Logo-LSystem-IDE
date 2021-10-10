@@ -17,9 +17,9 @@ public abstract class MovementModelCommand extends ModelCommand {
 
   //Direction quantifiers in degrees, named via compass
   public static final int NORTH = 0;
+  public static final int EAST = 90;
   public static final int SOUTH = 180;
   public static final int WEST = 270;
-  public static final int EAST = 90;
   public static final int NORTHEAST = 45;
   public static final int NORTHWEST = 315;
   public static final int SOUTHWEST = 225;
@@ -84,6 +84,7 @@ public abstract class MovementModelCommand extends ModelCommand {
   }
 
   //set the newly computed coordinates in the Turtle object
+
   protected void setNewCoordinates() {
     myModelTurtle.setNewX(myNewX);
     myModelTurtle.setVisualNewX(myVisualNewX);
