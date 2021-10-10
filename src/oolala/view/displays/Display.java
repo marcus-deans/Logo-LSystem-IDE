@@ -138,6 +138,16 @@ public class Display extends Application {
     //Initialize the view classes
 //    myLogo = new Logo();
 //    this.root = new Group();
+
+//    initializeRunButton(); //initialize the program run button
+
+    //Set the scene
+    scene = new Scene(root, width, height, background);
+    scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
+    return scene;
+  }
+
+  protected void performInitialSetup() {
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();
@@ -147,24 +157,18 @@ public class Display extends Application {
     languagesTitle();
     initializeLanguages();
     initializeCommandLine(); //initialize the command line
-//    initializeRunButton(); //initialize the program run button
     initializeSaveButton(); //initializes the program save button
     initializeClearScreen();
     initializeBoundaries(); // sets up program boundaries for where the turtle will move
-    //Set the scene
-    scene = new Scene(root, width, height, background);
-    scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
-    return scene;
   }
-
 
   protected void initializeBoundaries() {
     Line topLine = new Line(OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP);
     Line leftLine = new Line(OFFSET_X, OFFSET_Y_TOP, OFFSET_X, COMMAND_Y - OFFSET_Y);
     Line rightLine = new Line(FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X,
-            COMMAND_Y - OFFSET_Y);
+        COMMAND_Y - OFFSET_Y);
     Line bottomLine = new Line(OFFSET_X, COMMAND_Y - OFFSET_Y, FRAME_WIDTH - OFFSET_X,
-            COMMAND_Y - OFFSET_Y);
+        COMMAND_Y - OFFSET_Y);
     root.getChildren().add(topLine);
     root.getChildren().add(leftLine);
     root.getChildren().add(rightLine);
@@ -257,6 +261,7 @@ public class Display extends Application {
 
   protected void historyTitle() {
     history = new Text(getWord("history_text"));
+    history.setId("dropdown-label");
     history.setLayoutX(HISTORY_TITLE_X);
     history.setLayoutY(HISTORY_TITLE_Y);
     root.getChildren().add(history);
@@ -275,6 +280,7 @@ public class Display extends Application {
 
   protected void languagesTitle() {
     languages = new Text(getWord("language_text"));
+    languages.setId("dropdown-label");
     languages.setLayoutX(LANGUAGES_TITLE_X);
     languages.setLayoutY(LANGUAGES_TITLE_Y);
     root.getChildren().add(languages);
@@ -405,7 +411,7 @@ public class Display extends Application {
       created = file.createNewFile();
       return created;
     } catch (IOException e) {
-      e.printStackTrace();
+      e.printStackTrace(); //TODO: don't print stack trace directly
     } finally {
       if (created) {
         file.delete();
@@ -424,7 +430,15 @@ public class Display extends Application {
     }
   }
 
-  protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage, Group root) {
+  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
+    historyPrograms.getItems().clear();
+    for (String element : myGameProcessor.getHistory()) {
+      historyPrograms.getItems().add(element);
+    }
+  }
+
+  protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
+      Group root) {
 
   }
 

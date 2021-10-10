@@ -96,23 +96,23 @@ public class LogoDisplay extends Display {
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
     myGameProcessor = new Logo();
-//    this.root = new Group();
     spawnTurtle(0);
-    gameTitle();
-    initializeGameSetting(); //game type dropdown
-    savedTitle();
-    super.initializeSavedPrograms(); //saved programs dropdown
-    historyTitle();
-    initializeHistory(); //program history dropdown
-    languagesTitle();
-    initializeLanguages();
-    turtleTitle();
+    performInitialSetup();
     initializeTurtleOptions(); //dropdown of all turtles and current running turtle
-    initializeCommandLine(); //initialize the command line
+//    initializeCommandLine(); //initialize the command line
     initializeRunButton(); //initialize the program run button
-    initializeSaveButton(); //initializes the program save button
-    initializeClearScreen();
-    initializeBoundaries(); // sets up program boundaries for where the turtle will move
+//    initializeClearScreen();
+//    initializeBoundaries(); // sets up program boundaries for where the turtle will move
+//    initializeSaveButton(); //initializes the program save button
+//    gameTitle();
+//    initializeGameSetting(); //game type dropdown
+//    savedTitle();
+//    initializeSavedPrograms(); //saved programs dropdown
+//    historyTitle();
+//    initializeHistory(); //program history dropdown
+//    languagesTitle();
+//    initializeLanguages();
+    turtleTitle();
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
@@ -203,24 +203,6 @@ public class LogoDisplay extends Display {
     });
   }
 
-  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
-    historyPrograms.getItems().clear();
-    for (String element : myGameProcessor.getHistory()) {
-      historyPrograms.getItems().add(element);
-    }
-  }
-
-//  @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
-//  protected void validateCommandStream() {
-//    boolean valid = myGameProcessor.getValidCommand();
-//    if (!valid) { //TODO: make sure popup works
-//      Alert alert = new Alert(Alert.AlertType.ERROR);
-//      alert.setContentText("Invalid command stream!");
-//      alert.show();
-//      myGameProcessor.setValidCommand(true);
-//    }
-//  }
-
 
   private void tellTurtle(int id) {
     //loop through allTurtles - if ID exists, switch to this turtle
@@ -279,7 +261,6 @@ public class LogoDisplay extends Display {
     if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);
-//      myTurtleLinkage.update();
       //TODO: create map (possibly global) ->
       drawTurtleLine();
       myModelTurtle.updateCoordinates();
