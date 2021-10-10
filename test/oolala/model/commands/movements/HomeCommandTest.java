@@ -1,6 +1,8 @@
 package oolala.model.commands.movements;
 
-import static oolala.view.displays.LogoDisplay.*;
+import static oolala.view.displays.LogoDisplay.COMMAND_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_WIDTH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oolala.model.ModelTurtle;
@@ -18,7 +20,7 @@ class HomeCommandTest {
 
     @Test
     void computeHomeCoordinates() {
-        HomeModelCommand hc = new HomeModelCommand(myModelTurtle, 100);
+        HomeModelCommand hc = new HomeModelCommand(myModelTurtle);
         assertEquals(TurtleHomeX, hc.myNewX);
         assertEquals(TurtleHomeY, hc.myNewY);
     }

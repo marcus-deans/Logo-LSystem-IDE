@@ -8,7 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+<<<<<<< HEAD
 public class Darwin {
+=======
+public class Darwin extends GameProcessor{
+>>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
 
     public static final String MOVE = "move";
     public static final String LEFT = "left";
@@ -52,6 +56,7 @@ public class Darwin {
         }
     }
 
+<<<<<<< HEAD
     private boolean nextCommandIsInt(int index, List<String> inputCommands) {
         boolean nextCommandIsInteger = true;
         try{
@@ -63,15 +68,25 @@ public class Darwin {
     }
 
     private void createSingleCommand(String command) {
+=======
+    @Override
+    protected void createSingleCommand(String command) {
+>>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
         CreatureInstruction singleInstruction = new CreatureInstruction(command);
         myInstructions.add(singleInstruction);
     }
 
+<<<<<<< HEAD
     private void createDoubleCommand(String command, Integer valueOf) {
+=======
+    @Override
+    protected void createDoubleCommand(String command, Integer valueOf) {
+>>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
         CreatureInstruction doubleInstruction = new CreatureInstruction(command, valueOf);
         myInstructions.add(doubleInstruction);
     }
 
+<<<<<<< HEAD
     //Method to save the user input commands to a fle
     public void saveCommand(String inputStream, String filename) {
         String path = "data/examples/darwin" + filename + ".txt";
@@ -87,6 +102,11 @@ public class Darwin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+=======
+    public void saveCommand(String inputStream, String filename) {
+        String path = "data/examples/darwin" + filename + ".txt";
+        saveCommandGivenPath(inputStream, path);
+>>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
     }
 
     public void saveHistory(String historyElement) {
