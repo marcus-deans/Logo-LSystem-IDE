@@ -72,6 +72,7 @@ public abstract class MovementModelCommand extends ModelCommand {
 
   //use vector math to determine the value of the vectors on each axis
   protected void computeVectors() {
+    Math.toRadians(myDegreesRotation);
     int sinLength = (int) Math.abs(Math.sin(myDegreesRotation) * pixels);
     int cosLength = (int) Math.abs(Math.cos(myDegreesRotation) * pixels);
     myXVector = checkVectorOrientation() ? sinLength : cosLength;
