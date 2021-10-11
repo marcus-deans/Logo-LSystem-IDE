@@ -1,5 +1,8 @@
 package oolala.model.commands;
 
+/**
+ * Enum to describe the the different commands for better formatting
+ */
 public enum Commands {
   FORWARD("fd"),
   BACKWARD("bk"),
@@ -27,6 +30,11 @@ public enum Commands {
     this.commandString = commandString;
   }
 
+  /**
+   * Get the string associated with command
+   *
+   * @return String that was specified for the command
+   */
   public String getString() {
     return this.commandString;
   }
