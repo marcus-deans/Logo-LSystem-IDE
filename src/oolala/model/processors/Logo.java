@@ -71,18 +71,27 @@ public class Logo extends GameProcessor{
     saveCommandGivenPath(inputStream, path);
   }
 
+  @Override
+  public Queue<Instruction> getMyInstructions() {
+    return myInstructions;
+  }
+
+  @Override
   public List<String> getHistory() {
     return myHistory;
   }
 
+  @Override
   public void saveHistory(String historyElement) {
     myHistory.add(historyElement);
   }
 
+  @Override
   public boolean getValidCommand() {
     return isValidCommand;
   }
 
+  @Override
   public void setValidCommand(Boolean status) {
     isValidCommand = status;
   }

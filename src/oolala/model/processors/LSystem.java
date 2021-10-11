@@ -22,10 +22,10 @@ public class LSystem extends GameProcessor{
 
     public List<String> expansionLevels; //expansions in LSystem language
     public List<List<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
-    private final Queue<Instruction> myInstructions; //TODO: do we need this?
+    private Queue<Instruction> myInstructions; //TODO: do we need this?
 
-    private final List<String> myHistory;
-    private final boolean isValidCommand;
+    private List<String> myHistory;
+    private boolean isValidCommand;
 
 
     public LSystem() {
@@ -57,8 +57,8 @@ public class LSystem extends GameProcessor{
     //TODO: ignore lines that start with #
     //Method to parse the input
     public void inputParser(int levels, int angle, int length, String inputStream) {
-        List<String> inputCommands = Arrays.asList(
-            inputStream.split("\\s+")); //split by any space or tab
+        isValidCommand = true;
+        List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
         int skip = 0;
         for (int i = 0; i < inputCommands.size(); i++) {
             if (skip > 0) {
@@ -80,6 +80,7 @@ public class LSystem extends GameProcessor{
                 commandConversion.put(inputCommands.get(i + 1), instructionDefinition);
                 skip += instructionDefinition.size() + 1; //skip letter and definition
             } else { //TODO: error handling - invalid command stream
+                isValidCommand = false;
                 break;
             }
         }
@@ -158,5 +159,30 @@ public class LSystem extends GameProcessor{
     public void saveCommand(String inputStream, String filename) {
         String path = "data/examples/lsystem" + filename + ".txt";
         saveCommandGivenPath(inputStream, path);
+    }
+
+    @Override
+    public Queue<Instruction> getMyInstructions() {
+        return myInstructions;
+    }
+
+    @Override
+    public List<String> getHistory() {
+        return myHistory;
+    }
+
+    @Override
+    public void saveHistory(String historyElement) {
+        myHistory.add(historyElement);
+    }
+
+    @Override
+    public boolean getValidCommand() {
+        return isValidCommand;
+    }
+
+    @Override
+    public void setValidCommand(Boolean status) {
+        isValidCommand = status;
     }
 }

@@ -1,5 +1,6 @@
 package oolala.view.displays;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import oolala.model.ModelCreature;
@@ -16,4 +17,13 @@ public class DarwinDisplay extends Display{
   }
 
 
+  @Override
+  protected void handleInputParsing(String text) {
+    //TODO: send stuff to input parser
+  }
+
+  @Override
+  protected File[] getFilesFromPath() {
+    return new File("data/examples/darwin").listFiles();
+  }
 }

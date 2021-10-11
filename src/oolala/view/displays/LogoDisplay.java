@@ -95,28 +95,20 @@ public class LogoDisplay extends Display {
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
+    performInitialSetup(); //setup everything common between all 3 displays
     myGameProcessor = new Logo();
     spawnTurtle(0);
-    performInitialSetup();
     initializeTurtleOptions(); //dropdown of all turtles and current running turtle
-//    initializeCommandLine(); //initialize the command line
-    initializeRunButton(); //initialize the program run button
-//    initializeClearScreen();
-//    initializeBoundaries(); // sets up program boundaries for where the turtle will move
-//    initializeSaveButton(); //initializes the program save button
-//    gameTitle();
-//    initializeGameSetting(); //game type dropdown
-//    savedTitle();
-//    initializeSavedPrograms(); //saved programs dropdown
-//    historyTitle();
-//    initializeHistory(); //program history dropdown
-//    languagesTitle();
-//    initializeLanguages();
     turtleTitle();
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
     return scene;
+  }
+
+  @Override
+  protected File[] getFilesFromPath() {
+      return new File("data/examples/logo").listFiles();
   }
 
   private void spawnTurtle(int id) {
@@ -154,6 +146,11 @@ public class LogoDisplay extends Display {
     }
   }
 
+  @Override
+  protected void handleInputParsing(String text) {
+    myGameProcessor.inputParser(0, 0, 0, text);
+  }
+
   private void turtleTitle() {
     turtles = new Text(getWord("turtles_text"));
     turtles.setLayoutX(TURTLES_TITLE_X);
@@ -184,24 +181,6 @@ public class LogoDisplay extends Display {
     root.getChildren().add(turtleDropdown);
   }
 
-  //  @Override
-  protected void initializeRunButton() {
-    Button runCommands = new Button(runTitle());
-    runCommands.setPrefWidth(RUN_WIDTH);
-    runCommands.setPrefHeight(RUN_HEIGHT);
-    runCommands.setLayoutX(RUN_X);
-    runCommands.setLayoutY(RUN_Y);
-    root.getChildren().add(runCommands);
-    runCommands.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        myGameProcessor.inputParser(0, 0, 0, commandLine.getText());
-        validateCommandStream();
-        myGameProcessor.saveHistory(commandLine.getText());
-        updateHistoryDropdown();
-      }
-    });
-  }
 
 
   private void tellTurtle(int id) {

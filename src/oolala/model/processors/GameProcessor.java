@@ -40,9 +40,9 @@ public abstract class GameProcessor {
         return nextCommandIsInteger;
     }
 
-    protected abstract void createDoubleCommand(String command, Integer number);
+    protected void createDoubleCommand(String command, Integer number){}; //NOT abstract
 
-    protected abstract void createSingleCommand(String command);
+    protected void createSingleCommand(String command){}; //NOT abstract
 
     public abstract void inputParser(int levels, int angle, int length, String inputStream);
 
