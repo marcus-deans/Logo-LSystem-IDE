@@ -35,6 +35,7 @@ public class DarwinDisplay extends Display {
   @Override
   protected void initializeCreatureDropdown() {
     allCreatures = new ComboBox();
+    updateCreatureDropdown();
     allCreatures.setOnAction((event) -> {
       mySpeciesIdentifier = allCreatures.getSelectionModel().getSelectedItem().toString();
     });
@@ -42,6 +43,12 @@ public class DarwinDisplay extends Display {
     allCreatures.setLayoutY(CREATURES_DROPDOWN_Y);
     allCreatures.setMaxWidth(MAX_DROPDOWN_WIDTH);
     root.getChildren().add(allCreatures);
+  }
+
+  private void updateCreatureDropdown() {
+    allCreatures.getItems().clear();
+
+
   }
 
 
