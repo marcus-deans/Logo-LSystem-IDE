@@ -2,6 +2,7 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -13,12 +14,13 @@ import oolala.view.darwin.CreatureLinkage;
 
 public class DarwinDisplay extends Display {
 
-  private static ArrayList<CreatureLinkage> allCreatureLinkages;
+  private static List<CreatureLinkage> allCreatureLinkages;
+  private List<String> allCreatureNames;
   private String mySpeciesIdentifier;
   private ComboBox allCreatures;
   private int myCreatureCount;
 
-  public static ArrayList<CreatureLinkage> getAllCreatureLinkages() {
+  public static List<CreatureLinkage> getAllCreatureLinkages() {
     return allCreatureLinkages;
   }
 
@@ -30,10 +32,21 @@ public class DarwinDisplay extends Display {
     initializeRunButton(getWord("run_text_darwin")); //initialize the program run button
     creaturesTitle(getWord("creatures_text_darwin"));
     initializeCreatureDropdown(); //initialize the dropdown of creatures
+    makeScreenClickable();
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
     return scene;
+  }
+
+  private void makeScreenClickable() {
+    root.setOnMouseClicked(mouseEvent ->{
+      double spawnX = mouseEvent.getX();
+      double spawnY = mouseEvent.getY();
+      //TODO: spawn new creature at x,y location
+      //TODO: add creature to list of creatures, and if its not already in the list of exisitng creatures add it
+      //TODO: set an image for the creature
+    });
   }
 
   @Override
@@ -51,8 +64,9 @@ public class DarwinDisplay extends Display {
 
   private void updateCreatureDropdown() {
     allCreatures.getItems().clear();
-
-
+    for(String creature: allCreatureNames){
+      allCreatures.getItems().add(creature);
+    }
   }
 
   @Override
@@ -63,6 +77,8 @@ public class DarwinDisplay extends Display {
   //Create method that passes in queue of commands to Logo
   @Override
   protected void step() {
+    //TODO: update dropdowns
+    updateCreatureDropdown();
     checkForInstructionsAndExecute();
   }
 
