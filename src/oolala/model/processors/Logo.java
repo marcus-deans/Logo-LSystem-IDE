@@ -75,11 +75,6 @@ public class Logo extends GameProcessor{
   }
 
   @Override
-  public Queue<Instruction> getMyInstructions() {
-    return myInstructions;
-  }
-
-  @Override
   public List<String> getHistory() {
     return myHistory;
   }
