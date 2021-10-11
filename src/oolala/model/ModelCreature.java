@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 
-//For darwin class
+/**
+ * @author Purpose: Extends from ModelTrutle for the Darwin application Assumptions: Functioning ;
+ * and other values error-checked Example Usage: used for computeForwardCoordinates() to declare
+ * myTurtleOldX User Details: None, usage exactly as dictated by command entry pattern
+ * (error-checked)
+ */
 public class ModelCreature extends ModelTurtle {
 
   private final List<CreatureInstruction> myCreatureInstructions = new ArrayList<>();

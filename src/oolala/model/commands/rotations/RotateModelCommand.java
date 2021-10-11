@@ -31,6 +31,7 @@ public abstract class RotateModelCommand extends ModelCommand {
   //set the rotation of the Turtle object based on the updates
   //the combination of adding and modulus FULL_CIRCLE ensures positive rotation value (clockwise)
   protected void setTurtleRotation(int newDegreesRotation) {
+
     myModelTurtle.setDegreesRotation((newDegreesRotation + FULL_CIRCLE) % FULL_CIRCLE);
   }
 }
