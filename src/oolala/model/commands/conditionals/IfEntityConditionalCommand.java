@@ -28,6 +28,7 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
     this.mySpeciesIdentifier = modelCreature.getMySpeciesIdentifier();
   }
 
+  //check whether there is an entity in front
   protected boolean determineEntityPresentAndNature(boolean checkingSameType) {
     ArrayList<ModelCreature> allModelCreatures = DarwinDisplay.getAllModelCreatures();
     for (ModelCreature checkModelCreature : allModelCreatures) {
@@ -44,6 +45,7 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
     return false;
   }
 
+  //create a circle around the ModelCreature based on nearbyThreshold, and determine if within
   private boolean compareWithinCircle(ModelCreature checkModelCreature) {
     int checkModelCreatureX = checkModelCreature.getTurtleCoordinates().turtleNewX;
     int checkModelCreatureY = checkModelCreature.getTurtleCoordinates().turtleNewY;
@@ -53,6 +55,7 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
     return xDifferenceSquared + yDifferenceSquared <= radiusDistanceSquared;
   }
 
+  //determine whether other entity is within the field of view of given ModelCreature
   private boolean compareWithinFieldOfView(ModelCreature checkModelCreature) {
     int checkModelCreatureX = checkModelCreature.getTurtleCoordinates().turtleNewX;
     int checkModelCreatureY = checkModelCreature.getTurtleCoordinates().turtleNewY;

@@ -24,6 +24,7 @@ public class GoConditionalCommand extends ConditionalCommand {
     checkPresent();
   }
 
+  //confirm that there is a valid next instruction present, then execute the instruction
   private void checkPresent() {
     //TODO: check that there is a valid next instruction specified -> maybe already be error-checked
     executeSpecifiedInstruction();

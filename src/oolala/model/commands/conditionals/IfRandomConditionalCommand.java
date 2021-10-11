@@ -26,6 +26,7 @@ public class IfRandomConditionalCommand extends ConditionalCommand {
     checkRandom();
   }
 
+  //compute randomness and determine whether next instruction will be executed
   private void checkRandom() {
     double randomSelection = Math.random();
     if (randomSelection >= RANDOMNESS_THRESHOLD) {

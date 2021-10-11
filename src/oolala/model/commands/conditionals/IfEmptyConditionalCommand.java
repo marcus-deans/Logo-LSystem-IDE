@@ -28,6 +28,7 @@ public class IfEmptyConditionalCommand extends IfEntityConditionalCommand {
     checkEmpty();
   }
 
+  //check whether the space in front of the turtle is empty
   private void checkEmpty() {
     if ((!determineEntityPresentAndNature(CHECKING_SAME_TYPE)) && (!determineEntityPresentAndNature(
         NOT_CHECKING_SAME_TYPE))) {

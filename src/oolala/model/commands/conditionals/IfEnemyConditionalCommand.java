@@ -27,6 +27,7 @@ public class IfEnemyConditionalCommand extends IfEntityConditionalCommand {
     checkEnemy();
   }
 
+  //check whether there is an enemy (an entity of different species) in front
   private void checkEnemy() {
     if (determineEntityPresentAndNature(NOT_CHECKING_SAME_TYPE)) {
       executeSpecifiedInstruction();

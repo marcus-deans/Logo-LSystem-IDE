@@ -27,6 +27,7 @@ public class IfSameConditionalCommand extends IfEntityConditionalCommand {
     checkSame();
   }
 
+  //check if there is a same entity (same species) in front of the ModelCreature
   private void checkSame() {
     if (determineEntityPresentAndNature(CHECKING_SAME_TYPE)) {
       executeSpecifiedInstruction();
