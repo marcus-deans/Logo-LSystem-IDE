@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.GameProcessor;
+import oolala.model.processors.Logo;
 import oolala.view.Language;
 import oolala.view.TurtleLinkage;
 
@@ -39,7 +40,7 @@ import oolala.view.TurtleLinkage;
 /**
  * JavaFX View class
  */
-public class Display extends Application {
+public abstract class Display extends Application {
 
   //  public static final String TITLE = R.string.program_name;
   public static final String TITLE = "Display";
@@ -102,9 +103,7 @@ public class Display extends Application {
 
   protected Group root = new Group();
   protected Scene scene;
-
   protected GameProcessor myGameProcessor;
-
   protected TextArea commandLine;
   protected ComboBox savedPrograms;
   protected ComboBox historyPrograms;
@@ -136,14 +135,12 @@ public class Display extends Application {
 
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-//    myLogo = new Logo();
-//    this.root = new Group();
-
-//    initializeRunButton(); //initialize the program run button
-
+    myGameProcessor = new Logo();
+    this.root = new Group();
+    performInitialSetup();
     //Set the scene
     scene = new Scene(root, width, height, background);
-    scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
+    scene.getStylesheets().add(Display.class.getResource("Display.css").toExternalForm());
     return scene;
   }
 
@@ -153,6 +150,7 @@ public class Display extends Application {
     savedTitle();
     initializeSavedPrograms(); //saved programs dropdown
     historyTitle();
+    initializeRunButton(); //initialize the program run button
     initializeHistory(); //program history dropdown
     languagesTitle();
     initializeLanguages();
@@ -229,7 +227,7 @@ public class Display extends Application {
 
   protected void getContentFromFilename() {
     String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
-    File[] files = new File("data/examples/logo").listFiles();
+    File[] files = getFilesFromPath();
     for (File file : files) {
       if (file.isFile() && file.getName().equals(filename)) {
         try {
@@ -249,6 +247,8 @@ public class Display extends Application {
       }
     }
   }
+
+  protected abstract File [] getFilesFromPath();
 
   protected void populateFileNames() {
     File[] files = new File("data/examples/logo").listFiles();
@@ -336,6 +336,27 @@ public class Display extends Application {
     commandLine.setLayoutY(COMMAND_Y);
     root.getChildren().add(commandLine);
   }
+
+  protected void initializeRunButton() {
+    Button runCommands = new Button(runTitle());
+    runCommands.setPrefWidth(RUN_WIDTH);
+    runCommands.setPrefHeight(RUN_HEIGHT);
+    runCommands.setLayoutX(RUN_X);
+    runCommands.setLayoutY(RUN_Y);
+    root.getChildren().add(runCommands);
+    runCommands.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        handleInputParsing(commandLine.getText());
+        //        myGameProcessor.inputParser(0, 0, 0, commandLine.getText());
+        validateCommandStream();
+        myGameProcessor.saveHistory(commandLine.getText());
+        updateHistoryDropdown();
+      }
+    });
+  }
+
+  protected abstract void handleInputParsing(String text);
 
   protected String runTitle() {
     return runText = getWord("run_text");
