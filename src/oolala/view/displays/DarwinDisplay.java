@@ -79,12 +79,15 @@ public class DarwinDisplay extends Display {
 
       while (!checkInstructions.isEmpty()) {
         Instruction currentInstruction = checkInstructions.get(0); //pop a single instruction, FIFO
-        executeInstruction(currentInstruction, checkCreatureLinkage, root);
+        //TODO:
+        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
+        executeInstruction(currentInstruction, myCreatureLinkage, root);
+        //TODO: associate each creature with its map
         // drawTurtleLine();
         // myModelTurtle.updateCoordinates(0;
-        checkCreatureLinkage.myModelCreature.updateCoordinates();
-        checkInstructions.remove(0);
+        currentCreatureInstructions.remove(0);
       }
+      creatureExecutionOrderList.remove(0);
     }
     //TODO: execute all instructions
   }
