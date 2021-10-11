@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Paint;
 import oolala.model.ModelCreature;
 import oolala.model.instructions.CreatureInstruction;
@@ -13,7 +14,9 @@ import oolala.view.darwin.CreatureLinkage;
 
 public class DarwinDisplay extends Display {
 
+
   private static ArrayList<ModelCreature> allModelCreatures;
+  private ComboBox allCreatures;
   private int myCreatureCount;
 
   @Override
@@ -21,7 +24,8 @@ public class DarwinDisplay extends Display {
     myGameProcessor = new Darwin();
     allModelCreatures = new ArrayList<>();
     performInitialSetup();
-    initializeRunButton(); //initialize the program run button
+    initializeRunButton(getWord("run_text_darwin")); //initialize the program run button
+    initializeCreatureDropdown(); //initialize the dropdown of creatures
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());

@@ -67,6 +67,10 @@ public abstract class Display extends Application {
   public static final int LANGUAGES_TITLE_Y = 17;
   public static final int LANGUAGES_DROPDOWN_X = 520;
   public static final int LANGUAGES_DROPDOWN_Y = 0;
+  public static final int CREATURES_TITLE_X = 620;
+  public static final int CREATURES_TITLE_Y = 17;
+  public static final int CREATURES_DROPDOWN_X = 680;
+  public static final int CREATURES_DROPDOWN_Y = 0;
   public static final int MAX_DROPDOWN_WIDTH = 50;
   public static final int OFFSET_X = 10;
   public static final int OFFSET_Y = 15;
@@ -111,7 +115,12 @@ public abstract class Display extends Application {
   protected Text savedTitle;
   protected Text history;
   protected Text languages;
-  protected Text turtles;
+  protected Text creaturesText; //logo and darwin
+  protected Text creatureRadiusText; //darwin
+  protected Text animationSpeedText; //darwin
+  protected Text stepLengthText; //lsystem
+  protected Text rotationAngleText; //lsystem
+  protected Text totalLevelsText; //lsystem
   protected String runText;
   protected int turtleHomeX;
   protected int turtleHomeY;
@@ -146,7 +155,7 @@ public abstract class Display extends Application {
     savedTitle();
     initializeSavedPrograms(); //saved programs dropdown
     historyTitle();
-    initializeRunButton(); //initialize the program run button
+    initializeRunButton(runTitle()); //initialize the program run button
     initializeHistory(); //program history dropdown
     languagesTitle();
     initializeLanguages();
@@ -311,7 +320,7 @@ public abstract class Display extends Application {
     savedTitle.setText("");
     history.setText("");
     languages.setText("");
-    turtles.setText("");
+    creaturesText.setText("");
     runText = "";
   }
 
@@ -333,8 +342,8 @@ public abstract class Display extends Application {
     root.getChildren().add(commandLine);
   }
 
-  protected void initializeRunButton() {
-    Button runCommands = new Button(runTitle());
+  protected void initializeRunButton(String runTitle) {
+    Button runCommands = new Button(runTitle);
     runCommands.setPrefWidth(RUN_WIDTH);
     runCommands.setPrefHeight(RUN_HEIGHT);
     runCommands.setLayoutX(RUN_X);
