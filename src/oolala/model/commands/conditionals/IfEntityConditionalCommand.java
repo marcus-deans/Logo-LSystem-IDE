@@ -4,11 +4,25 @@ import java.util.ArrayList;
 import oolala.model.ModelCreature;
 import oolala.view.displays.DarwinDisplay;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Abstract command to determine presence of entity, and type of entity, in front of
+ * ModelCreature Assumptions: Functioning ModelCreature and position; other values error-checked
+ * Dependencies: ConditionalCommand, ModelCommand, ModelCreature Example Usage: used for 'ifsame',
+ * 'ifenemy', 'ifempty' command User Details: None, usage exactly as dictated by command entry
+ * pattern (error-checked)
+ */
 public abstract class IfEntityConditionalCommand extends ConditionalCommand {
 
   protected final int halfFieldOfView = 20;
   protected int mySpeciesIdentifier;
 
+  /**
+   * Create new IfEntityConditionalCommand
+   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param nextCommand conditional command that will be executed if conditions are met
+   */
   public IfEntityConditionalCommand(ModelCreature modelCreature, int nextCommand) {
     super(modelCreature, nextCommand);
     this.mySpeciesIdentifier = modelCreature.getMySpeciesIdentifier();
