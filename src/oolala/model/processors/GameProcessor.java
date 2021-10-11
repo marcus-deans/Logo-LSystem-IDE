@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
 public abstract class GameProcessor {
@@ -71,4 +72,6 @@ public abstract class GameProcessor {
     public abstract LinkedList<Instruction> getMyInstructions();
 
     public abstract ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels();
+
+    public abstract ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey);
 }

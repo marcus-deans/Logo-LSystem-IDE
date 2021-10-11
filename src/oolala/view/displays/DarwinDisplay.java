@@ -18,6 +18,10 @@ public class DarwinDisplay extends Display {
   private ComboBox allCreatures;
   private int myCreatureCount;
 
+  public static ArrayList<CreatureLinkage> getAllCreatureLinkages() {
+    return allCreatureLinkages;
+  }
+
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     myGameProcessor = new Darwin();
@@ -51,11 +55,6 @@ public class DarwinDisplay extends Display {
 
   }
 
-
-  public static ArrayList<CreatureLinkage> getAllCreatureLinkages() {
-    return allCreatureLinkages;
-  }
-
   @Override
   protected void handleInputParsing(String text) {
     myGameProcessor.inputParser(4, 4, 4, text);
@@ -71,22 +70,20 @@ public class DarwinDisplay extends Display {
     allCreatureLinkages = randomizeCreatureOrder();
     for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
       int checkCreatureLinkageSpecies = checkCreatureLinkage.myModelCreature.getMySpeciesIdentifier();
+      ArrayList<CreatureInstruction> checkInstructions = myGameProcessor.getMySpeciesInstructions(
+          checkCreatureLinkageSpecies);
 
-      while (!creatureExecutionOrderList.isEmpty()) {
-        ArrayList<CreatureInstruction> currentCreatureInstructions = creatureExecutionOrderList.get(
-            0);
-        while (!currentCreatureInstructions.isEmpty()) {
-          Instruction currentInstruction = currentCreatureInstructions.get(
-              0); //pop a single instruction, FIFO
-          CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
-          executeInstruction(currentInstruction, myCreatureLinkage, root);
-          //TODO: associate each creature with its map
-          // drawTurtleLine();
-          // myModelTurtle.updateCoordinates(0;
-          currentCreatureInstructions.remove(0);
-        }
-        creatureExecutionOrderList.remove(0);
+      while (!checkInstructions.isEmpty()) {
+        Instruction currentInstruction = checkInstructions.get(0); //pop a single instruction, FIFO
+        //TODO:
+        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
+        executeInstruction(currentInstruction, myCreatureLinkage, root);
+        //TODO: associate each creature with its map
+        // drawTurtleLine();
+        // myModelTurtle.updateCoordinates(0;
+        currentCreatureInstructions.remove(0);
       }
+      creatureExecutionOrderList.remove(0);
     }
     //TODO: execute all instructions
   }

@@ -102,8 +102,11 @@ public class Darwin extends GameProcessor{
         return new LinkedList<>();
     }
 
-    public HashMap<Integer, ArrayList<CreatureInstruction>> getMySpeciesInstructions() {
-        return mySpeciesInstructions;
+//    public HashMap<Integer, ArrayList<CreatureInstruction>> getMySpeciesInstructions() {
+//        return mySpeciesInstructions;
+//    }
+    public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey){
+        return mySpeciesInstructions.get(speciesKey);
     }
 
     //expansions by level in Logo instruction format
