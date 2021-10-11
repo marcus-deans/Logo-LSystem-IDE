@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
 
@@ -203,5 +204,10 @@ public class LSystem extends GameProcessor{
     //expansions by level in Logo instruction format
     public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
         return convertedInstructionLevels;
+    }
+
+    @Override
+    public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey) {
+        return null;
     }
 }
