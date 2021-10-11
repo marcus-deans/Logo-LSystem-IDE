@@ -1,5 +1,9 @@
 package oolala.model.processors;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
@@ -8,11 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-<<<<<<< HEAD
 public class Darwin {
-=======
-public class Darwin extends GameProcessor{
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
 
     public static final String MOVE = "move";
     public static final String LEFT = "left";
@@ -27,8 +27,8 @@ public class Darwin extends GameProcessor{
 
     public ArrayList<String> doubleCommands;
     public ArrayList<String> singleCommands;
-    public Queue<Instruction> myInstructions;
-    private List<String> myHistory;
+    public LinkedList<Instruction> myInstructions;
+    private final List<String> myHistory;
     boolean isValidCommand;
 
     public Darwin() {
@@ -48,7 +48,7 @@ public class Darwin extends GameProcessor{
                 createSingleCommand(inputCommands.get(i));
             }else if(inputCommands.get(i).matches("[a-zA-Z]+") && doubleCommands.contains(inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i, inputCommands)){ //Valid double command (requires a second number)
                 createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i+1)));
-                continue;
+                break;
             }else{ //Not a valid command stream
                 isValidCommand = false; //TODO: notify user that input was invalid
                 break;
@@ -56,7 +56,6 @@ public class Darwin extends GameProcessor{
         }
     }
 
-<<<<<<< HEAD
     private boolean nextCommandIsInt(int index, List<String> inputCommands) {
         boolean nextCommandIsInteger = true;
         try{
@@ -68,25 +67,15 @@ public class Darwin extends GameProcessor{
     }
 
     private void createSingleCommand(String command) {
-=======
-    @Override
-    protected void createSingleCommand(String command) {
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
         CreatureInstruction singleInstruction = new CreatureInstruction(command);
         myInstructions.add(singleInstruction);
     }
 
-<<<<<<< HEAD
     private void createDoubleCommand(String command, Integer valueOf) {
-=======
-    @Override
-    protected void createDoubleCommand(String command, Integer valueOf) {
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
         CreatureInstruction doubleInstruction = new CreatureInstruction(command, valueOf);
         myInstructions.add(doubleInstruction);
     }
 
-<<<<<<< HEAD
     //Method to save the user input commands to a fle
     public void saveCommand(String inputStream, String filename) {
         String path = "data/examples/darwin" + filename + ".txt";
@@ -102,11 +91,6 @@ public class Darwin extends GameProcessor{
         } catch (IOException e) {
             e.printStackTrace();
         }
-=======
-    public void saveCommand(String inputStream, String filename) {
-        String path = "data/examples/darwin" + filename + ".txt";
-        saveCommandGivenPath(inputStream, path);
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
     }
 
     public void saveHistory(String historyElement) {
@@ -125,7 +109,8 @@ public class Darwin extends GameProcessor{
         isValidCommand = status;
     }
 
-    public Queue<Instruction> getMyInstructions() {
+    public LinkedList<Instruction> getMyInstructions() {
         return myInstructions;
     }
+
 }

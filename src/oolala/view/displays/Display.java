@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.GameProcessor;
+import oolala.model.processors.Logo;
 import oolala.view.Language;
 import oolala.view.TurtleLinkage;
 
@@ -39,14 +40,14 @@ import oolala.view.TurtleLinkage;
 /**
  * JavaFX View class
  */
-public class Display extends Application {
+public abstract class Display extends Application {
 
   //  public static final String TITLE = R.string.program_name;
   public static final String TITLE = "Display";
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
-  public static final int FRAMES_PER_SECOND = 60;
+  public static final int FRAMES_PER_SECOND = 1;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
   //Top Layout
@@ -93,11 +94,6 @@ public class Display extends Application {
   public static final int CLEAR_X = 620;
   public static final int CLEAR_Y = 600;
 
-  //Line drawings
-  public static final double LINE_WIDTH = 2.0;
-  public static final double FULL_OPACITY = 100.0;
-  public static final double NO_OPACITY = 0.0;
-
   //Games
   protected final List<String> gameTypes = new ArrayList<>(
       Arrays.asList("Logo", "L-System", "Darwin"));
@@ -105,14 +101,9 @@ public class Display extends Application {
   protected final List<String> languageTypes = new ArrayList<>(
       Arrays.asList("English", "Spanish", "French"));
 
-
-  public static final Paint LINE_COLOUR = Color.INDIANRED;
   protected Group root = new Group();
   protected Scene scene;
-  protected Group lineRoot;
-
-  protected GameProcessor myLogo;
-
+  protected GameProcessor myGameProcessor;
   protected TextArea commandLine;
   protected ComboBox savedPrograms;
   protected ComboBox historyPrograms;
@@ -120,7 +111,6 @@ public class Display extends Application {
   protected Locale langType;
   protected FileInputStream fis;
   protected ComboBox turtleDropdown;
-  protected final double penOpacity = FULL_OPACITY;
   protected Text gameSettingTitle;
   protected Text savedTitle;
   protected Text history;
@@ -145,35 +135,38 @@ public class Display extends Application {
 
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-//    myLogo = new Logo();
-//    this.root = new Group();
+    myGameProcessor = new Logo();
+    this.root = new Group();
+    performInitialSetup();
+    //Set the scene
+    scene = new Scene(root, width, height, background);
+    scene.getStylesheets().add(Display.class.getResource("Display.css").toExternalForm());
+    return scene;
+  }
+
+  protected void performInitialSetup() {
     gameTitle();
     initializeGameSetting(); //game type dropdown
     savedTitle();
     initializeSavedPrograms(); //saved programs dropdown
     historyTitle();
+    initializeRunButton(); //initialize the program run button
     initializeHistory(); //program history dropdown
     languagesTitle();
     initializeLanguages();
     initializeCommandLine(); //initialize the command line
-//    initializeRunButton(); //initialize the program run button
     initializeSaveButton(); //initializes the program save button
     initializeClearScreen();
     initializeBoundaries(); // sets up program boundaries for where the turtle will move
-    //Set the scene
-    scene = new Scene(root, width, height, background);
-    scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
-    return scene;
   }
-
 
   protected void initializeBoundaries() {
     Line topLine = new Line(OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP);
     Line leftLine = new Line(OFFSET_X, OFFSET_Y_TOP, OFFSET_X, COMMAND_Y - OFFSET_Y);
     Line rightLine = new Line(FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X,
-            COMMAND_Y - OFFSET_Y);
+        COMMAND_Y - OFFSET_Y);
     Line bottomLine = new Line(OFFSET_X, COMMAND_Y - OFFSET_Y, FRAME_WIDTH - OFFSET_X,
-            COMMAND_Y - OFFSET_Y);
+        COMMAND_Y - OFFSET_Y);
     root.getChildren().add(topLine);
     root.getChildren().add(leftLine);
     root.getChildren().add(rightLine);
@@ -234,7 +227,7 @@ public class Display extends Application {
 
   protected void getContentFromFilename() {
     String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
-    File[] files = new File("data/examples/logo").listFiles();
+    File[] files = getFilesFromPath();
     for (File file : files) {
       if (file.isFile() && file.getName().equals(filename)) {
         try {
@@ -255,6 +248,8 @@ public class Display extends Application {
     }
   }
 
+  protected abstract File [] getFilesFromPath();
+
   protected void populateFileNames() {
     File[] files = new File("data/examples/logo").listFiles();
     for (File file : files) {
@@ -266,6 +261,7 @@ public class Display extends Application {
 
   protected void historyTitle() {
     history = new Text(getWord("history_text"));
+    history.setId("dropdown-label");
     history.setLayoutX(HISTORY_TITLE_X);
     history.setLayoutY(HISTORY_TITLE_Y);
     root.getChildren().add(history);
@@ -284,6 +280,7 @@ public class Display extends Application {
 
   protected void languagesTitle() {
     languages = new Text(getWord("language_text"));
+    languages.setId("dropdown-label");
     languages.setLayoutX(LANGUAGES_TITLE_X);
     languages.setLayoutY(LANGUAGES_TITLE_Y);
     root.getChildren().add(languages);
@@ -340,17 +337,38 @@ public class Display extends Application {
     root.getChildren().add(commandLine);
   }
 
+  protected void initializeRunButton() {
+    Button runCommands = new Button(runTitle());
+    runCommands.setPrefWidth(RUN_WIDTH);
+    runCommands.setPrefHeight(RUN_HEIGHT);
+    runCommands.setLayoutX(RUN_X);
+    runCommands.setLayoutY(RUN_Y);
+    root.getChildren().add(runCommands);
+    runCommands.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        handleInputParsing(commandLine.getText());
+        //        myGameProcessor.inputParser(0, 0, 0, commandLine.getText());
+        validateCommandStream();
+        myGameProcessor.saveHistory(commandLine.getText());
+        updateHistoryDropdown();
+      }
+    });
+  }
+
+  protected abstract void handleInputParsing(String text);
+
   protected String runTitle() {
     return runText = getWord("run_text");
   }
 
   protected void validateCommandStream() {
-    Boolean valid = myLogo.getValidCommand();
+    Boolean valid = myGameProcessor.getValidCommand();
     if (!valid) { //TODO: make sure popup works
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Invalid command stream!");
       alert.show();
-      myLogo.setValidCommand(true);
+      myGameProcessor.setValidCommand(true);
     }
   }
 
@@ -365,7 +383,7 @@ public class Display extends Application {
       @Override
       public void handle(ActionEvent event) {
         String filename = getUserFileName();
-        myLogo.saveCommand(commandLine.getText(), filename);
+        myGameProcessor.saveCommand(commandLine.getText(), filename);
         updateSavedDropdown();
       }
     });
@@ -414,7 +432,7 @@ public class Display extends Application {
       created = file.createNewFile();
       return created;
     } catch (IOException e) {
-      e.printStackTrace();
+      e.printStackTrace(); //TODO: don't print stack trace directly
     } finally {
       if (created) {
         file.delete();
@@ -427,13 +445,21 @@ public class Display extends Application {
   //Create method that passes in queue of commands to Logo
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myLogo.getMyInstructions();
+    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
 
     }
   }
 
-  protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage, Group root) {
+  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
+    historyPrograms.getItems().clear();
+    for (String element : myGameProcessor.getHistory()) {
+      historyPrograms.getItems().add(element);
+    }
+  }
+
+  protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
+      Group root) {
 
   }
 

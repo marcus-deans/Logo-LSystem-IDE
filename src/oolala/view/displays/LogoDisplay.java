@@ -2,14 +2,12 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
@@ -83,28 +81,16 @@ public class LogoDisplay extends Display {
   public static final int CLEAR_X = 620;
   public static final int CLEAR_Y = 600;
 
-  //Line drawings
-  public static final double LINE_WIDTH = 2.0;
-  public static final double FULL_OPACITY = 100.0;
-  public static final double NO_OPACITY = 0.0;
-
-  //Games
-  private final List<String> gameTypes = new ArrayList<>(
-      Arrays.asList("Logo", "L-System", "Darwin"));
-  //Languages
-  private final List<String> languageTypes = new ArrayList<>(
-      Arrays.asList("English", "Spanish", "French"));
   //Turtles
-  private final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
-  private final List<ModelTurtle> allModelTurtles = new ArrayList<>();
-  private final List<ViewTurtle> allViewTurtles = new ArrayList<>();
+  protected final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
+  protected final List<ModelTurtle> allModelTurtles = new ArrayList<>();
+  protected final List<ViewTurtle> allViewTurtles = new ArrayList<>();
 
-  private TurtleLinkage myTurtleLinkage;
-  private ModelTurtle myModelTurtle;
-  private ViewTurtle myViewTurtle;
+  protected TurtleLinkage myTurtleLinkage;
+  protected ModelTurtle myModelTurtle;
+  protected ViewTurtle myViewTurtle;
 
   public static final Paint LINE_COLOUR = Color.INDIANRED;
-<<<<<<< HEAD
   private Group root;
   private Group lineRoot;
   private Logo myLogo;
@@ -114,60 +100,28 @@ public class LogoDisplay extends Display {
   private ComboBox languagesPrograms;
   private Locale langType;
   private FileInputStream fis;
-=======
-  //  private Group root;
-//  private Group lineRoot;
-  public Logo myLogo;
-  //  private TextArea commandLine;
-//  private ComboBox savedPrograms;
-//  private ComboBox historyPrograms;
-//  private ComboBox languagesPrograms;
-//  private Locale langType;
-//  private FileInputStream fis;
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
   private ComboBox turtleDropdown;
-//  private final double penOpacity = FULL_OPACITY;
-//  private Text gameSettingTitle;
-//  private Text savedTitle;
-//  private Text history;
-//  private Text languages;
-//  private Text turtles;
-//  private String runText;
-//  private int turtleHomeX;
-//  private int turtleHomeY;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
     myLogo = new Logo();
-<<<<<<< HEAD
     root = new Group();
-=======
-//    this.root = new Group();
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
     spawnTurtle(0);
-    gameTitle();
-    initializeGameSetting(); //game type dropdown
-    savedTitle();
-    super.initializeSavedPrograms(); //saved programs dropdown
-    historyTitle();
-    initializeHistory(); //program history dropdown
-    languagesTitle();
-    initializeLanguages();
-    turtleTitle();
     initializeTurtleOptions(); //dropdown of all turtles and current running turtle
-    initializeCommandLine(); //initialize the command line
-    initializeRunButton(); //initialize the program run button
-    initializeSaveButton(); //initializes the program save button
-    initializeClearScreen();
-    initializeBoundaries(); // sets up program boundaries for where the turtle will move
+    turtleTitle();
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
     return scene;
   }
 
-  private void spawnTurtle(int id) {
+  @Override
+  protected File[] getFilesFromPath() {
+      return new File("data/examples/logo").listFiles();
+  }
+
+  protected void spawnTurtle(int id) {
     myTurtleLinkage = new TurtleLinkage(id);
 
     myModelTurtle = myTurtleLinkage.myModelTurtle;
@@ -176,7 +130,6 @@ public class LogoDisplay extends Display {
     allTurtleLinkages.add(myTurtleLinkage);
     allModelTurtles.add(myModelTurtle);
     allViewTurtles.add(myViewTurtle);
-<<<<<<< HEAD
 
     root.getChildren().add(myViewTurtle.getMyTurtleView());
   }
@@ -199,10 +152,6 @@ public class LogoDisplay extends Display {
     gameSettingTitle.setLayoutX(GAME_TITLE_X);
     gameSettingTitle.setLayoutY(GAME_TITLE_Y);
     root.getChildren().add(gameSettingTitle);
-  }
-=======
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
-
     root.getChildren().add(myViewTurtle.getMyTurtleView());
   }
 
@@ -226,6 +175,11 @@ public class LogoDisplay extends Display {
         savedPrograms.getItems().add(file.getName());
       }
     }
+  }
+
+  @Override
+  protected void handleInputParsing(String text) {
+    myGameProcessor.inputParser(0, 0, 0, text);
   }
 
   private void turtleTitle() {
@@ -258,42 +212,6 @@ public class LogoDisplay extends Display {
     root.getChildren().add(turtleDropdown);
   }
 
-  //  @Override
-  protected void initializeRunButton() {
-    Button runCommands = new Button(runTitle());
-    runCommands.setPrefWidth(RUN_WIDTH);
-    runCommands.setPrefHeight(RUN_HEIGHT);
-    runCommands.setLayoutX(RUN_X);
-    runCommands.setLayoutY(RUN_Y);
-    root.getChildren().add(runCommands);
-    runCommands.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        myLogo.inputParser(0, 0, 0, commandLine.getText());
-        validateCommandStream();
-        myLogo.saveHistory(commandLine.getText());
-        updateHistoryDropdown();
-      }
-    });
-  }
-
-  protected void updateHistoryDropdown() { //TODO: make sure history is specific to current game model
-    historyPrograms.getItems().clear();
-    for (String element : myLogo.getHistory()) {
-      historyPrograms.getItems().add(element);
-    }
-  }
-
-  @Override //TODO: abstract to myProcessor instead of myLogo, be able to put in Display class
-  protected void validateCommandStream() {
-    Boolean valid = myLogo.getValidCommand();
-    if (!valid) { //TODO: make sure popup works
-      Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setContentText("Invalid command stream!");
-      alert.show();
-      myLogo.setValidCommand(true);
-    }
-  }
 
 
   private void tellTurtle(int id) {
@@ -348,14 +266,18 @@ public class LogoDisplay extends Display {
   //Create method that passes in queue of commands to Logo
   @Override
   protected void step() {
+    checkForInstructionsAndExecute();
+  }
+
+  private void checkForInstructionsAndExecute() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myLogo.getMyInstructions();
+    LinkedList<Instruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);
-//      myTurtleLinkage.update();
       //TODO: create map (possibly global) ->
       drawTurtleLine();
+//      myGameProcessor.updateMyInstructions();
       myModelTurtle.updateCoordinates();
     }
   }
@@ -371,7 +293,7 @@ public class LogoDisplay extends Display {
   }
 
 
-  private void drawTurtleLine() {
+  protected void drawTurtleLine() {
     Coordinates turtleCoordinates = myTurtleLinkage.myModelTurtle.getTurtleVisualCoordinates();
     Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleOldY,
         turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);

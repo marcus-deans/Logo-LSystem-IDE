@@ -1,6 +1,5 @@
 package oolala.model.processors;
 
-<<<<<<< HEAD
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,19 +8,6 @@ import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
 
 public class LSystem {
-=======
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import oolala.model.instructions.Instruction;
-import oolala.model.instructions.LSystemInstruction;
-
-public class LSystem extends GameProcessor{
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
 
     public List<String> validCommands;
     public List<String> doubleAngleCommands;
@@ -33,23 +19,17 @@ public class LSystem extends GameProcessor{
 
     public List<String> expansionLevels; //expansions in LSystem language
     public List<List<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
-<<<<<<< HEAD
     private Queue<Instruction> myInstructions; //TODO: do we need this?
 
     private final List<String> myHistory;
     private boolean isValidCommand;
-=======
-    private final Queue<Instruction> myInstructions; //TODO: do we need this?
-
-    private final List<String> myHistory;
-    private final boolean isValidCommand;
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
 
 
     public LSystem() {
         myInstructions = new LinkedList<>();
         myHistory = new ArrayList<>();
-        validCommands = new ArrayList<>(Arrays.asList("F", "f", "G", "g", "A", "a", "B", "b", "X", "x", "+", "-"));
+        validCommands = new ArrayList<>(
+            Arrays.asList("F", "f", "G", "g", "A", "a", "B", "b", "X", "x", "+", "-"));
         doubleAngleCommands = new ArrayList<>(Arrays.asList("lt", "rt"));
         doubleLengthCommands = new ArrayList<>(Arrays.asList("fd", "bk"));
         singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp"));
@@ -58,6 +38,8 @@ public class LSystem extends GameProcessor{
         expansionLevels = new ArrayList<>();
         convertedInstructionLevels = new ArrayList<>();
         initializeCommandConversions();
+
+        myInstructions.add(new LSystemInstruction(0, "ht"));
         isValidCommand = true;
     }
 
@@ -74,7 +56,6 @@ public class LSystem extends GameProcessor{
 
     //TODO: ignore lines that start with #
     //Method to parse the input
-<<<<<<< HEAD
     public void inputParser(int levels, int angle, int length, String inputStream){
         List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
         int skip = 0;
@@ -94,32 +75,6 @@ public class LSystem extends GameProcessor{
                 commandConversion.put(inputCommands.get(i+1), instructionDefinition);
                 skip+=instructionDefinition.size()+1; //skip letter and definition
             }else{ //TODO: error handling - invalid command stream
-=======
-    public void inputParser(int levels, int angle, int length, String inputStream) {
-        List<String> inputCommands = Arrays.asList(
-            inputStream.split("\\s+")); //split by any space or tab
-        int skip = 0;
-        for (int i = 0; i < inputCommands.size(); i++) {
-            if (skip > 0) {
-                skip--;
-                continue;
-            }
-            if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i)
-                .equalsIgnoreCase("start")) { //TODO: make string global
-                expansionLevels.add(inputCommands.get(i + 1)); //first letter to expand on
-                skip++;
-            } else if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i)
-                .equalsIgnoreCase("rule")) {//TODO: make string global
-                userRules.put(inputCommands.get(i + 1), inputCommands.get(i + 2));
-                skip += 2;
-            } else if (inputCommands.get(i).matches("[a-zA-Z]+") && inputCommands.get(i)
-                .equalsIgnoreCase("set")) {//TODO: make string global
-                List<String> instructionDefinition = getInstructionsInsideQuotes(i + 2,
-                    inputCommands);
-                commandConversion.put(inputCommands.get(i + 1), instructionDefinition);
-                skip += instructionDefinition.size() + 1; //skip letter and definition
-            } else { //TODO: error handling - invalid command stream
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
                 break;
             }
         }
@@ -132,16 +87,9 @@ public class LSystem extends GameProcessor{
             List<String> commandsToExpand = Arrays.asList(expansionLevels.get(level-1).split("")); //previous level to expand on
             StringBuilder expansion = new StringBuilder();
             for(int currCommand=0; currCommand<commandsToExpand.size(); currCommand++){
-<<<<<<< HEAD
                 if(userRules.keySet().contains(commandsToExpand.get(currCommand))){ //if there is a rule for this character, append the rule
                     expansion.append(userRules.get(commandsToExpand.get(currCommand)));
                 }else{//otherwise, append the character
-=======
-                if (userRules.containsKey(commandsToExpand.get(
-                    currCommand))) { //if there is a rule for this character, append the rule
-                    expansion.append(userRules.get(commandsToExpand.get(currCommand)));
-                } else {//otherwise, append the character
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
                     expansion.append(commandsToExpand.get(currCommand));
                 }
             }
@@ -152,7 +100,8 @@ public class LSystem extends GameProcessor{
 
     private void convertToLogoCommands(int levels, int angle, int length) {
         for(int i=0; i<expansionLevels.size(); i++){ //each expansion level
-            List<Instruction> thisLevelInstructions = createCommandsFromLSystem(levels, angle, length, expansionLevels.get(i));
+            ArrayList<Instruction> thisLevelInstructions = createCommandsFromLSystem(levels, angle,
+                length, expansionLevels.get(i));
             convertedInstructionLevels.add(thisLevelInstructions);
         }
     }
@@ -164,11 +113,7 @@ public class LSystem extends GameProcessor{
             if(inputCommands.get(i).startsWith("\"")){
                 instructions.add(inputCommands.get(i).substring(1));
             }else if(inputCommands.get(i).endsWith("\"")){
-<<<<<<< HEAD
                 instructions.add(inputCommands.get(i).substring(0,inputCommands.get(i).length())); //TODO: make sure this properly indexes
-=======
-                instructions.add(inputCommands.get(i)); //TODO: make sure this properly indexes
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
                 break;
             }else{
                 instructions.add(inputCommands.get(i));
@@ -179,20 +124,17 @@ public class LSystem extends GameProcessor{
 
 
     private List<Instruction> createCommandsFromLSystem(int level, int angle, int length, String commandStream) {
-<<<<<<< HEAD
         List<String> commandStreamSplit = Arrays.asList(commandStream.split(""));
-=======
-        String[] commandStreamSplit = commandStream.split("");
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
         List<Instruction> instructions = new ArrayList<>();
         for(String currentLSystemCommand : commandStreamSplit){
             List<String> logoCommands; //equivalent logo commands for this LSystem character
-            if(currentLSystemCommand.matches("[a-zA-Z]+")){ //Handles case sensitivity for alphabetic LSystem commands
+            if (currentLSystemCommand.matches(
+                "[a-zA-Z]+")) { //Handles case sensitivity for alphabetic LSystem commands
                 logoCommands = commandConversion.get(currentLSystemCommand.toUpperCase());
-            }else{
+            } else {
                 logoCommands = commandConversion.get(currentLSystemCommand);
             }
-            for(String currentLogoCommand : logoCommands){
+            for (String currentLogoCommand : logoCommands) {
                 instructions.add(convertLogoCommandToInstruction(level, angle, length, currentLogoCommand));
             }
         }
@@ -204,12 +146,11 @@ public class LSystem extends GameProcessor{
             return new LSystemInstruction(level, thisCommand);
         }else if(doubleAngleCommands.contains(thisCommand)){ //double command
             return new LSystemInstruction(level, thisCommand, angle);
-        }else{
+        } else {
             return new LSystemInstruction(level, thisCommand, length);
         }
     }
 
-<<<<<<< HEAD
     //TODO: each new line should be a new level
     //Method to save the user input commands to a fle
     public void saveCommand(String inputStream, String filename) {
@@ -246,10 +187,43 @@ public class LSystem extends GameProcessor{
 
     public Queue<Instruction> getMyInstructions() {
         return myInstructions;
-=======
-    public void saveCommand(String inputStream, String filename) {
-        String path = "data/examples/lsystem" + filename + ".txt";
-        saveCommandGivenPath(inputStream, path);
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
+    }
+
+    @Override
+    protected void createDoubleCommand(String command, Integer number) {
+        String alpha = command;
+        int bravo = number;
+    }
+
+    protected void createSingleCommand(String command) {
+        String alpha = command;
+    }
+
+    public List<String> getHistory() {
+        return myHistory;
+    }
+
+    @Override
+    public void saveHistory(String historyElement) {
+        myHistory.add(historyElement);
+    }
+
+    @Override
+    public boolean getValidCommand() {
+        return isValidCommand;
+    }
+
+    public void setValidCommand(Boolean status) {
+        isValidCommand = status;
+    }
+
+    @Override
+    public LinkedList<Instruction> getMyInstructions() {
+        return myInstructions;
+    }
+
+    //expansions by level in Logo instruction format
+    public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
+        return convertedInstructionLevels;
     }
 }

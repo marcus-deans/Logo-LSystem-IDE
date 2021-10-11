@@ -1,39 +1,59 @@
 package oolala.view.displays;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import oolala.model.ModelTurtle;
-import oolala.model.commands.Commands;
-import oolala.model.instructions.Instruction;
-import oolala.model.processors.InstructionProcessor;
-import oolala.model.processors.Logo;
-import oolala.view.Language;
-import oolala.view.TurtleLinkage;
-import oolala.view.ViewTurtle;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
 
-public class LSystemDisplay extends Display {
+import java.util.ArrayList;
+import javafx.scene.Scene;
+import javafx.scene.paint.Paint;
+import oolala.model.instructions.Instruction;
+import oolala.model.processors.LSystem;
 
+public class LSystemDisplay extends LogoDisplay {
 
+  @Override
+  protected Scene setupGame(int width, int height, Paint background) {
+    //Initialize the view classes
+    myGameProcessor = new LSystem();
+    spawnTurtle(0);
+    performInitialSetup();
+    initializeRunButton(); //initialize the program run button
+    //Set the scene
+    Scene scene = new Scene(root, width, height, background);
+    scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
+    return scene;
+  }
 
+  //Create method that passes in queue of commands to Logo
+  @Override
+  protected void step() {
+    checkForInstructionsAndExecute();
+  }
+
+  private void checkForInstructionsAndExecute() {
+    //If an instruction has been sent to myLogo, run it
+    ArrayList<ArrayList<Instruction>> instructions = myGameProcessor.getConvertedInstructionLevels();
+    if (!instructions.isEmpty()) {
+      ArrayList<Instruction> currentLevelInstructions = instructions.poll();
+      while (!currentLevelInstructions.isEmpty()) {
+        Instruction currentInstruction = currentLevelInstructions.poll(); //pop a single instruction, FIFO
+        executeInstruction(currentInstruction, myTurtleLinkage, root);
+        //TODO: create map (possibly global) ->
+        drawTurtleLine();
+//      myGameProcessor.updateMyInstructions();
+        myModelTurtle.updateCoordinates();
+      }
+      //TODO: add several lines of spacing to the screen -> update ModelTurtle's coordinates
+      //TODO: use TurtleLinkage to tell ViewTurtle to update its coordinates and location
+    }
+  }
+
+  @Override
+  protected void handleInputParsing(String text) {
+
+  }
+
+  @Override
+  protected File[] getFilesFromPath() {
+    return new File("data/examples/lsystem").listFiles();
+  }
 }
