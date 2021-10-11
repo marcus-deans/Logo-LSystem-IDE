@@ -46,7 +46,7 @@ public class Display extends Application {
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
-  public static final int FRAMES_PER_SECOND = 60;
+  public static final int FRAMES_PER_SECOND = 1;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
   //Top Layout

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
 
@@ -21,17 +20,18 @@ public class LSystem extends GameProcessor{
     public Map<String, List<String>> commandConversion; //SET command
 
     public List<String> expansionLevels; //expansions in LSystem language
-    public List<List<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
-    private final Queue<Instruction> myInstructions; //TODO: do we need this?
+    public ArrayList<ArrayList<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
+    private final LinkedList<Instruction> myInstructions; //TODO: do we need this? prob not
 
     private final List<String> myHistory;
-    private final boolean isValidCommand;
+    private boolean isValidCommand;
 
 
     public LSystem() {
         myInstructions = new LinkedList<>();
         myHistory = new ArrayList<>();
-        validCommands = new ArrayList<>(Arrays.asList("F", "f", "G", "g", "A", "a", "B", "b", "X", "x", "+", "-"));
+        validCommands = new ArrayList<>(
+            Arrays.asList("F", "f", "G", "g", "A", "a", "B", "b", "X", "x", "+", "-"));
         doubleAngleCommands = new ArrayList<>(Arrays.asList("lt", "rt"));
         doubleLengthCommands = new ArrayList<>(Arrays.asList("fd", "bk"));
         singleCommands = new ArrayList<>(Arrays.asList("pd", "pu", "st", "ht", "home", "stamp"));
@@ -40,6 +40,8 @@ public class LSystem extends GameProcessor{
         expansionLevels = new ArrayList<>();
         convertedInstructionLevels = new ArrayList<>();
         initializeCommandConversions();
+
+        myInstructions.add(new LSystemInstruction(0, "ht"));
         isValidCommand = true;
     }
 
@@ -106,7 +108,8 @@ public class LSystem extends GameProcessor{
 
     private void convertToLogoCommands(int levels, int angle, int length) {
         for(int i=0; i<expansionLevels.size(); i++){ //each expansion level
-            List<Instruction> thisLevelInstructions = createCommandsFromLSystem(levels, angle, length, expansionLevels.get(i));
+            ArrayList<Instruction> thisLevelInstructions = createCommandsFromLSystem(levels, angle,
+                length, expansionLevels.get(i));
             convertedInstructionLevels.add(thisLevelInstructions);
         }
     }
@@ -128,17 +131,19 @@ public class LSystem extends GameProcessor{
     }
 
 
-    private List<Instruction> createCommandsFromLSystem(int level, int angle, int length, String commandStream) {
+    private ArrayList<Instruction> createCommandsFromLSystem(int level, int angle, int length,
+        String commandStream) {
         String[] commandStreamSplit = commandStream.split("");
-        List<Instruction> instructions = new ArrayList<>();
-        for(String currentLSystemCommand : commandStreamSplit){
+        ArrayList<Instruction> instructions = new ArrayList<>();
+        for (String currentLSystemCommand : commandStreamSplit) {
             List<String> logoCommands; //equivalent logo commands for this LSystem character
-            if(currentLSystemCommand.matches("[a-zA-Z]+")){ //Handles case sensitivity for alphabetic LSystem commands
+            if (currentLSystemCommand.matches(
+                "[a-zA-Z]+")) { //Handles case sensitivity for alphabetic LSystem commands
                 logoCommands = commandConversion.get(currentLSystemCommand.toUpperCase());
-            }else{
+            } else {
                 logoCommands = commandConversion.get(currentLSystemCommand);
             }
-            for(String currentLogoCommand : logoCommands){
+            for (String currentLogoCommand : logoCommands) {
                 instructions.add(convertLogoCommandToInstruction(level, angle, length, currentLogoCommand));
             }
         }
@@ -150,7 +155,7 @@ public class LSystem extends GameProcessor{
             return new LSystemInstruction(level, thisCommand);
         }else if(doubleAngleCommands.contains(thisCommand)){ //double command
             return new LSystemInstruction(level, thisCommand, angle);
-        }else{
+        } else {
             return new LSystemInstruction(level, thisCommand, length);
         }
     }
@@ -159,4 +164,40 @@ public class LSystem extends GameProcessor{
         String path = "data/examples/lsystem" + filename + ".txt";
         saveCommandGivenPath(inputStream, path);
     }
+
+    protected void createDoubleCommand(String command, Integer number) {
+        String alpha = command;
+        int bravo = number;
+    }
+
+    protected void createSingleCommand(String command) {
+        String alpha = command;
+    }
+
+    public List<String> getHistory() {
+        return myHistory;
+    }
+
+    public void saveHistory(String historyElement) {
+        myHistory.add(historyElement);
+    }
+
+    public boolean getValidCommand() {
+        return isValidCommand;
+    }
+
+    public void setValidCommand(Boolean status) {
+        isValidCommand = status;
+    }
+
+    @Override
+    public LinkedList<Instruction> getMyInstructions() {
+        return myInstructions;
+    }
+
+    //expansions by level in Logo instruction format
+    public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
+        return convertedInstructionLevels;
+    }
+
 }
