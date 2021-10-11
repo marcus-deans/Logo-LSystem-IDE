@@ -2,7 +2,6 @@ package oolala.model.processors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
@@ -23,45 +22,32 @@ public class Darwin extends GameProcessor{
 
     public ArrayList<String> doubleCommands;
     public ArrayList<String> singleCommands;
-    public ArrayList<CreatureInstruction> myInstructions;
-    private final HashMap<Integer, ArrayList<CreatureInstruction>> mySpeciesInstructions;
+    public LinkedList<Instruction> myInstructions;
     private final List<String> myHistory;
     boolean isValidCommand;
 
     public Darwin() {
         singleCommands = new ArrayList<>(Arrays.asList(INFECT));
-        doubleCommands = new ArrayList<>(
-            Arrays.asList(MOVE, LEFT, RIGHT, IFEMPTY, IFWALL, IFSAME, IFENEMY, IFRANDOM, GO));
-        myInstructions = new ArrayList<>();
-        mySpeciesInstructions = new HashMap<>();
+        doubleCommands = new ArrayList<>(Arrays.asList(MOVE, LEFT, RIGHT, IFEMPTY, IFWALL, IFSAME, IFENEMY, IFRANDOM, GO));
+        myInstructions = new LinkedList<>();
         myHistory = new ArrayList<>();
         isValidCommand = true;
     }
 
     //TODO: ignore lines that start with #
-    public void inputParser(int nearbyThreshold, int speciesIdentifier, int length,
-        String inputStream) {
-        myInstructions.clear();
+    public void inputParser(int radius, int angle, int length, String inputStream) {
         isValidCommand = true;
-        List<String> inputCommands = Arrays.asList(
-            inputStream.split("\\s+")); //split by any space or tab
-        for (int i = 0; i < inputCommands.size(); i++) {
-            if (inputCommands.get(i).matches("[a-zA-Z]+") && singleCommands.contains(
-                inputCommands.get(i).toLowerCase())) { //Valid single command
+        List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
+        for(int i=0; i<inputCommands.size(); i++){
+            if(inputCommands.get(i).matches("[a-zA-Z]+") && singleCommands.contains(inputCommands.get(i).toLowerCase())){ //Valid single command
                 createSingleCommand(inputCommands.get(i));
-            } else if (inputCommands.get(i).matches("[a-zA-Z]+") && doubleCommands.contains(
-                inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(
-                i, inputCommands)) { //Valid double command (requires a second number)
-                createDoubleCommand(inputCommands.get(i),
-                    Integer.valueOf(inputCommands.get(i + 1)));
+            }else if(inputCommands.get(i).matches("[a-zA-Z]+") && doubleCommands.contains(inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i, inputCommands)){ //Valid double command (requires a second number)
+                createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i+1)));
                 break;
-            } else { //Not a valid command stream
+            }else{ //Not a valid command stream
                 isValidCommand = false; //TODO: notify user that input was invalid
                 break;
             }
-        }
-        if (isValidCommand) {
-            mySpeciesInstructions.put(speciesIdentifier, myInstructions);
         }
     }
 
@@ -99,6 +85,7 @@ public class Darwin extends GameProcessor{
     }
 
     public LinkedList<Instruction> getMyInstructions() {
+<<<<<<< HEAD
         return new LinkedList<>();
     }
 
@@ -107,10 +94,9 @@ public class Darwin extends GameProcessor{
 //    }
     public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey){
         return mySpeciesInstructions.get(speciesKey);
+=======
+        return myInstructions;
+>>>>>>> parent of c005ba5 (Fixed merge errors)
     }
 
-    //expansions by level in Logo instruction format
-    public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
-        return new ArrayList<ArrayList<Instruction>>();
-    }
 }

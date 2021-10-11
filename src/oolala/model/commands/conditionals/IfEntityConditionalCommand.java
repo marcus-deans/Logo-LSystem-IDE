@@ -1,10 +1,7 @@
 package oolala.model.commands.conditionals;
 
 import java.util.ArrayList;
-import javafx.scene.Group;
 import oolala.model.ModelCreature;
-import oolala.model.instructions.CreatureInstruction;
-import oolala.view.darwin.CreatureLinkage;
 import oolala.view.displays.DarwinDisplay;
 
 /**
@@ -23,21 +20,18 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
 
   /**
    * Create new IfEntityConditionalCommand
-   *
-   * @param creatureLinkage ModelCreature object on which command will be imparted
-   * @param nextCommand     conditional command that will be executed if conditions are met
+   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param nextCommand conditional command that will be executed if conditions are met
    */
-  public IfEntityConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand,
-      ArrayList<CreatureInstruction> creatureInstructions, Group root) {
-    super(creatureLinkage, nextCommand, creatureInstructions, root);
-    this.mySpeciesIdentifier = myModelCreature.getMySpeciesIdentifier();
+  public IfEntityConditionalCommand(ModelCreature modelCreature, int nextCommand) {
+    super(modelCreature, nextCommand);
+    this.mySpeciesIdentifier = modelCreature.getMySpeciesIdentifier();
   }
 
   //check whether there is an entity in front
   protected boolean determineEntityPresentAndNature(boolean checkingSameType) {
-    ArrayList<CreatureLinkage> allCreatureLinkages = DarwinDisplay.getAllCreatureLinkages();
-    for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
-      ModelCreature checkModelCreature = checkCreatureLinkage.myModelCreature;
+    ArrayList<ModelCreature> allModelCreatures = DarwinDisplay.getAllModelCreatures();
+    for (ModelCreature checkModelCreature : allModelCreatures) {
       if (compareWithinCircle(checkModelCreature) && compareWithinFieldOfView(checkModelCreature)) {
         if (checkingSameType
             && mySpeciesIdentifier == checkModelCreature.getMySpeciesIdentifier()) {

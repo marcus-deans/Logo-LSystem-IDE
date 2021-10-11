@@ -1,8 +1,8 @@
 package oolala.model.commands.movements;
 
 import oolala.model.Coordinates;
+import oolala.model.ModelTurtle;
 import oolala.model.commands.ModelCommand;
-import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -39,14 +39,17 @@ public abstract class MovementModelCommand extends ModelCommand {
   protected int myVisualNewX;
   protected int myVisualNewY;
 
+<<<<<<< HEAD
+=======
   /**
    * Construct a movement command to move the turtle
    *
-   * @param turtleLinkage the turtle on which the action will be imparted
+   * @param myModelTurtle the turtle on which the action will be imparted
    * @param pixels        the distance of movement
    */
-  public MovementModelCommand(TurtleLinkage turtleLinkage, int pixels) {
-    super(turtleLinkage, pixels);
+>>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
+  public MovementModelCommand(ModelTurtle myModelTurtle, int pixels) {
+    super(myModelTurtle, pixels);
     getTurtleCoordinates();
     myDegreesRotation = myModelTurtle.getDegreesRotation();
     computeVectors();
@@ -59,20 +62,17 @@ public abstract class MovementModelCommand extends ModelCommand {
   }
 
   //determine if turtle is facing to the right
-  //made public for testing purposes
-  public boolean rightFacing() {
+  protected boolean rightFacing() {
     return (myDegreesRotation >= NORTH) && (myDegreesRotation <= SOUTH);
   }
 
   //determine is turtle is facing upward
-  //made public for testing purposes
-  public boolean upwardFacing() {
+  protected boolean upwardFacing() {
     return (myDegreesRotation <= EAST) || (myDegreesRotation >= WEST);
   }
 
   //use vector math to determine the value of the vectors on each axis
   protected void computeVectors() {
-    Math.toRadians(myDegreesRotation);
     int sinLength = (int) Math.abs(Math.sin(myDegreesRotation) * pixels);
     int cosLength = (int) Math.abs(Math.cos(myDegreesRotation) * pixels);
     myXVector = checkVectorOrientation() ? sinLength : cosLength;
@@ -87,6 +87,7 @@ public abstract class MovementModelCommand extends ModelCommand {
   }
 
   //set the newly computed coordinates in the Turtle object
+
   protected void setNewCoordinates() {
     myModelTurtle.setNewX(myNewX);
     myModelTurtle.setVisualNewX(myVisualNewX);

@@ -2,17 +2,13 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
-import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.paint.Paint;
-import oolala.model.instructions.CreatureInstruction;
-import oolala.model.instructions.Instruction;
-import oolala.model.processors.Darwin;
-import oolala.view.darwin.CreatureLinkage;
+import java.util.List;
+import oolala.model.ModelCreature;
 
-public class DarwinDisplay extends Display {
+public class DarwinDisplay extends Display{
+  private static ArrayList<ModelCreature> allModelCreatures;
 
+<<<<<<< HEAD
   private static ArrayList<CreatureLinkage> allCreatureLinkages;
   private String mySpeciesIdentifier;
   private ComboBox allCreatures;
@@ -47,14 +43,17 @@ public class DarwinDisplay extends Display {
     allCreatures.setLayoutY(CREATURES_DROPDOWN_Y);
     allCreatures.setMaxWidth(MAX_DROPDOWN_WIDTH);
     root.getChildren().add(allCreatures);
+=======
+  public DarwinDisplay(){
+    super();
+    allModelCreatures = new ArrayList<>();
+>>>>>>> parent of c005ba5 (Fixed merge errors)
+  }
+  public static ArrayList<ModelCreature> getAllModelCreatures(){
+    return allModelCreatures;
   }
 
-  private void updateCreatureDropdown() {
-    allCreatures.getItems().clear();
-
-
-  }
-
+<<<<<<< HEAD
   @Override
   protected void handleInputParsing(String text) {
     myGameProcessor.inputParser(4, 4, 4, text);
@@ -108,6 +107,12 @@ public class DarwinDisplay extends Display {
     }
     return randomizedCreatureLinkageOrder;
 //    ArrayList<Integer> numericOptions = createNumericOptionsArraylist();
+=======
+
+  @Override
+  protected void handleInputParsing(String text) {
+    //TODO: send stuff to input parser
+>>>>>>> parent of c005ba5 (Fixed merge errors)
   }
 
   @Override

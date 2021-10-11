@@ -11,18 +11,6 @@ import oolala.model.instructions.Instruction;
 
 public abstract class GameProcessor {
 
-    public static final String FORWARD = "fd";
-    public static final String BACKWARD = "bk";
-    public static final String LEFT = "lt";
-    public static final String RIGHT = "rt";
-    public static final String TELL = "tell";
-    public static final String PENDOWN = "pd";
-    public static final String PENUP = "pu";
-    public static final String SHOW_TURTLE = "st";
-    public static final String HIDE_TURTLE = "ht";
-    public static final String HOME = "home";
-    public static final String STAMP = "stamp";
-
     public GameProcessor() {}
 
     //TODO: each new line should be a new level

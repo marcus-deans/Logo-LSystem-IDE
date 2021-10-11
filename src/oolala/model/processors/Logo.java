@@ -6,7 +6,18 @@ import java.util.LinkedList;
 import java.util.List;
 import oolala.model.instructions.Instruction;
 
-public class Logo extends GameProcessor{
+public class Logo {
+  public static final String FORWARD = "fd";
+  public static final String BACKWARD = "bk";
+  public static final String LEFT = "lt";
+  public static final String RIGHT = "rt";
+  public static final String TELL = "tell";
+  public static final String PENDOWN = "pd";
+  public static final String PENUP = "pu";
+  public static final String SHOW_TURTLE = "st";
+  public static final String HIDE_TURTLE = "ht";
+  public static final String HOME = "home";
+  public static final String STAMP = "stamp";
 
 
   public ArrayList<String> doubleCommands;

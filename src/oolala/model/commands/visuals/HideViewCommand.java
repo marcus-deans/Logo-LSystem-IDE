@@ -1,7 +1,7 @@
 package oolala.model.commands.visuals;
 
 import oolala.model.commands.Commands;
-import oolala.view.TurtleLinkage;
+import oolala.view.ViewTurtle;
 
 /**
  * @author marcusdeans
@@ -16,10 +16,10 @@ public class HideViewCommand extends VisibleViewCommand {
   /**
    * Create a new Hide command to hide the turtle object from view on screen
    *
-   * @param turtleLinkage the turtle on which the action will be imparted
+   * @param viewTurtle the turtle on which the action will be imparted
    */
-  public HideViewCommand(TurtleLinkage turtleLinkage) {
-    super(turtleLinkage);
+  public HideViewCommand(ViewTurtle viewTurtle) {
+    super(viewTurtle);
     myCommandName = Commands.HIDE;
     displayTurtle();
   }

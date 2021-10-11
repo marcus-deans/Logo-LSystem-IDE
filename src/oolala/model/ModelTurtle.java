@@ -9,25 +9,25 @@ public class ModelTurtle {
 
   private static final String TURTLE_IMAGE = "turtle-picture.png";
 
-  private static final int TurtleHomeX = (FRAME_WIDTH / 2);
-  private static final int TurtleHomeY = ((FRAME_HEIGHT - 26 - COMMAND_HEIGHT + 15) / 2);
+  public static final int TurtleHomeX = (FRAME_WIDTH / 2);
+  public static final int TurtleHomeY = ((FRAME_HEIGHT - 26 - COMMAND_HEIGHT + 15) / 2);
 
   public int myTurtleId;
-  protected int oldX;
-  protected int oldY;
-  protected int newX;
-  protected int newY;
-  protected int degreesRotation;
+  private int oldX;
+  private int oldY;
+  private int newX;
+  private int newY;
+  private int degreesRotation;
 
-  protected int visualOldX;
-  protected int visualOldY;
-  protected int visualNewX;
-  protected int visualNewY;
+  private int visualOldX;
+  private int visualOldY;
+  private int visualNewX;
+  private int visualNewY;
 
-  private static final int NORTH = 0;
-  private static final int SOUTH = 180;
-  private static final int WEST = 270;
-  private static final int EAST = 90;
+  public static final int NORTH = 0;
+  public static final int SOUTH = 180;
+  public static final int WEST = 270;
+  public static final int EAST = 90;
 
   //    public Turtle(int homeX, int homeY, int id) {
   public ModelTurtle(int id) {
@@ -90,20 +90,20 @@ public class ModelTurtle {
   public void setTurtleCoordinates(Coordinates newTurtleCoordinates) {
     this.oldX = newTurtleCoordinates.turtleOldX;
     this.oldY = newTurtleCoordinates.turtleOldY;
-    setNewX(newTurtleCoordinates.turtleNewX);
-    setNewY(newTurtleCoordinates.turtleNewY);
+    this.newX = newTurtleCoordinates.turtleNewX;
+    this.newY = newTurtleCoordinates.turtleNewY;
   }
 
   public Coordinates getTurtleVisualCoordinates() {
     return new Coordinates(visualOldX, visualOldY, visualNewX, visualNewY);
   }
 
-
-  protected int correctXCoordinate(int currentX) {
+  //TODO: compute actual coordinates based on vectors
+  private int correctXCoordinate(int currentX) {
     return (int) (rightFacing() ? currentX + TURTLE_SIZE / 2 : currentX - TURTLE_SIZE / 2);
   }
 
-  protected int correctYCoordinate(int currentY) {
+  private int correctYCoordinate(int currentY) {
     return (int) (upwardFacing() ? currentY + TURTLE_SIZE / 2 : currentY - TURTLE_SIZE / 2);
   }
 
