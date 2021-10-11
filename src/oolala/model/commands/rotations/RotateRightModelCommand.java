@@ -1,7 +1,7 @@
 package oolala.model.commands.rotations;
 
-import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
+import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -17,17 +17,18 @@ public class RotateRightModelCommand extends RotateModelCommand {
   /**
    * Create new rotation command to rotate turtle right
    *
-   * @param myModelTurtle the turtle on which the action will be imparted
+   * @param turtleLinkage the turtle on which the action will be imparted
    * @param degrees       number of degrees by which turtle will be rotated
    */
-  public RotateRightModelCommand(ModelTurtle myModelTurtle, int degrees) {
-    super(myModelTurtle, degrees);
+  public RotateRightModelCommand(TurtleLinkage turtleLinkage, int degrees) {
+    super(turtleLinkage, degrees);
     myCommandName = Commands.RIGHT;
     setRightRotation();
   }
 
   //compute the new rotation of the object by incrementing (rightward rotation)
-  private void setRightRotation() {
+  //made public for testing purposes
+  public void setRightRotation() {
     setTurtleRotation(myModelTurtle.getDegreesRotation() + degreesToRotate);
   }
 }

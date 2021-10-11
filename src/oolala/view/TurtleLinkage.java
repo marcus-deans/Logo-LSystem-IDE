@@ -14,6 +14,9 @@ public class TurtleLinkage {
     myViewTurtle = new ViewTurtle(id);
   }
 
+  public TurtleLinkage() {
+  }
+
   public void update() {
 //    myTurtle.update();
     myViewTurtle.update(myModelTurtle);
