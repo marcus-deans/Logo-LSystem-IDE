@@ -1,7 +1,7 @@
 package oolala.model.commands.rotations;
 
-import oolala.model.ModelTurtle;
 import oolala.model.commands.ModelCommand;
+import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -20,11 +20,11 @@ public abstract class RotateModelCommand extends ModelCommand {
   /**
    * Create new rotation command to rotate turtle in given direction
    *
-   * @param myModelTurtle the turtle on which the action will be imparted
+   * @param turtleLinkage the turtle on which the action will be imparted
    * @param degrees       number of degrees by which turtle will be rotated
    */
-  public RotateModelCommand(ModelTurtle myModelTurtle, int degrees) {
-    super(myModelTurtle, degrees);
+  public RotateModelCommand(TurtleLinkage turtleLinkage, int degrees) {
+    super(turtleLinkage, degrees);
     this.degreesToRotate = degrees;
   }
 

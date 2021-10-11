@@ -1,6 +1,7 @@
 package oolala.model.commands;
 
 import javafx.scene.image.ImageView;
+import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
 
 /**
@@ -14,6 +15,7 @@ import oolala.view.ViewTurtle;
 public abstract class ViewCommand {
 
   protected Commands myCommandName;
+  protected TurtleLinkage myTurtleLinkage;
   protected ViewTurtle myViewTurtle;
   protected ImageView myTurtleView;
 
@@ -22,8 +24,9 @@ public abstract class ViewCommand {
    *
    * @param viewTurtle ViewTurtle on which commands should be imparted
    */
-  public ViewCommand(ViewTurtle viewTurtle) {
-    myViewTurtle = viewTurtle;
+  public ViewCommand(TurtleLinkage turtleLinkage) {
+    myTurtleLinkage = turtleLinkage;
+    myViewTurtle = myTurtleLinkage.myViewTurtle;
     myTurtleView = myViewTurtle.getMyTurtleView();
   }
 }

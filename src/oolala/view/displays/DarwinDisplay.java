@@ -26,6 +26,18 @@ public class DarwinDisplay extends Display {
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
     return scene;
+  }
+
+
+  private void initializeCreatureDropdown() {
+    allCreatures = new ComboBox();
+    allCreatures.setOnAction((event) -> {
+
+    });
+    allCreatures.setLayoutX(CREATURES_DROPDOWN_X);
+    allCreatures.setLayoutY(CREATURES_DROPDOWN_Y);
+    allCreatures.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    root.getChildren().add(allCreatures);
 
   }
 

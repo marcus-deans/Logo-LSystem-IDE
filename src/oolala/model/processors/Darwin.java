@@ -2,6 +2,7 @@ package oolala.model.processors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
@@ -23,6 +24,7 @@ public class Darwin extends GameProcessor{
     public ArrayList<String> doubleCommands;
     public ArrayList<String> singleCommands;
     public LinkedList<Instruction> myInstructions;
+    private HashMap<Integer, LinkedList<Instruction>> mySpeciesInstructions;
     private final List<String> myHistory;
     boolean isValidCommand;
 

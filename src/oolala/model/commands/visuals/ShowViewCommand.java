@@ -1,7 +1,7 @@
 package oolala.model.commands.visuals;
 
 import oolala.model.commands.Commands;
-import oolala.view.ViewTurtle;
+import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -16,10 +16,10 @@ public class ShowViewCommand extends VisibleViewCommand {
   /**
    * Create a new Show command to show the turtle object on screen
    *
-   * @param viewTurtle the turtle on which the action will be imparted
+   * @param turtleLinkage the turtle on which the action will be imparted
    */
-  public ShowViewCommand(ViewTurtle viewTurtle) {
-    super(viewTurtle);
+  public ShowViewCommand(TurtleLinkage turtleLinkage) {
+    super(turtleLinkage);
     myCommandName = Commands.SHOW;
     displayTurtle();
   }

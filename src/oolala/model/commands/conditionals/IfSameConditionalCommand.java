@@ -1,7 +1,7 @@
 package oolala.model.commands.conditionals;
 
-import oolala.model.ModelCreature;
 import oolala.model.commands.Commands;
+import oolala.view.darwin.CreatureLinkage;
 
 /**
  * @author marcusdeans
@@ -18,11 +18,11 @@ public class IfSameConditionalCommand extends IfEntityConditionalCommand {
 
   /**
    * Create new IfSameConditionalCommand
-   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param creatureLinkage ModelCreature object on which command will be imparted
    * @param nextCommand conditional command that will be executed if conditions are met
    */
-  public IfSameConditionalCommand(ModelCreature modelCreature, int nextCommand) {
-    super(modelCreature, nextCommand);
+  public IfSameConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
+    super(creatureLinkage, nextCommand);
     myCommandName = Commands.IFSAME;
     checkSame();
   }

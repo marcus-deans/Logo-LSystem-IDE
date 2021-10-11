@@ -2,6 +2,7 @@ package oolala.model.commands.conditionals;
 
 import java.util.ArrayList;
 import oolala.model.ModelCreature;
+import oolala.view.darwin.CreatureLinkage;
 import oolala.view.displays.DarwinDisplay;
 
 /**
@@ -20,12 +21,12 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
 
   /**
    * Create new IfEntityConditionalCommand
-   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param creatureLinkage ModelCreature object on which command will be imparted
    * @param nextCommand conditional command that will be executed if conditions are met
    */
-  public IfEntityConditionalCommand(ModelCreature modelCreature, int nextCommand) {
-    super(modelCreature, nextCommand);
-    this.mySpeciesIdentifier = modelCreature.getMySpeciesIdentifier();
+  public IfEntityConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
+    super(creatureLinkage, nextCommand);
+    this.mySpeciesIdentifier = myModelCreature.getMySpeciesIdentifier();
   }
 
   //check whether there is an entity in front

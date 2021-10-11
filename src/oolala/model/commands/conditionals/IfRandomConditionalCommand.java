@@ -1,7 +1,7 @@
 package oolala.model.commands.conditionals;
 
-import oolala.model.ModelCreature;
 import oolala.model.commands.Commands;
+import oolala.view.darwin.CreatureLinkage;
 
 /**
  * @author marcusdeans
@@ -17,11 +17,11 @@ public class IfRandomConditionalCommand extends ConditionalCommand {
 
   /**
    * Create new IfRandomConditionalCommand
-   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param creatureLinkage ModelCreature object on which command will be imparted
    * @param nextCommand conditional command that will be executed if conditions are met
    */
-  public IfRandomConditionalCommand(ModelCreature modelCreature, int nextCommand) {
-    super(modelCreature, nextCommand);
+  public IfRandomConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
+    super(creatureLinkage, nextCommand);
     myCommandName = Commands.IFRANDOM;
     checkRandom();
   }

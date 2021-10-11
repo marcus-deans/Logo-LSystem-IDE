@@ -8,11 +8,16 @@ public class CreatureLinkage extends TurtleLinkage {
   private final int myNearbyThreshold;
   private final int mySpeciesIdentifier;
 
+  public ModelCreature myModelCreature;
+  public ViewCreature myViewCreature;
+
   public CreatureLinkage(int id, int nearbyThreshold, int speciesIdentifier, int homeX, int homeY) {
     myID = id;
     myNearbyThreshold = nearbyThreshold;
     mySpeciesIdentifier = speciesIdentifier;
-    myModelTurtle = new ModelCreature(id, nearbyThreshold, speciesIdentifier, homeX, homeY);
-    myViewTurtle = new ViewCreature(id);
+    myModelCreature = new ModelCreature(id, nearbyThreshold, speciesIdentifier, homeX, homeY);
+    myModelTurtle = myModelCreature;
+    myViewCreature = new ViewCreature(id);
+    myViewTurtle = myViewCreature;
   }
 }

@@ -1,7 +1,7 @@
 package oolala.model.commands.conditionals;
 
-import oolala.model.ModelCreature;
 import oolala.model.commands.Commands;
+import oolala.view.darwin.CreatureLinkage;
 
 /**
  * @author marcusdeans
@@ -18,11 +18,11 @@ public class IfEnemyConditionalCommand extends IfEntityConditionalCommand {
 
   /**
    * Create new IfEnemyConditionalCommand
-   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param creatureLinkage ModelCreature object on which command will be imparted
    * @param nextCommand conditional command that will be executed if conditions are met
    */
-  public IfEnemyConditionalCommand(ModelCreature modelCreature, int nextCommand) {
-    super(modelCreature, nextCommand);
+  public IfEnemyConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
+    super(creatureLinkage, nextCommand);
     myCommandName = Commands.IFENEMY;
     checkEnemy();
   }

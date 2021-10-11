@@ -2,6 +2,7 @@ package oolala.model.commands.conditionals;
 
 import oolala.model.ModelCreature;
 import oolala.model.commands.ModelCommand;
+import oolala.view.darwin.CreatureLinkage;
 
 /**
  * @author marcusdeans
@@ -17,6 +18,7 @@ public abstract class ConditionalCommand extends ModelCommand {
   protected static final int FULL_CIRCLE = 360;
   protected int myNextCommand;
   protected ModelCreature myModelCreature;
+  protected CreatureLinkage myCreatureLinkage;
   protected int myNearbyThreshold;
   protected int myModelCreatureX;
   protected int myModelCreatureY;
@@ -25,12 +27,12 @@ public abstract class ConditionalCommand extends ModelCommand {
   /**
    * Create new abstract ConditionalCommand
    *
-   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param creatureLinkage ModelCreature object on which command will be imparted
    * @param nextCommand   conditional comand that will be executed if conditions are met
    */
-  public ConditionalCommand(ModelCreature modelCreature, int nextCommand) {
-    super(modelCreature);
-    myModelCreature = modelCreature;
+  public ConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
+    super(creatureLinkage);
+    myModelCreature = creatureLinkage.myModelCreature;
     myNextCommand = nextCommand;
     myNearbyThreshold = myModelCreature.getMyNearbyThreshold();
     myModelCreatureX = myModelCreature.getTurtleCoordinates().turtleNewX;

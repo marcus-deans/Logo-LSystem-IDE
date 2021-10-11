@@ -1,7 +1,7 @@
 package oolala.model.commands.conditionals;
 
-import oolala.model.ModelCreature;
 import oolala.model.commands.Commands;
+import oolala.view.darwin.CreatureLinkage;
 
 /**
  * @author marcusdeans
@@ -15,11 +15,11 @@ public class IfWallConditionalCommand extends ConditionalCommand {
 
   /**
    * Create new IfWallConditionalCommand
-   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param creatureLinkage ModelCreature object on which command will be imparted
    * @param nextCommand conditional command that will be executed if conditions are met
    */
-  public IfWallConditionalCommand(ModelCreature modelCreature, int nextCommand) {
-    super(modelCreature, nextCommand);
+  public IfWallConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
+    super(creatureLinkage, nextCommand);
     myCommandName = Commands.IFWALL;
     if (checkWall()) {
       executeSpecifiedInstruction();
