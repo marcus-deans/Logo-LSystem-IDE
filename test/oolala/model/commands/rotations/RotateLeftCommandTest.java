@@ -12,14 +12,14 @@ class RotateLeftCommandTest {
     @Test
     void computeDegreesRotationLeftPositive() {
         RotateLeftModelCommand rlc = new RotateLeftModelCommand(myModelTurtle, 50);
-//        rlc.setLeftRotation();
+        rlc.setLeftRotation();
         assertEquals(myModelTurtle.getDegreesRotation(), -100);
     }
 
     @Test
     void computeDegreesRotationLeftNegative() {
         RotateLeftModelCommand rlc = new RotateLeftModelCommand(myModelTurtle, -75);
-//        rlc.setLeftRotation();
+        rlc.setLeftRotation();
         assertEquals(myModelTurtle.getDegreesRotation(), 150);
     }
 

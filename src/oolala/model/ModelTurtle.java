@@ -90,15 +90,15 @@ public class ModelTurtle {
   public void setTurtleCoordinates(Coordinates newTurtleCoordinates) {
     this.oldX = newTurtleCoordinates.turtleOldX;
     this.oldY = newTurtleCoordinates.turtleOldY;
-    this.newX = newTurtleCoordinates.turtleNewX;
-    this.newY = newTurtleCoordinates.turtleNewY;
+    setNewX(newTurtleCoordinates.turtleNewX);
+    setNewY(newTurtleCoordinates.turtleNewY);
   }
 
   public Coordinates getTurtleVisualCoordinates() {
     return new Coordinates(visualOldX, visualOldY, visualNewX, visualNewY);
   }
 
-  //TODO: compute actual coordinates based on vectors
+
   private int correctXCoordinate(int currentX) {
     return (int) (rightFacing() ? currentX + TURTLE_SIZE / 2 : currentX - TURTLE_SIZE / 2);
   }

@@ -59,12 +59,14 @@ public abstract class MovementModelCommand extends ModelCommand {
   }
 
   //determine if turtle is facing to the right
-  protected boolean rightFacing() {
+  //made public for testing purposes
+  public boolean rightFacing() {
     return (myDegreesRotation >= NORTH) && (myDegreesRotation <= SOUTH);
   }
 
   //determine is turtle is facing upward
-  protected boolean upwardFacing() {
+  //made public for testing purposes
+  public boolean upwardFacing() {
     return (myDegreesRotation <= EAST) || (myDegreesRotation >= WEST);
   }
 
@@ -84,7 +86,6 @@ public abstract class MovementModelCommand extends ModelCommand {
   }
 
   //set the newly computed coordinates in the Turtle object
-
   protected void setNewCoordinates() {
     myModelTurtle.setNewX(myNewX);
     myModelTurtle.setVisualNewX(myVisualNewX);

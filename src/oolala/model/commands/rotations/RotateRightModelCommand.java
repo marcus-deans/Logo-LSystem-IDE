@@ -27,7 +27,8 @@ public class RotateRightModelCommand extends RotateModelCommand {
   }
 
   //compute the new rotation of the object by incrementing (rightward rotation)
-  private void setRightRotation() {
+  //made public for testing purposes
+  public void setRightRotation() {
     setTurtleRotation(myModelTurtle.getDegreesRotation() + degreesToRotate);
   }
 }

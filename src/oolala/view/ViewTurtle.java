@@ -28,6 +28,10 @@ public class ViewTurtle {
   private int myDegreesRotation;
   private boolean penOpacity;
 
+  /**
+   *
+   * @param id
+   */
   public ViewTurtle(int id) {
     myID = id;
     penOpacity = true;

@@ -27,7 +27,8 @@ public class RotateLeftModelCommand extends RotateModelCommand {
   }
 
   //compute the new rotation of the object by decrementing (leftward rotation)
-  private void setLeftRotation() {
+  //made public for testing purposes
+  public void setLeftRotation() {
     setTurtleRotation(myModelTurtle.getDegreesRotation() - degreesToRotate);
   }
 }

@@ -88,4 +88,8 @@ public class Darwin extends GameProcessor{
         return myInstructions;
     }
 
+    //expansions by level in Logo instruction format
+    public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
+        return new ArrayList<ArrayList<Instruction>>();
+    }
 }

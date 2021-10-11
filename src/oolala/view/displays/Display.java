@@ -67,10 +67,6 @@ public abstract class Display extends Application {
   public static final int LANGUAGES_TITLE_Y = 17;
   public static final int LANGUAGES_DROPDOWN_X = 520;
   public static final int LANGUAGES_DROPDOWN_Y = 0;
-  public static final int TURTLES_TITLE_X = 620;
-  public static final int TURTLES_TITLE_Y = 17;
-  public static final int TURTLES_DROPDOWN_X = 680;
-  public static final int TURTLES_DROPDOWN_Y = 0;
   public static final int MAX_DROPDOWN_WIDTH = 50;
   public static final int OFFSET_X = 10;
   public static final int OFFSET_Y = 15;
