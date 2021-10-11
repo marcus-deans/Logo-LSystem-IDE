@@ -45,8 +45,8 @@ public class LogoDisplay extends Display {
     performInitialSetup(); //setup everything common between all 3 displays
     myGameProcessor = new Logo();
     spawnTurtle(0);
-    initializeCreaturesOptions(); //dropdown of all turtles and current running turtle
-    creaturesTitle();
+    initializeCreatureDropdown(); //dropdown of all turtles and current running turtle
+    creaturesTitle(getWord("creatures_text_logo"));
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
@@ -98,14 +98,8 @@ public class LogoDisplay extends Display {
     myGameProcessor.inputParser(0, 0, 0, text);
   }
 
-  private void creaturesTitle() {
-    creaturesText = new Text(getWord("creatures_text_logo"));
-    creaturesText.setLayoutX(CREATURES_TITLE_X);
-    creaturesText.setLayoutY(CREATURES_TITLE_Y);
-    root.getChildren().add(creaturesText);
-  }
-
-  private void initializeCreaturesOptions() {
+  @Override
+  protected void initializeCreatureDropdown() {
     creatureDropdown = new ComboBox();
     creatureDropdown.setOnAction((event) -> {
       //TODO: switch to this turtle

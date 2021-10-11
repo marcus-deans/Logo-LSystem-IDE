@@ -22,7 +22,6 @@ public class LSystemDisplay extends LogoDisplay {
     myGameProcessor = new LSystem();
     spawnTurtle(0);
     performInitialSetup();
-    initializeRunButton(); //initialize the program run button
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());

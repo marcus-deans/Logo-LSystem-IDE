@@ -412,6 +412,36 @@ public abstract class Display extends Application {
     });
   }
 
+  protected void creaturesTitle(String title) {
+    creaturesText = new Text(title);
+    creaturesText.setLayoutX(CREATURES_TITLE_X);
+    creaturesText.setLayoutY(CREATURES_TITLE_Y);
+    root.getChildren().add(creaturesText);
+  }
+
+  protected void initializeCreatureDropdown() {
+    creatureDropdown = new ComboBox();
+    creatureDropdown.setOnAction((event) -> {
+      //TODO: switch to this turtle
+      int id = Integer.parseInt(historyPrograms.getSelectionModel().getSelectedItem().toString());
+//      for (ModelTurtle modelTurtle : allModelTurtles) {
+//        if (modelTurtle.myTurtleId == id) {
+//          myModelTurtle = modelTurtle;
+//        }
+//      }
+      for (TurtleLinkage turtleLinkage : allTurtleLinkages) {
+        if (turtleLinkage.myID == id) {
+          switchTurtleLinkage(turtleLinkage);
+        }
+      }
+      //TODO: clear previous lines?
+    });
+    creatureDropdown.setLayoutX(CREATURES_DROPDOWN_X);
+    creatureDropdown.setLayoutY(CREATURES_DROPDOWN_Y);
+    creatureDropdown.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    root.getChildren().add(creatureDropdown);
+  }
+
   //TODO: override this method in each game, make it clear specific dropdowns
   protected void clearSpecificGameDropdowns(){
     turtleDropdown.getItems().clear();

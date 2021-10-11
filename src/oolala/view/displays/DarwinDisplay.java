@@ -25,6 +25,7 @@ public class DarwinDisplay extends Display {
     allModelCreatures = new ArrayList<>();
     performInitialSetup();
     initializeRunButton(getWord("run_text_darwin")); //initialize the program run button
+    creaturesTitle(getWord("creatures_text_darwin"));
     initializeCreatureDropdown(); //initialize the dropdown of creatures
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
@@ -32,8 +33,8 @@ public class DarwinDisplay extends Display {
     return scene;
   }
 
-
-  private void initializeCreatureDropdown() {
+  @Override
+  protected void initializeCreatureDropdown() {
     allCreatures = new ComboBox();
     allCreatures.setOnAction((event) -> {
 
