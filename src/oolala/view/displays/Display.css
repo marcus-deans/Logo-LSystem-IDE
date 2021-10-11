@@ -26,6 +26,7 @@
 
 #dropdown-label {
   -fx-text-fill: #012169;
+  -fx-font-weight: bold;
 }
 
 
