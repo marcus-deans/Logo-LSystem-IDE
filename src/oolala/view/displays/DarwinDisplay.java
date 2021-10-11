@@ -55,10 +55,6 @@ public class DarwinDisplay extends Display {
 
   }
 
-  public static ArrayList<CreatureLinkage> getAllCreatureLinkages() {
-    return allCreatureLinkages;
-  }
-
   @Override
   protected void handleInputParsing(String text) {
     myGameProcessor.inputParser(4, 4, 4, text);

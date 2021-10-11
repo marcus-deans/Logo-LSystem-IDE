@@ -42,8 +42,8 @@ public class LogoDisplay extends Display {
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     //Initialize the view classes
-    myLogo = new Logo();
-    root = new Group();
+    performInitialSetup(); //setup everything common between all 3 displays
+    myGameProcessor = new Logo();
     spawnTurtle(0);
     initializeCreatureDropdown(); //dropdown of all turtles and current running turtle
     creaturesTitle(getWord("creatures_text_logo"));
@@ -68,27 +68,6 @@ public class LogoDisplay extends Display {
     allModelTurtles.add(myModelTurtle);
     allViewTurtles.add(myViewTurtle);
 
-    root.getChildren().add(myViewTurtle.getMyTurtleView());
-  }
-
-  private void initializeBoundaries() {
-    Line topLine = new Line(OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP);
-    Line leftLine = new Line(OFFSET_X, OFFSET_Y_TOP, OFFSET_X, COMMAND_Y - OFFSET_Y);
-    Line rightLine = new Line(FRAME_WIDTH - OFFSET_X, OFFSET_Y_TOP, FRAME_WIDTH - OFFSET_X,
-        COMMAND_Y - OFFSET_Y);
-    Line bottomLine = new Line(OFFSET_X, COMMAND_Y - OFFSET_Y, FRAME_WIDTH - OFFSET_X,
-        COMMAND_Y - OFFSET_Y);
-    root.getChildren().add(topLine);
-    root.getChildren().add(leftLine);
-    root.getChildren().add(rightLine);
-    root.getChildren().add(bottomLine);
-  }
-
-  private void gameTitle() {
-    gameSettingTitle = new Text(getWord("game_setting_title"));
-    gameSettingTitle.setLayoutX(GAME_TITLE_X);
-    gameSettingTitle.setLayoutY(GAME_TITLE_Y);
-    root.getChildren().add(gameSettingTitle);
     root.getChildren().add(myViewTurtle.getMyTurtleView());
   }
 

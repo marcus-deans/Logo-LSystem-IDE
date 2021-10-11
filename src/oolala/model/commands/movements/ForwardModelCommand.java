@@ -46,10 +46,7 @@ public class ForwardModelCommand extends MovementModelCommand {
     myVisualNewY = newVisualCoordinates.turtleNewY;
   }
 
-<<<<<<< HEAD
-=======
   //perform the actual calculation of the coordinates based on vector mathematics
->>>>>>> d78dfef445eb4985d0d788eea8cca607f4abc428
   private Coordinates calculateForwardCoordinates(int oldX, int oldY) {
     int newX = rightFacing() ? oldX + myXVector : oldX - myXVector;
     int newY = upwardFacing() ? oldY - myYVector : oldY + myYVector;
