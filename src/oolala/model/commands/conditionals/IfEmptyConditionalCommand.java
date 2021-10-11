@@ -1,7 +1,9 @@
 package oolala.model.commands.conditionals;
 
 import java.util.ArrayList;
+import javafx.scene.Group;
 import oolala.model.commands.Commands;
+import oolala.model.instructions.CreatureInstruction;
 import oolala.view.darwin.CreatureLinkage;
 
 /**
@@ -25,8 +27,8 @@ public class IfEmptyConditionalCommand extends IfEntityConditionalCommand {
    * @param nextCommand     conditional command that will be executed if conditions are met
    */
   public IfEmptyConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand,
-      ArrayList<CreatureInstruction> creatureInstructions) {
-    super(creatureLinkage, nextCommand, creatureInstructions);
+      ArrayList<CreatureInstruction> creatureInstructions, Group root) {
+    super(creatureLinkage, nextCommand, creatureInstructions, root);
     myCommandName = Commands.IFEMPTY;
     checkEmpty();
   }

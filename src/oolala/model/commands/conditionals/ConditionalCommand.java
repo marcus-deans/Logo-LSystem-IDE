@@ -1,6 +1,7 @@
 package oolala.model.commands.conditionals;
 
 import java.util.ArrayList;
+import javafx.scene.Group;
 import oolala.model.ModelCreature;
 import oolala.model.commands.ModelCommand;
 import oolala.model.instructions.CreatureInstruction;
@@ -27,6 +28,7 @@ public abstract class ConditionalCommand extends ModelCommand {
   protected int myModelCreatureY;
   protected int myDegreesRotation;
   protected ArrayList<CreatureInstruction> myCreatureInstructions;
+  protected Group myRoot;
 
   /**
    * Create new abstract ConditionalCommand
@@ -35,8 +37,9 @@ public abstract class ConditionalCommand extends ModelCommand {
    * @param nextCommand     conditional comand that will be executed if conditions are met
    */
   public ConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand,
-      ArrayList<CreatureInstruction> creatureInstructions) {
+      ArrayList<CreatureInstruction> creatureInstructions, Group root) {
     super(creatureLinkage);
+    myRoot = root;
     myCreatureLinkage = creatureLinkage;
     myModelCreature = creatureLinkage.myModelCreature;
     myNextCommand = nextCommand;
@@ -52,7 +55,7 @@ public abstract class ConditionalCommand extends ModelCommand {
   protected void executeSpecifiedInstruction() {
     CreatureInstruction instructionToExecute = myCreatureInstructions.get(myNextCommand);
     InstructionProcessor processInstruction = new InstructionProcessor(instructionToExecute,
-        myCreatureLinkage);
+        myCreatureLinkage, myRoot);
 //    myModelCreature.setMyNextInstructionIndex(myNextCommand);
   }
 

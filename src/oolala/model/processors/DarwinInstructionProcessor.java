@@ -22,21 +22,17 @@ import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 import oolala.view.darwin.CreatureLinkage;
 
-public class InstructionProcessor {
+public class DarwinInstructionProcessor extends InstructionProcessor {
 
   private ArrayList<CreatureInstruction> allInstructions;
 
-  public InstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage,
-      Group root) {
-    performInstruction(currentInst, creatureLinkage, root);
-  }
-
-  public InstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage) {
+  public DarwinInstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage) {
     Group root = new Group();
     performInstruction(currentInst, creatureLinkage, root);
   }
 
-  public InstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage, Group root,
+  public DarwinInstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage,
+      Group root,
       ArrayList<CreatureInstruction> instructions) {
     this.allInstructions = instructions;
     performInstruction(currentInst, creatureLinkage, root);
@@ -57,20 +53,19 @@ public class InstructionProcessor {
       case STAMP -> new StampViewCommand(creatureLinkage, root);
       case INFECT -> new InfectCommand(creatureLinkage);
       case IFEMPTY -> new IfEmptyConditionalCommand(creatureLinkage, commandPixels,
-          allInstructions, root);
-      case IFWALL -> new IfWallConditionalCommand(creatureLinkage, commandPixels, allInstructions,
-          root);
-      case IFSAME -> new IfSameConditionalCommand(creatureLinkage, commandPixels, allInstructions,
-          root);
+          allInstructions);
+      case IFWALL -> new IfWallConditionalCommand(creatureLinkage, commandPixels, allInstructions);
+      case IFSAME -> new IfSameConditionalCommand(creatureLinkage, commandPixels, allInstructions);
       case IFENEMY -> new IfEnemyConditionalCommand(creatureLinkage, commandPixels,
-          allInstructions, root);
+          allInstructions);
       case IFRANDOM -> new IfRandomConditionalCommand(creatureLinkage, commandPixels,
-          allInstructions, root);
-      case GO -> new GoConditionalCommand(creatureLinkage, commandPixels, root);
+          allInstructions);
+      case GO -> new GoConditionalCommand(creatureLinkage, commandPixels);
       default -> {
       }
 //      default -> myTurtle.execute(currentInstruction, root, lineRoot);
     }
     creatureLinkage.update();
   }
+
 }
