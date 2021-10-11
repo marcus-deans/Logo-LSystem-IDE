@@ -1,7 +1,9 @@
 package oolala.model.processors;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import oolala.model.instructions.Instruction;
 
 public class Logo extends GameProcessor{
@@ -21,8 +23,8 @@ public class Logo extends GameProcessor{
   public ArrayList<String> singleCommands;
 
   private boolean isValidCommand;
-  private Queue<Instruction> myInstructions;
-  private List<String> myHistory;
+  private final LinkedList<Instruction> myInstructions;
+  private final List<String> myHistory;
 
   public Logo() {
     super();
@@ -30,7 +32,8 @@ public class Logo extends GameProcessor{
     myInstructions = new LinkedList<>();
     myHistory = new ArrayList<>();
     doubleCommands = new ArrayList<>(Arrays.asList(FORWARD, BACKWARD, LEFT, RIGHT, TELL));
-    singleCommands = new ArrayList<>(Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
+    singleCommands = new ArrayList<>(
+        Arrays.asList(PENDOWN, PENUP, SHOW_TURTLE, HIDE_TURTLE, HOME, STAMP));
   }
 
   //TODO: ignore lines that start with # - filter out before splitting inputCommands
@@ -47,7 +50,7 @@ public class Logo extends GameProcessor{
           inputCommands.get(i).toLowerCase()) && i < inputCommands.size() && nextCommandIsInt(i,
           inputCommands)) { //Valid double command (requires a second number)
         createDoubleCommand(inputCommands.get(i), Integer.valueOf(inputCommands.get(i + 1)));
-        break;
+        i++;
       } else { //Not a valid command stream
         isValidCommand = false;
         break;
@@ -96,4 +99,12 @@ public class Logo extends GameProcessor{
     isValidCommand = status;
   }
 
+  public LinkedList<Instruction> getMyInstructions() {
+    return myInstructions;
+  }
+
+  //expansions by level in Logo instruction format
+  public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
+    return new ArrayList<ArrayList<Instruction>>();
+  }
 }

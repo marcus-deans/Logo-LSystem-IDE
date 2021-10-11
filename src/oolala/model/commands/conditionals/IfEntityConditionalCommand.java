@@ -4,16 +4,31 @@ import java.util.ArrayList;
 import oolala.model.ModelCreature;
 import oolala.view.displays.DarwinDisplay;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Abstract command to determine presence of entity, and type of entity, in front of
+ * ModelCreature Assumptions: Functioning ModelCreature and position; other values error-checked
+ * Dependencies: ConditionalCommand, ModelCommand, ModelCreature Example Usage: used for 'ifsame',
+ * 'ifenemy', 'ifempty' command User Details: None, usage exactly as dictated by command entry
+ * pattern (error-checked)
+ */
 public abstract class IfEntityConditionalCommand extends ConditionalCommand {
 
   protected final int halfFieldOfView = 20;
   protected int mySpeciesIdentifier;
 
+  /**
+   * Create new IfEntityConditionalCommand
+   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param nextCommand conditional command that will be executed if conditions are met
+   */
   public IfEntityConditionalCommand(ModelCreature modelCreature, int nextCommand) {
     super(modelCreature, nextCommand);
     this.mySpeciesIdentifier = modelCreature.getMySpeciesIdentifier();
   }
 
+  //check whether there is an entity in front
   protected boolean determineEntityPresentAndNature(boolean checkingSameType) {
     ArrayList<ModelCreature> allModelCreatures = DarwinDisplay.getAllModelCreatures();
     for (ModelCreature checkModelCreature : allModelCreatures) {
@@ -30,6 +45,7 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
     return false;
   }
 
+  //create a circle around the ModelCreature based on nearbyThreshold, and determine if within
   private boolean compareWithinCircle(ModelCreature checkModelCreature) {
     int checkModelCreatureX = checkModelCreature.getTurtleCoordinates().turtleNewX;
     int checkModelCreatureY = checkModelCreature.getTurtleCoordinates().turtleNewY;
@@ -39,6 +55,7 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
     return xDifferenceSquared + yDifferenceSquared <= radiusDistanceSquared;
   }
 
+  //determine whether other entity is within the field of view of given ModelCreature
   private boolean compareWithinFieldOfView(ModelCreature checkModelCreature) {
     int checkModelCreatureX = checkModelCreature.getTurtleCoordinates().turtleNewX;
     int checkModelCreatureY = checkModelCreature.getTurtleCoordinates().turtleNewY;

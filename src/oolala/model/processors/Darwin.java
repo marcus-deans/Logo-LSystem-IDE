@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
@@ -23,7 +22,7 @@ public class Darwin extends GameProcessor{
 
     public ArrayList<String> doubleCommands;
     public ArrayList<String> singleCommands;
-    public Queue<Instruction> myInstructions;
+    public LinkedList<Instruction> myInstructions;
     private final List<String> myHistory;
     boolean isValidCommand;
 
@@ -85,7 +84,8 @@ public class Darwin extends GameProcessor{
         isValidCommand = status;
     }
 
-    public Queue<Instruction> getMyInstructions() {
+    public LinkedList<Instruction> getMyInstructions() {
         return myInstructions;
     }
+
 }

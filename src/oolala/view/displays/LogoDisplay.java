@@ -2,8 +2,8 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -82,13 +82,13 @@ public class LogoDisplay extends Display {
   public static final int CLEAR_Y = 600;
 
   //Turtles
-  private final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
-  private final List<ModelTurtle> allModelTurtles = new ArrayList<>();
-  private final List<ViewTurtle> allViewTurtles = new ArrayList<>();
+  protected final List<TurtleLinkage> allTurtleLinkages = new ArrayList<>();
+  protected final List<ModelTurtle> allModelTurtles = new ArrayList<>();
+  protected final List<ViewTurtle> allViewTurtles = new ArrayList<>();
 
-  private TurtleLinkage myTurtleLinkage;
-  private ModelTurtle myModelTurtle;
-  private ViewTurtle myViewTurtle;
+  protected TurtleLinkage myTurtleLinkage;
+  protected ModelTurtle myModelTurtle;
+  protected ViewTurtle myViewTurtle;
 
   private ComboBox turtleDropdown;
 
@@ -111,7 +111,7 @@ public class LogoDisplay extends Display {
       return new File("data/examples/logo").listFiles();
   }
 
-  private void spawnTurtle(int id) {
+  protected void spawnTurtle(int id) {
     myTurtleLinkage = new TurtleLinkage(id);
 
     myModelTurtle = myTurtleLinkage.myModelTurtle;
@@ -235,13 +235,18 @@ public class LogoDisplay extends Display {
   //Create method that passes in queue of commands to Logo
   @Override
   protected void step() {
+    checkForInstructionsAndExecute();
+  }
+
+  private void checkForInstructionsAndExecute() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
+    LinkedList<Instruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
       Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);
       //TODO: create map (possibly global) ->
       drawTurtleLine();
+//      myGameProcessor.updateMyInstructions();
       myModelTurtle.updateCoordinates();
     }
   }
@@ -257,7 +262,7 @@ public class LogoDisplay extends Display {
   }
 
 
-  private void drawTurtleLine() {
+  protected void drawTurtleLine() {
     Coordinates turtleCoordinates = myTurtleLinkage.myModelTurtle.getTurtleVisualCoordinates();
     Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleOldY,
         turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);

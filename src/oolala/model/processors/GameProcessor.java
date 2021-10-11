@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import oolala.model.instructions.Instruction;
 
 public abstract class GameProcessor {
@@ -57,5 +56,7 @@ public abstract class GameProcessor {
     //Method to save the user input commands to a fle
     public abstract void saveCommand(String inputStream, String filename);
 
-    public abstract Queue<Instruction> getMyInstructions();
+    public abstract LinkedList<Instruction> getMyInstructions();
+
+    public abstract ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels();
 }
