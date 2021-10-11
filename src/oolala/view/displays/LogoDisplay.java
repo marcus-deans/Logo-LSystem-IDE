@@ -202,7 +202,6 @@ public class LogoDisplay extends Display {
   }
 
   private void checkForInstructionsAndExecute() {
-    //TODO: update dropdowns
     //If an instruction has been sent to myLogo, run it
     LinkedList<Instruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {

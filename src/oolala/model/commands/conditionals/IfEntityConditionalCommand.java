@@ -1,8 +1,6 @@
 package oolala.model.commands.conditionals;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.Group;
 import oolala.model.ModelCreature;
 import oolala.model.instructions.CreatureInstruction;
@@ -37,7 +35,7 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
 
   //check whether there is an entity in front
   protected boolean determineEntityPresentAndNature(boolean checkingSameType) {
-    List<CreatureLinkage> allCreatureLinkages = DarwinDisplay.getAllCreatureLinkages();
+    ArrayList<CreatureLinkage> allCreatureLinkages = DarwinDisplay.getAllCreatureLinkages();
     for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
       ModelCreature checkModelCreature = checkCreatureLinkage.myModelCreature;
       if (compareWithinCircle(checkModelCreature) && compareWithinFieldOfView(checkModelCreature)) {
