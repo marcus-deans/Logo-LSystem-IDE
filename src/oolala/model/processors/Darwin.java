@@ -8,7 +8,12 @@ import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
-public class Darwin extends GameProcessor{
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+
+public class Darwin {
 
     public static final String MOVE = "move";
     public static final String LEFT = "left";
@@ -65,21 +70,31 @@ public class Darwin extends GameProcessor{
         }
     }
 
-    @Override
-    protected void createSingleCommand(String command) {
+    private void createSingleCommand(String command) {
         CreatureInstruction singleInstruction = new CreatureInstruction(command);
         myInstructions.add(singleInstruction);
     }
 
-    @Override
-    protected void createDoubleCommand(String command, Integer valueOf) {
+    private void createDoubleCommand(String command, Integer valueOf) {
         CreatureInstruction doubleInstruction = new CreatureInstruction(command, valueOf);
         myInstructions.add(doubleInstruction);
     }
 
+    //Method to save the user input commands to a fle
     public void saveCommand(String inputStream, String filename) {
         String path = "data/examples/darwin" + filename + ".txt";
-        saveCommandGivenPath(inputStream, path);
+        File newProgram = new File(path);
+        try {
+            if (newProgram.createNewFile()) {
+                FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
+                writeToFile.write(inputStream);
+                writeToFile.close();
+            } else { //TODO: error handling instead of a sys.out.print statement
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void saveHistory(String historyElement) {

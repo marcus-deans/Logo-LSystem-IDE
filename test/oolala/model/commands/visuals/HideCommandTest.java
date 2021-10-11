@@ -14,6 +14,7 @@ class HideCommandTest {
 
     @Test
     void checkIfTurtleIsVisible() {
+
     }
 
 }

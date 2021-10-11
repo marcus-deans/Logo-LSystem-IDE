@@ -57,10 +57,10 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
   private boolean compareWithinCircle(ModelCreature checkModelCreature) {
     int checkModelCreatureX = checkModelCreature.getTurtleCoordinates().turtleNewX;
     int checkModelCreatureY = checkModelCreature.getTurtleCoordinates().turtleNewY;
-    int xDifferenceSquared = (int) Math.pow(checkModelCreatureX - myModelCreatureX, 2);
-    int yDifferenceSquared = (int) Math.pow(checkModelCreatureY - myModelCreatureY, 2);
-    int radiusDistanceSquared = (int) Math.pow(myNearbyThreshold, 2);
-    return xDifferenceSquared + yDifferenceSquared <= radiusDistanceSquared;
+    int xDifference = (int) Math.pow(checkModelCreatureX - myModelCreatureX, 2);
+    int yDifference = (int) Math.pow(checkModelCreatureY - myModelCreatureY, 2);
+    int radiusDistance = (int) Math.pow(myNearbyThreshold, 2);
+    return xDifference + yDifference <= radiusDistance;
   }
 
   //determine whether other entity is within the field of view of given ModelCreature
