@@ -5,10 +5,9 @@ import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 
 /**
- * @author Purpose: Extends from ModelTrutle for the Darwin application Assumptions: Functioning ;
- * and other values error-checked Example Usage: used for computeForwardCoordinates() to declare
- * myTurtleOldX User Details: None, usage exactly as dictated by command entry pattern
- * (error-checked)
+ * @author Purpose: Extends from ModelTurtle for the Darwin application Assumptions: Utilizes
+ * functioning creature x and y locations; nearby threshold and species identifier; other values
+ * error checked Example Usage: used to create specific creatures for the Darwin application
  */
 public class ModelCreature extends ModelTurtle {
 
@@ -19,6 +18,13 @@ public class ModelCreature extends ModelTurtle {
   private final int myCreatureHomeX;
   private final int myCreatureHomeY;
 
+  /**
+   * @param id
+   * @param nearbyThreshold
+   * @param speciesIdentifier
+   * @param homeX
+   * @param homeY
+   */
   public ModelCreature(int id, int nearbyThreshold, int speciesIdentifier, int homeX, int homeY) {
     super(id);
     myCreatureHomeX = homeX;
