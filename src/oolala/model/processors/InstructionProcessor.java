@@ -66,7 +66,7 @@ public class InstructionProcessor {
           allInstructions, root);
       case IFRANDOM -> new IfRandomConditionalCommand(creatureLinkage, commandPixels,
           allInstructions, root);
-      case GO -> new GoConditionalCommand(creatureLinkage, commandPixels, root);
+      case GO -> new GoConditionalCommand(creatureLinkage, commandPixels, allInstructions, root);
       default -> {
       }
 //      default -> myTurtle.execute(currentInstruction, root, lineRoot);

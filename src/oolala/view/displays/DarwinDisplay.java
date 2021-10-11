@@ -68,46 +68,48 @@ public class DarwinDisplay extends Display {
   }
 
   private void checkForInstructionsAndExecute() {
-    ArrayList<ArrayList<CreatureInstruction>> creatureExecutionOrderList = randomizeCreatureOrder();
-    while (!creatureExecutionOrderList.isEmpty()) {
-      ArrayList<CreatureInstruction> currentCreatureInstructions = creatureExecutionOrderList.get(
-          0);
-      while (!currentCreatureInstructions.isEmpty()) {
-        Instruction currentInstruction = currentCreatureInstructions.get(
-            0); //pop a single instruction, FIFO
-        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
-        executeInstruction(currentInstruction, myCreatureLinkage, root);
-        //TODO: associate each creature with its map
-        // drawTurtleLine();
-        // myModelTurtle.updateCoordinates(0;
-        currentCreatureInstructions.remove(0);
+    allCreatureLinkages = randomizeCreatureOrder();
+    for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
+      int checkCreatureLinkageSpecies = checkCreatureLinkage.myModelCreature.getMySpeciesIdentifier();
+
+      while (!creatureExecutionOrderList.isEmpty()) {
+        ArrayList<CreatureInstruction> currentCreatureInstructions = creatureExecutionOrderList.get(
+            0);
+        while (!currentCreatureInstructions.isEmpty()) {
+          Instruction currentInstruction = currentCreatureInstructions.get(
+              0); //pop a single instruction, FIFO
+          CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
+          executeInstruction(currentInstruction, myCreatureLinkage, root);
+          //TODO: associate each creature with its map
+          // drawTurtleLine();
+          // myModelTurtle.updateCoordinates(0;
+          currentCreatureInstructions.remove(0);
+        }
+        creatureExecutionOrderList.remove(0);
       }
-      creatureExecutionOrderList.remove(0);
     }
     //TODO: execute all instructions
   }
 
-  private ArrayList<ArrayList<CreatureInstruction>> randomizeCreatureOrder() {
+  private ArrayList<CreatureLinkage> randomizeCreatureOrder() {
     //TODO: get instructions and execute in random order
     Random rand = new Random();
     // create a temporary list for storing
     // selected element
-    ArrayList<ArrayList<CreatureInstruction>> randomizedOptionOrder = new ArrayList<>();
-    ArrayList<ArrayList<CreatureInstruction>> allCreaturesInstructions = new ArrayList<>(); //myGameProcessor.getCreatureList;
-    myCreatureCount = allCreaturesInstructions.size();
-    for (int i = 0; i < allCreaturesInstructions.size(); i++) {
-
-      // take a random index between 0 to size
-      // of given List
-      int randomIndex = rand.nextInt(allCreaturesInstructions.size());
+    ArrayList<CreatureLinkage> randomizedCreatureLinkageOrder = new ArrayList<>();
+//    ArrayList<ArrayList<CreatureInstruction>> allCreaturesInstructions = new ArrayList<>(); //myGameProcessor.getCreatureList;
+    myCreatureCount = allCreatureLinkages.size();
+    for (int i = 0; i < myCreatureCount; i++) {
+      // take a random index between 0 to size of given List
+      int randomIndex = rand.nextInt(allCreatureLinkages.size());
 
       // add element in temporary list
-      randomizedOptionOrder.add(allCreaturesInstructions.get(randomIndex));
+      randomizedCreatureLinkageOrder.add(allCreatureLinkages.get(randomIndex));
 
       // Remove selected element from original list
-      allCreaturesInstructions.remove(randomIndex);
+      allCreatureLinkages.remove(randomIndex);
     }
-    return randomizedOptionOrder;
+    return randomizedCreatureLinkageOrder;
 //    ArrayList<Integer> numericOptions = createNumericOptionsArraylist();
   }
 
