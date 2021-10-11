@@ -56,7 +56,7 @@ class MovementModelCommandTest {
   @Test
   void upwardFacingAt15Degrees() {
       myModelTurtle.setDegreesRotation(15);
-      ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
       assertTrue(fc.upwardFacing());
   }
 

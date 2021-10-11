@@ -1,13 +1,13 @@
 package oolala.model.commands.rotations;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import oolala.model.ModelTurtle;
 import oolala.model.commands.movements.ForwardModelCommand;
 import oolala.view.TurtleLinkage;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RotateModelCommandTest {
 

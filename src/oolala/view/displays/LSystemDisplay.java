@@ -1,13 +1,11 @@
 package oolala.view.displays;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
 import oolala.model.Coordinates;
 import oolala.model.instructions.Instruction;
-import oolala.model.instructions.LSystemInstruction;
 import oolala.model.processors.LSystem;
 
 public class LSystemDisplay extends LogoDisplay {

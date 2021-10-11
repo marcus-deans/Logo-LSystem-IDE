@@ -1,7 +1,10 @@
 package oolala.model.commands.conditionals;
 
+import java.util.ArrayList;
 import oolala.model.ModelCreature;
 import oolala.model.commands.ModelCommand;
+import oolala.model.instructions.CreatureInstruction;
+import oolala.model.processors.InstructionProcessor;
 import oolala.view.darwin.CreatureLinkage;
 
 /**
@@ -23,17 +26,22 @@ public abstract class ConditionalCommand extends ModelCommand {
   protected int myModelCreatureX;
   protected int myModelCreatureY;
   protected int myDegreesRotation;
+  protected ArrayList<CreatureInstruction> myCreatureInstructions;
 
   /**
    * Create new abstract ConditionalCommand
    *
    * @param creatureLinkage ModelCreature object on which command will be imparted
-   * @param nextCommand   conditional comand that will be executed if conditions are met
+   * @param nextCommand     conditional comand that will be executed if conditions are met
    */
-  public ConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
+  public ConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand,
+      ArrayList<CreatureInstruction> creatureInstructions) {
     super(creatureLinkage);
+    myCreatureLinkage = creatureLinkage;
     myModelCreature = creatureLinkage.myModelCreature;
     myNextCommand = nextCommand;
+    myCreatureInstructions = creatureInstructions;
+
     myNearbyThreshold = myModelCreature.getMyNearbyThreshold();
     myModelCreatureX = myModelCreature.getTurtleCoordinates().turtleNewX;
     myModelCreatureY = myModelCreature.getTurtleCoordinates().turtleNewY;
@@ -42,7 +50,10 @@ public abstract class ConditionalCommand extends ModelCommand {
 
   //execute the next instruction since conditionality has been met
   protected void executeSpecifiedInstruction() {
-    myModelCreature.setMyNextInstructionIndex(myNextCommand);
+    CreatureInstruction instructionToExecute = myCreatureInstructions.get(myNextCommand);
+    InstructionProcessor processInstruction = new InstructionProcessor(instructionToExecute,
+        myCreatureLinkage);
+//    myModelCreature.setMyNextInstructionIndex(myNextCommand);
   }
 
 }

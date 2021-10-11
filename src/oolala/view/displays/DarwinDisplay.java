@@ -6,7 +6,6 @@ import java.util.Random;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Paint;
-import oolala.model.ModelCreature;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.Darwin;
@@ -14,14 +13,15 @@ import oolala.view.darwin.CreatureLinkage;
 
 public class DarwinDisplay extends Display {
 
-  private static ArrayList<ModelCreature> allModelCreatures;
+  private static ArrayList<CreatureLinkage> allCreatureLinkages;
+  private String mySpeciesIdentifier;
   private ComboBox allCreatures;
   private int myCreatureCount;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
     myGameProcessor = new Darwin();
-    allModelCreatures = new ArrayList<>();
+    allCreatureLinkages = new ArrayList<>();
     performInitialSetup();
     initializeRunButton(getWord("run_text_darwin")); //initialize the program run button
     creaturesTitle(getWord("creatures_text_darwin"));
@@ -45,8 +45,8 @@ public class DarwinDisplay extends Display {
   }
 
 
-  public static ArrayList<ModelCreature> getAllModelCreatures() {
-    return allModelCreatures;
+  public static ArrayList<CreatureLinkage> getAllCreatureLinkages() {
+    return allCreatureLinkages;
   }
 
   @Override

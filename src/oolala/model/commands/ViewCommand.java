@@ -22,7 +22,7 @@ public abstract class ViewCommand {
   /**
    * Create new abstract ViewCommand
    *
-   * @param viewTurtle ViewTurtle on which commands should be imparted
+   * @param turtleLinkage ViewTurtle on which commands should be imparted
    */
   public ViewCommand(TurtleLinkage turtleLinkage) {
     myTurtleLinkage = turtleLinkage;

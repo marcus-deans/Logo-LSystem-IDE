@@ -1,6 +1,8 @@
 package oolala.model.commands.movements;
 
-import static oolala.view.displays.LogoDisplay.*;
+import static oolala.view.displays.LogoDisplay.COMMAND_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_HEIGHT;
+import static oolala.view.displays.LogoDisplay.FRAME_WIDTH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oolala.model.ModelTurtle;

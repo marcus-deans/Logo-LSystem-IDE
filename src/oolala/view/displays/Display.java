@@ -422,7 +422,7 @@ public abstract class Display extends Application {
   protected abstract void initializeCreatureDropdown();
 
   //TODO: override this method in each game, make it clear specific dropdowns
-  protected void clearSpecificGameDropdowns(){
+  protected void clearSpecificGameDropdowns() {
     turtleDropdown.getItems().clear();
     //myModelTurtle = new ModelTurtle(0);
   }

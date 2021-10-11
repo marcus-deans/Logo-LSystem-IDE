@@ -21,18 +21,21 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
 
   /**
    * Create new IfEntityConditionalCommand
+   *
    * @param creatureLinkage ModelCreature object on which command will be imparted
-   * @param nextCommand conditional command that will be executed if conditions are met
+   * @param nextCommand     conditional command that will be executed if conditions are met
    */
-  public IfEntityConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand) {
-    super(creatureLinkage, nextCommand);
+  public IfEntityConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand,
+      ArrayList<CreatureInstruction> creatureInstructions) {
+    super(creatureLinkage, nextCommand, creatureInstructions);
     this.mySpeciesIdentifier = myModelCreature.getMySpeciesIdentifier();
   }
 
   //check whether there is an entity in front
   protected boolean determineEntityPresentAndNature(boolean checkingSameType) {
-    ArrayList<ModelCreature> allModelCreatures = DarwinDisplay.getAllModelCreatures();
-    for (ModelCreature checkModelCreature : allModelCreatures) {
+    ArrayList<CreatureLinkage> allCreatureLinkages = DarwinDisplay.getAllCreatureLinkages();
+    for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
+      ModelCreature checkModelCreature = checkCreatureLinkage.myModelCreature;
       if (compareWithinCircle(checkModelCreature) && compareWithinFieldOfView(checkModelCreature)) {
         if (checkingSameType
             && mySpeciesIdentifier == checkModelCreature.getMySpeciesIdentifier()) {

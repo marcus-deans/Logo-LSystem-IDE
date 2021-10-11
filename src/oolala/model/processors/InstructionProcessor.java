@@ -1,5 +1,6 @@
 package oolala.model.processors;
 
+import java.util.ArrayList;
 import javafx.scene.Group;
 import oolala.model.commands.InfectCommand;
 import oolala.model.commands.conditionals.GoConditionalCommand;
@@ -17,40 +18,58 @@ import oolala.model.commands.visuals.HideViewCommand;
 import oolala.model.commands.visuals.PenUpViewCommand;
 import oolala.model.commands.visuals.ShowViewCommand;
 import oolala.model.commands.visuals.StampViewCommand;
+import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
-import oolala.view.TurtleLinkage;
 import oolala.view.darwin.CreatureLinkage;
 
 public class InstructionProcessor {
 
-  public InstructionProcessor(Instruction currentInst, TurtleLinkage myTurtLink, Group root) {
-    performInstruction(currentInst, myTurtLink, root);
+  private ArrayList<CreatureInstruction> allInstructions;
+
+  public InstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage,
+      Group root) {
+    performInstruction(currentInst, creatureLinkage, root);
   }
 
-  private void performInstruction(Instruction currentInstruction, CreatureLinkage myTurtLink,
+  public InstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage, Group root,
+      ArrayList<CreatureInstruction> instructions) {
+    this(currentInst, creatureLinkage, root);
+    this.allInstructions = instructions;
+    performInstruction(currentInst, creatureLinkage, root);
+  }
+
+  public InstructionProcessor(Instruction currentInst, CreatureLinkage creatureLinkage) {
+    Group root = new Group();
+    performInstruction(currentInst, creatureLinkage, root);
+  }
+
+  private void performInstruction(Instruction currentInstruction, CreatureLinkage creatureLinkage,
       Group root) {
     int commandPixels = currentInstruction.pixels;
     switch (currentInstruction.order) {
-      case PENUP -> new PenUpViewCommand(myTurtLink);
-      case FORWARD -> new ForwardModelCommand(myTurtLink, commandPixels);
-      case BACKWARD -> new BackwardModelCommand(myTurtLink, commandPixels);
-      case RIGHT -> new RotateRightModelCommand(myTurtLink, commandPixels);
-      case LEFT -> new RotateLeftModelCommand(myTurtLink, commandPixels);
-      case HOME -> new HomeModelCommand(myTurtLink);
-      case HIDE -> new HideViewCommand(myTurtLink);
-      case SHOW -> new ShowViewCommand(myTurtLink);
-      case STAMP -> new StampViewCommand(myTurtLink, root);
-      case INFECT -> new InfectCommand(myTurtLink);
-      case IFEMPTY -> new IfEmptyConditionalCommand(myTurtLink, commandPixels);
-      case IFWALL -> new IfWallConditionalCommand(myTurtLink, commandPixels);
-      case IFSAME -> new IfSameConditionalCommand(myTurtLink, commandPixels);
-      case IFENEMY -> new IfEnemyConditionalCommand(myTurtLink, commandPixels);
-      case IFRANDOM -> new IfRandomConditionalCommand(myTurtLink, commandPixels);
-      case GO -> new GoConditionalCommand(myTurtLink, commandPixels);
+      case PENUP -> new PenUpViewCommand(creatureLinkage);
+      case FORWARD -> new ForwardModelCommand(creatureLinkage, commandPixels);
+      case BACKWARD -> new BackwardModelCommand(creatureLinkage, commandPixels);
+      case RIGHT -> new RotateRightModelCommand(creatureLinkage, commandPixels);
+      case LEFT -> new RotateLeftModelCommand(creatureLinkage, commandPixels);
+      case HOME -> new HomeModelCommand(creatureLinkage);
+      case HIDE -> new HideViewCommand(creatureLinkage);
+      case SHOW -> new ShowViewCommand(creatureLinkage);
+      case STAMP -> new StampViewCommand(creatureLinkage, root);
+      case INFECT -> new InfectCommand(creatureLinkage);
+      case IFEMPTY -> new IfEmptyConditionalCommand(creatureLinkage, commandPixels,
+          allInstructions);
+      case IFWALL -> new IfWallConditionalCommand(creatureLinkage, commandPixels, allInstructions);
+      case IFSAME -> new IfSameConditionalCommand(creatureLinkage, commandPixels, allInstructions);
+      case IFENEMY -> new IfEnemyConditionalCommand(creatureLinkage, commandPixels,
+          allInstructions);
+      case IFRANDOM -> new IfRandomConditionalCommand(creatureLinkage, commandPixels,
+          allInstructions);
+      case GO -> new GoConditionalCommand(creatureLinkage, commandPixels);
       default -> {
       }
 //      default -> myTurtle.execute(currentInstruction, root, lineRoot);
     }
-    myTurtLink.update();
+    creatureLinkage.update();
   }
 }
