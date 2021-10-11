@@ -1,7 +1,7 @@
 package oolala.model.commands.visuals;
 
 import oolala.model.commands.ViewCommand;
-import oolala.view.ViewTurtle;
+import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -16,10 +16,10 @@ public abstract class PenViewCommand extends ViewCommand {
   /**
    * Create a new abstract PenViewCommand command to control lines for a turtle
    *
-   * @param viewTurtle the turtle on which the action will be imparted
+   * @param turtleLinkage the turtle on which the action will be imparted
    */
-  public PenViewCommand(ViewTurtle viewTurtle) {
-    super(viewTurtle);
+  public PenViewCommand(TurtleLinkage turtleLinkage) {
+    super(turtleLinkage);
   }
 
   //change the TurtleOpacity boolean (referenced when drawing lines)

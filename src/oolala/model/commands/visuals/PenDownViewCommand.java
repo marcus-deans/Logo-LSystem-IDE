@@ -1,7 +1,7 @@
 package oolala.model.commands.visuals;
 
 import oolala.model.commands.Commands;
-import oolala.view.ViewTurtle;
+import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -17,10 +17,10 @@ public class PenDownViewCommand extends PenViewCommand {
   /**
    * Create a new PenDown command to set the lines for this turtle as pen down (i.e., draw them)
    *
-   * @param viewTurtle the turtle on which the action will be imparted
+   * @param turtleLinkage the turtle on which the action will be imparted
    */
-  public PenDownViewCommand(ViewTurtle viewTurtle) {
-    super(viewTurtle);
+  public PenDownViewCommand(TurtleLinkage turtleLinkage) {
+    super(turtleLinkage);
     myCommandName = Commands.PENUP;
     updateTurtleOpacity();
   }

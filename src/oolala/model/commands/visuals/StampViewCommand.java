@@ -4,7 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import oolala.model.commands.Commands;
 import oolala.model.commands.ViewCommand;
-import oolala.view.ViewTurtle;
+import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -20,11 +20,11 @@ public class StampViewCommand extends ViewCommand {
   /**
    * Create a new Stamp command to stamp the turtle object in current position
    *
-   * @param viewTurtle the turtle on which the action will be imparted
+   * @param turtleLinkage the turtle on which the action will be imparted
    * @param root       the JavaFX Group to which the new Turtle (JavaFX Imageview) should be added
    */
-  public StampViewCommand(ViewTurtle viewTurtle, Group root) {
-    super(viewTurtle);
+  public StampViewCommand(TurtleLinkage turtleLinkage, Group root) {
+    super(turtleLinkage);
     myCommandName = Commands.STAMP;
     stampTurtle(root);
   }

@@ -1,7 +1,7 @@
 package oolala.model.commands.movements;
 
-import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
+import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -17,10 +17,10 @@ public class HomeModelCommand extends MovementModelCommand {
   /**
    * Construct a home command to move Turtle home
    *
-   * @param myModelTurtle the turtle on which the action will be imparted
+   * @param turtleLinkage the turtle on which the action will be imparted
    */
-  public HomeModelCommand(ModelTurtle myModelTurtle) {
-    super(myModelTurtle, 0);
+  public HomeModelCommand(TurtleLinkage turtleLinkage) {
+    super(turtleLinkage, 0);
     myCommandName = Commands.HOME;
     computeHomeCoordinates();
     setNewCoordinates();
