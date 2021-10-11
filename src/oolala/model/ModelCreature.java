@@ -19,11 +19,11 @@ public class ModelCreature extends ModelTurtle {
   private final int myCreatureHomeY;
 
   /**
-   * @param id
-   * @param nearbyThreshold
-   * @param speciesIdentifier
-   * @param homeX
-   * @param homeY
+   * @param id                sets the ID for the creature being created for the Darwin application
+   * @param nearbyThreshold   sets the threshold for the created creature
+   * @param speciesIdentifier sets the identity for the creature
+   * @param homeX             sets the home x coordinate for the created creature
+   * @param homeY             sets the home y coordinate for the created creature
    */
   public ModelCreature(int id, int nearbyThreshold, int speciesIdentifier, int homeX, int homeY) {
     super(id);
@@ -35,6 +35,11 @@ public class ModelCreature extends ModelTurtle {
     visualOldY = correctYCoordinate(myCreatureHomeY);
   }
 
+  /**
+   * Declares the instruction index to track the creature's current instruction
+   *
+   * @param myNextInstructionIndex
+   */
   public void setMyNextInstructionIndex(int myNextInstructionIndex) {
     this.myNextInstructionIndex = myNextInstructionIndex;
   }
