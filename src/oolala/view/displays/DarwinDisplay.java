@@ -14,7 +14,6 @@ import oolala.view.darwin.CreatureLinkage;
 
 public class DarwinDisplay extends Display {
 
-
   private static ArrayList<ModelCreature> allModelCreatures;
   private ComboBox allCreatures;
   private int myCreatureCount;
@@ -37,14 +36,14 @@ public class DarwinDisplay extends Display {
   protected void initializeCreatureDropdown() {
     allCreatures = new ComboBox();
     allCreatures.setOnAction((event) -> {
-
+      mySpeciesIdentifier = allCreatures.getSelectionModel().getSelectedItem().toString();
     });
     allCreatures.setLayoutX(CREATURES_DROPDOWN_X);
     allCreatures.setLayoutY(CREATURES_DROPDOWN_Y);
     allCreatures.setMaxWidth(MAX_DROPDOWN_WIDTH);
     root.getChildren().add(allCreatures);
-
   }
+
 
   public static ArrayList<ModelCreature> getAllModelCreatures() {
     return allModelCreatures;

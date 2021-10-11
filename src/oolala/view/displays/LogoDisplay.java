@@ -78,7 +78,7 @@ public class LogoDisplay extends Display {
     savedTitle();
     historyTitle();
     languagesTitle();
-    creaturesTitle();
+    creaturesTitle(getWord(""));
     runTitle();
   }
 
@@ -116,6 +116,7 @@ public class LogoDisplay extends Display {
       }
       //TODO: clear previous lines?
     });
+    //TODO: add all the existing turtles to the dropdown
     creatureDropdown.setLayoutX(CREATURES_DROPDOWN_X);
     creatureDropdown.setLayoutY(CREATURES_DROPDOWN_Y);
     creatureDropdown.setMaxWidth(MAX_DROPDOWN_WIDTH);
