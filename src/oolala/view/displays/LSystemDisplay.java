@@ -123,7 +123,7 @@ public class LSystemDisplay extends LogoDisplay {
     stepDropdown.setLayoutX(LENGTH_DROPDOWN_X);
     stepDropdown.setLayoutY(LENGTH_DROPDOWN_Y);
     stepDropdown.setMaxWidth(MAX_DROPDOWN_WIDTH);
-    for(int i=0; i<15; i++){
+    for (int i = 10; i < 30; i++) {
       stepDropdown.getItems().add(i);
     }
     stepDropdown.setOnAction((event) -> {
@@ -170,7 +170,7 @@ public class LSystemDisplay extends LogoDisplay {
 
   @Override
   protected void handleInputParsing(String text) {
-    myGameProcessor.inputParser(2, 50, 3, text);
+    myGameProcessor.inputParser(6, 60, 20, text);
   }
 
   private void checkForInstructionsAndExecute() {
