@@ -59,9 +59,9 @@ public class Logo extends GameProcessor{
   }
 
   //Method to save the user input commands to a fle
-  public void saveCommand(String inputStream, String filename) {
+  public boolean saveCommand(String inputStream, String filename) {
     String path = "data/examples/logo" + filename + ".txt";
-    saveCommandGivenPath(inputStream, path);
+    return saveCommandGivenPath(inputStream, path);
   }
 
   @Override

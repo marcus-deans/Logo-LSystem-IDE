@@ -25,21 +25,21 @@ public abstract class GameProcessor {
 
     public GameProcessor() {}
 
-    //TODO: each new line should be a new level
     //Method to save the user input commands to a fle
-    public void saveCommandGivenPath(String inputStream, String path) {
+    public boolean saveCommandGivenPath(String inputStream, String path) {
         File newProgram = new File(path);
         try {
             if (newProgram.createNewFile()) {
                 FileWriter writeToFile = new FileWriter(newProgram.getAbsolutePath());
                 writeToFile.write(inputStream);
                 writeToFile.close();
-            } else { //TODO: error handling instead of a sys.out.print statement
-                System.out.println("File already exists.");
+            } else {
+                return false; //on front end, user will be informed of error
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return false; //on front end, user will be informed of error
         }
+        return true;
     }
 
     protected boolean nextCommandIsInt(int index, List<String> inputCommands) {
@@ -67,7 +67,7 @@ public abstract class GameProcessor {
     public abstract void setValidCommand(Boolean status);
 
     //Method to save the user input commands to a fle
-    public abstract void saveCommand(String inputStream, String filename);
+    public abstract boolean saveCommand(String inputStream, String filename);
 
     public abstract LinkedList<Instruction> getMyInstructions();
 

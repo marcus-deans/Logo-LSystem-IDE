@@ -46,7 +46,7 @@ public abstract class Display extends Application {
   public static final int FRAME_WIDTH = 733;
   public static final int FRAME_HEIGHT = 680;
   public static final Paint BACKGROUND = Color.WHITE;
-  public static final int FRAMES_PER_SECOND = 1;
+  public static final int FRAMES_PER_SECOND = 7;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
   //Top Layout
@@ -220,7 +220,9 @@ public abstract class Display extends Application {
     savedPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
     populateFileNames();
     savedPrograms.setOnAction((event) -> {
-      getContentFromFilename(savedPrograms.getSelectionModel().getSelectedItem().toString());
+      if(savedPrograms.getSelectionModel().getSelectedItem() != null){
+        getContentFromFilename(savedPrograms.getSelectionModel().getSelectedItem().toString());
+      }
     });
     root.getChildren().add(savedPrograms);
   }
@@ -401,8 +403,11 @@ public abstract class Display extends Application {
       @Override
       public void handle(ActionEvent event) {
         String filename = getUserFileName(getWord("get_user_filename"));
-        myGameProcessor.saveCommand(commandLine.getText(), filename);
-        updateSavedDropdown();
+        if(myGameProcessor.saveCommand(commandLine.getText(), filename)){
+          updateSavedDropdown();
+        }else{
+          sendAlert("Error saving program!");
+        }
       }
     });
   }

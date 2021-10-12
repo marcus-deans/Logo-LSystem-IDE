@@ -76,9 +76,9 @@ public class Darwin extends GameProcessor{
         myInstructions.add(doubleInstruction);
     }
 
-    public void saveCommand(String inputStream, String filename) {
+    public boolean saveCommand(String inputStream, String filename) {
         String path = "data/examples/darwin" + filename + ".txt";
-        saveCommandGivenPath(inputStream, path);
+        return saveCommandGivenPath(inputStream, path);
     }
 
     public void saveHistory(String historyElement) {
