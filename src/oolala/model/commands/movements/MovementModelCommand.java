@@ -79,8 +79,6 @@ public abstract class MovementModelCommand extends ModelCommand {
     int cosLength = (int) (Math.cos(myRadianDegreesRotation) * pixels);
     myXVector = Math.abs(sinLength);
     myYVector = Math.abs(cosLength);
-//    myXVector = checkVectorOrientation() ? sinLength : cosLength;
-//    myYVector = checkVectorOrientation() ? cosLength : sinLength;
   }
 
   //determine orientation of turtle so that appropriate trigonometric conversions used

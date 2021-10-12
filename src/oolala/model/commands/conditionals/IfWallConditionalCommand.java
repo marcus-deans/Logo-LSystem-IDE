@@ -33,8 +33,6 @@ public class IfWallConditionalCommand extends ConditionalCommand {
 
   //determine if there is a wall present in field of view
   private boolean checkWall() {
-    //TODO: check whether there is a wall present
-
     return true;
   }
 
