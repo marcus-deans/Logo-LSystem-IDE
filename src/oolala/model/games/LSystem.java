@@ -10,27 +10,31 @@ import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.LSystemInstruction;
 import oolala.model.instructions.LogoInstruction;
 
+/**
+ * @author naylaboorady, marcusdeans Purpose: create backend game for Logo Assumptions: running
+ * display, error-checked inputs Dependencies: None Example Usage: serves as backend for playing
+ * Logo User Details: getMyInstruction(), getmySpeciesInstructions() should not be used
+ */
 public class LSystem extends Game {
 
-    public List<String> validCommands;
-    public List<String> doubleAngleCommands;
-    public List<String> doubleLengthCommands;
-    public List<String> singleCommands;
+    private final List<String> validCommands;
+    private final List<String> doubleAngleCommands;
+    private final List<String> doubleLengthCommands;
+    private final List<String> singleCommands;
 
-    public Map<String, String> userRules; //RULE command
-    public Map<String, List<String>> commandConversion; //SET command
+    private final Map<String, String> userRules; //RULE command
+    private Map<String, List<String>> commandConversion; //SET command
 
-    public List<String> expansionLevels; //expansions in LSystem language
-
-    public ArrayList<ArrayList<LogoInstruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
-    private final LinkedList<LogoInstruction> myInstructions; //TODO: do we need this? prob not
+    private final List<String> expansionLevels; //expansions in LSystem language
+    private final ArrayList<ArrayList<LogoInstruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
 
     private final List<String> myHistory;
     private boolean isValidCommand;
 
-
+    /**
+     * Create new LSystem backend
+     */
     public LSystem() {
-        myInstructions = new LinkedList<>();
         myHistory = new ArrayList<>();
         validCommands = new ArrayList<>(
             Arrays.asList("F", "f", "G", "g", "A", "a", "B", "b", "X", "x", "+", "-"));
@@ -42,11 +46,10 @@ public class LSystem extends Game {
         expansionLevels = new ArrayList<>();
         convertedInstructionLevels = new ArrayList<>();
         initializeCommandConversions();
-
-        myInstructions.add(new LSystemInstruction(0, "ht"));
         isValidCommand = true;
     }
 
+    //setup conversion for pre-defined dictionary as specified in projet details
     private void initializeCommandConversions() {
         commandConversion = new HashMap<>();
         commandConversion.put("F", Arrays.asList("pd", "fd"));
@@ -59,10 +62,19 @@ public class LSystem extends Game {
     }
 
     //TODO: ignore lines that start with #
-    //Method to parse the input
+
+    /**
+     * Create input parser that will parse the command line input of the program
+     *
+     * @param levels      the number of levels for the program
+     * @param angle       the angle to be used when drawing
+     * @param length      the number of pixels that line segments should be
+     * @param inputStream input from the command line
+     */
     public void inputParser(int levels, int angle, int length, String inputStream) {
         isValidCommand = true;
-        List<String> inputCommands = Arrays.asList(inputStream.split("\\s+")); //split by any space or tab
+        List<String> inputCommands = Arrays.asList(
+            inputStream.split("\\s+")); //split by any space or tab
         int skip = 0;
         for (int i = 0; i < inputCommands.size(); i++) {
             if (skip > 0) {
@@ -109,6 +121,7 @@ public class LSystem extends Game {
         convertToLogoCommands(levels, angle, length); //now, convert the LSystem expansion into Logo commands
     }
 
+    //iterate through levels and call conversion to logo commands
     private void convertToLogoCommands(int levels, int angle, int length) {
         for(int i=0; i<expansionLevels.size(); i++){ //each expansion level
             ArrayList<LogoInstruction> thisLevelInstructions = createCommandsFromLSystem(levels,
@@ -118,7 +131,7 @@ public class LSystem extends Game {
         }
     }
 
-
+    //obtain instructions that are inside double quotes
     private List<String> getInstructionsInsideQuotes(int startingIndex, List<String> inputCommands) {
         List<String> instructions = new ArrayList<>();
         for(int i=startingIndex; i<inputCommands.size(); i++){
@@ -134,7 +147,7 @@ public class LSystem extends Game {
         return instructions;
     }
 
-
+    //convert all of the expanded instructions to existing Logo commands that can be executed
     private ArrayList<LogoInstruction> createCommandsFromLSystem(int level, int angle, int length,
         String commandStream) {
         String[] commandStreamSplit = commandStream.split("");
@@ -154,6 +167,7 @@ public class LSystem extends Game {
         return instructions;
     }
 
+    //convert each Logo command to an executable instruction
     private LogoInstruction convertLogoCommandToInstruction(int level, int angle, int length,
         String thisCommand) {
         if (singleCommands.contains(thisCommand)) { //if this is single command
@@ -165,6 +179,13 @@ public class LSystem extends Game {
         }
     }
 
+    /**
+     * Save the input to a text file
+     *
+     * @param inputStream command line input from Display
+     * @param filename    String filename of file to be saved
+     * @return confirmation that files was saved
+     */
     public boolean saveCommand(String inputStream, String filename) {
         StringBuilder sb = new StringBuilder();
         sb.append("data/examples/lsystem/");
@@ -173,46 +194,85 @@ public class LSystem extends Game {
         return saveCommandGivenPath(inputStream, sb.toString());
     }
 
+    //create a command that consists of a word and an integer value
     @Override
     protected void createDoubleCommand(String command, Integer number) {
         String alpha = command;
         int bravo = number;
     }
 
+    //create a command that consists of a single word
     protected void createSingleCommand(String command) {
         String alpha = command;
     }
 
+    /**
+     * Get history of commands
+     *
+     * @return list of command strings
+     */
     public List<String> getHistory() {
         return myHistory;
     }
 
+    /**
+     * Save a specific string to the history of the file
+     *
+     * @param historyElement element to be added to historu
+     */
     @Override
     public void saveHistory(String historyElement) {
         myHistory.add(historyElement);
     }
 
+    /**
+     * Get the commands that characterize a species, defunct command
+     *
+     * @param speciesKey the species of interest
+     * @return empty ArrayList as method is not to be used
+     */
+    @Override
+    public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey) {
+        return new ArrayList<CreatureInstruction>();
+    }
+
+    /**
+     * Get instructions that have been parsed, defunct command
+     *
+     * @return empty LinkedList as method is not to be used
+     */
+    @Override
+    public LinkedList<LogoInstruction> getMyInstructions() {
+        return new LinkedList<LogoInstruction>();
+    }
+
+
+    /**
+     * Determine whether the command was valid
+     *
+     * @return boolean whether valid
+     */
     @Override
     public boolean getValidCommand() {
         return isValidCommand;
     }
 
+    /**
+     * Set the status of valid command
+     *
+     * @param status status that valid command should be set to
+     */
     public void setValidCommand(Boolean status) {
         isValidCommand = status;
     }
 
-    @Override
-    public LinkedList<LogoInstruction> getMyInstructions() {
-        return myInstructions;
-    }
 
-    //expansions by level in Logo instruction format
+    /**
+     * expansions by level in Logo instruction format
+     *
+     * @return ArrayList of each level, with each level containg LogoInstructions
+     */
     public ArrayList<ArrayList<LogoInstruction>> getConvertedInstructionLevels() {
         return convertedInstructionLevels;
-    }
-
-    @Override
-    public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey) {
-        return null;
     }
 }
