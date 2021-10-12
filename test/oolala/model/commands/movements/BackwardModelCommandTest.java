@@ -28,14 +28,14 @@ class BackwardModelCommandTest {
 
   @Test
   void computeBackwardWithNorth100() {
-    BackwardModelCommand bc = new BackwardModelCommand(turtLink, TESTING_PIXELS);
+    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, TESTING_PIXELS);
     assertEquals(TurtleHomeX, bc.myNewX);
     assertEquals(TurtleHomeY+TESTING_PIXELS, bc.myNewY);
   }
 
   @Test
   void computeBackwardWithSouth100() {
-    BackwardModelCommand bc = new BackwardModelCommand(turtLink, TESTING_PIXELS);
+    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, TESTING_PIXELS);
     assertEquals(TurtleHomeX, bc.myNewX);
     assertEquals(TurtleHomeY-TESTING_PIXELS, bc.myNewY);
   }
@@ -43,7 +43,7 @@ class BackwardModelCommandTest {
   @Test
   void computeBackwardWithNortheast100() {
     myModelTurtle.setDegreesRotation(45);
-    BackwardModelCommand bc = new BackwardModelCommand(turtLink, 100);
+    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX - 70, bc.myNewX);
     assertEquals(TurtleHomeY + 70, bc.myNewY);
   }
@@ -51,7 +51,7 @@ class BackwardModelCommandTest {
   @Test
   void computeBackwardWithNorthwest100() {
     myModelTurtle.setDegreesRotation(45);
-    BackwardModelCommand bc = new BackwardModelCommand(turtLink, 100);
+    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX + 70, bc.myNewX);
     assertEquals(TurtleHomeX + 70, bc.myNewY);
   }
@@ -59,7 +59,7 @@ class BackwardModelCommandTest {
   @Test
   void computeForwardWithDegrees295Length100() {
     myModelTurtle.setDegreesRotation(295);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX + 90, fc.myNewX); //sin --> new x-coord
     assertEquals(TurtleHomeY + 42, fc.myNewY); //cos --> new y-coord
   }

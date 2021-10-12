@@ -20,11 +20,11 @@ class ForwardModelCommandTest {
   private static final int TurtleHomeY = ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2);
 
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  TurtleLinkage turtLink = new TurtleLinkage(0);
+//  TurtleLinkage turtLink = new TurtleLinkage(0);
 
   @Test
   void computeForwardWithNorth100() {
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, TESTING_PIXELS);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, TESTING_PIXELS);
     assertEquals(TurtleHomeX, fc.myNewX);
     assertEquals(TurtleHomeY-TESTING_PIXELS, fc.myNewY);
   }
@@ -32,7 +32,7 @@ class ForwardModelCommandTest {
   @Test
   void computeForwardWithSouth100() {
     myModelTurtle.setDegreesRotation(180);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, TESTING_PIXELS);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, TESTING_PIXELS);
     assertEquals(TurtleHomeX, fc.myNewX);
     assertEquals(TurtleHomeY+TESTING_PIXELS, fc.myNewY);
   }
@@ -40,7 +40,7 @@ class ForwardModelCommandTest {
   @Test
   void computeForwardWithNortheast100() {
     myModelTurtle.setDegreesRotation(45);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX + 70, fc.myNewX);
     assertEquals(TurtleHomeY - 70, fc.myNewY);
   }
@@ -48,7 +48,7 @@ class ForwardModelCommandTest {
   @Test
   void computeForwardWithNorthwest100() {
     myModelTurtle.setDegreesRotation(315);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX - 70, fc.myNewX);
     assertEquals(TurtleHomeY - 70, fc.myNewY);
   }
@@ -56,7 +56,7 @@ class ForwardModelCommandTest {
   @Test
   void computeForwardWithSouthEast100() {
     myModelTurtle.setDegreesRotation(225);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX + 70, fc.myNewX);
     assertEquals(TurtleHomeY - 70, fc.myNewY);
   }
@@ -64,7 +64,7 @@ class ForwardModelCommandTest {
   @Test
   void computeForwardWithDegrees295Length100() {
     myModelTurtle.setDegreesRotation(295);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX - 90, fc.myNewX);
     assertEquals(TurtleHomeY - 42, fc.myNewY);
   }

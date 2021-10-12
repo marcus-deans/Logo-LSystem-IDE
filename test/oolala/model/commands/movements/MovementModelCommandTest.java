@@ -34,7 +34,7 @@ class MovementModelCommandTest {
 
   @Test
   void getTurtleCoordinatesMoving100Pixels() {
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertEquals(TurtleHomeX, fc.myNewX);
     assertEquals(TurtleHomeY-100, fc.myNewY);
   }
@@ -42,28 +42,28 @@ class MovementModelCommandTest {
   @Test
   void rightFacingAt45Degrees() {
     myModelTurtle.setDegreesRotation(45);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.rightFacing());
   }
 
   @Test
   void leftFacingAt270Degrees() {
     myModelTurtle.setDegreesRotation(270);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.rightFacing());
   }
 
   @Test
   void upwardFacingAt15Degrees() {
       myModelTurtle.setDegreesRotation(15);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
       assertTrue(fc.upwardFacing());
   }
 
   @Test
   void downwardFacingAt195Degrees() {
     myModelTurtle.setDegreesRotation(195);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.upwardFacing());
   }
 
@@ -81,118 +81,118 @@ class MovementModelCommandTest {
   @Test
   void checkSineUsedForQuad1T() {
     myModelTurtle.setDegreesRotation(15);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad1T() {
     myModelTurtle.setDegreesRotation(65);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkSineUsedForQuad1F() {
     myModelTurtle.setDegreesRotation(50);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad1F() {
     myModelTurtle.setDegreesRotation(35);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void checkSineUsedForQuad2T() {
     myModelTurtle.setDegreesRotation(175);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad2T() {
     myModelTurtle.setDegreesRotation(105);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkSineUsedForQuad2F() {
     myModelTurtle.setDegreesRotation(100);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad2F() {
     myModelTurtle.setDegreesRotation(170);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void checkSineUsedForQuad3T() {
     myModelTurtle.setDegreesRotation(200);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad3T() {
     myModelTurtle.setDegreesRotation(240);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkSineUsedForQuad3F() {
     myModelTurtle.setDegreesRotation(250);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad3F() {
     myModelTurtle.setDegreesRotation(190);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void checkSineUsedForQuad4T() {
     myModelTurtle.setDegreesRotation(330);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad4T() {
     myModelTurtle.setDegreesRotation(280);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkSineUsedForQuad4F() {
     myModelTurtle.setDegreesRotation(290);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertFalse(fc.checkVectorOrientation());
   }
 
   @Test
   void checkCosineUsedForQuad4F() {
     myModelTurtle.setDegreesRotation(330);
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     assertTrue(fc.checkVectorOrientation());
   }
 
   @Test
   void setNewCoordinates() {
-    ForwardModelCommand fc = new ForwardModelCommand(turtLink, 100);
+    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
     fc.myNewX = 100;
     fc.myNewY = 100;
     fc.setNewCoordinates();

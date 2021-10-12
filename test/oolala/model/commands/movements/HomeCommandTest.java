@@ -23,7 +23,7 @@ class HomeCommandTest {
 
   @Test
   void computeHomeCoordinates() {
-    HomeModelCommand hc = new HomeModelCommand(turtLink);
+    HomeModelCommand hc = new HomeModelCommand(myModelTurtle);
     assertEquals(TurtleHomeX, hc.myNewX);
     assertEquals(TurtleHomeY, hc.myNewY);
   }
