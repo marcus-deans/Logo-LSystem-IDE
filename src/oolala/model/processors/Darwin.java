@@ -77,8 +77,11 @@ public class Darwin extends GameProcessor{
     }
 
     public boolean saveCommand(String inputStream, String filename) {
-        String path = "data/examples/darwin" + filename + ".txt";
-        return saveCommandGivenPath(inputStream, path);
+        StringBuilder sb = new StringBuilder();
+        sb.append("data/examples/darwin/");
+        sb.append(filename);
+        sb.append(".txt");
+        return saveCommandGivenPath(inputStream, sb.toString());
     }
 
     public void saveHistory(String historyElement) {

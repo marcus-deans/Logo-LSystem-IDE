@@ -23,7 +23,6 @@ public class LSystemDisplay extends LogoDisplay {
   public static final int BUFFER = 300;
   private Text levelText;
   private ComboBox levelsDropdown;
-  public static final int BUFFER = 50;
   private int numLevels;
   private int turnAngle;
   private int stepLength;
