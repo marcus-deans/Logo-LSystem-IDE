@@ -82,12 +82,18 @@ public class DarwinDisplay extends Display {
     root.setOnMouseClicked(mouseEvent -> {
       double spawnX = mouseEvent.getX();
       double spawnY = mouseEvent.getY();
-      myCreatureCount++;
-      spawnCreature(spawnX, spawnY, myCreatureCount);
+      if(isInBoundary(spawnX, spawnY)){
+        myCreatureCount++;
+        spawnCreature(spawnX, spawnY, myCreatureCount);
+      }
       //TODO: spawn new creature at x,y location
       //TODO: add creature to list of creatures, and if its not already in the list of exisitng creatures add it
       //TODO: set an image for the creature
     });
+  }
+
+  private boolean isInBoundary(double spawnX, double spawnY) {
+    return spawnX > OFFSET_X && spawnX < FRAME_WIDTH - OFFSET_X && spawnY > OFFSET_Y_TOP && spawnY < COMMAND_Y - OFFSET_Y;
   }
 
   private void spawnCreature(double spawnX, double spawnY, int creatureCount) {
