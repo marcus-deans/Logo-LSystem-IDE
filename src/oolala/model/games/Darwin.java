@@ -8,22 +8,29 @@ import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.LogoInstruction;
 
+/**
+ * @author naylaboorady
+ * <p>
+ * Purpose: Create a model that parses user command input on the front-end and uses it to
+ * create a creature. Stores a HashMap of existing creatures in the world and their unique ID
+ * to be referenced on the front-end
+ */
 public class Darwin extends Game {
 
-    public static final String MOVE = "move";
-    public static final String LEFT = "left";
-    public static final String RIGHT = "right";
-    public static final String INFECT = "infect";
-    public static final String IFEMPTY = "ifempty";
-    public static final String IFWALL = "ifwall";
-    public static final String IFSAME = "ifsame";
-    public static final String IFENEMY = "ifenemy";
-    public static final String IFRANDOM = "ifrandom";
-    public static final String GO = "go";
+    private static final String MOVE = "move";
+    private static final String LEFT = "left";
+    private static final String RIGHT = "right";
+    private static final String INFECT = "infect";
+    private static final String IFEMPTY = "ifempty";
+    private static final String IFWALL = "ifwall";
+    private static final String IFSAME = "ifsame";
+    private static final String IFENEMY = "ifenemy";
+    private static final String IFRANDOM = "ifrandom";
+    private static final String GO = "go";
 
-    public ArrayList<String> doubleCommands;
-    public ArrayList<String> singleCommands;
-    public ArrayList<CreatureInstruction> myInstructions;
+    private ArrayList<String> doubleCommands;
+    private ArrayList<String> singleCommands;
+    private ArrayList<CreatureInstruction> myInstructions;
     private final HashMap<Integer, ArrayList<CreatureInstruction>> mySpeciesInstructions;
     private final List<String> myHistory;
     boolean isValidCommand;

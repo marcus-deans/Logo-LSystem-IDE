@@ -12,17 +12,17 @@ import oolala.model.instructions.LogoInstruction;
 
 public class LSystem extends Game {
 
-    public List<String> validCommands;
-    public List<String> doubleAngleCommands;
-    public List<String> doubleLengthCommands;
-    public List<String> singleCommands;
+    private List<String> validCommands;
+    private List<String> doubleAngleCommands;
+    private List<String> doubleLengthCommands;
+    private List<String> singleCommands;
 
-    public Map<String, String> userRules; //RULE command
-    public Map<String, List<String>> commandConversion; //SET command
+    private Map<String, String> userRules; //RULE command
+    private Map<String, List<String>> commandConversion; //SET command
 
-    public List<String> expansionLevels; //expansions in LSystem language
+    private List<String> expansionLevels; //expansions in LSystem language
 
-    public ArrayList<ArrayList<LogoInstruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
+    private ArrayList<ArrayList<LogoInstruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
     private final LinkedList<LogoInstruction> myInstructions; //TODO: do we need this? prob not
 
     private final List<String> myHistory;
@@ -83,7 +83,7 @@ public class LSystem extends Game {
                     inputCommands);
                 commandConversion.put(inputCommands.get(i + 1), instructionDefinition);
                 skip += instructionDefinition.size() + 1; //skip letter and definition
-            } else { //TODO: error handling - invalid command stream
+            } else {
                 isValidCommand = false;
                 break;
             }
@@ -125,7 +125,7 @@ public class LSystem extends Game {
             if(inputCommands.get(i).startsWith("\"")){
                 instructions.add(inputCommands.get(i).substring(1));
             }else if(inputCommands.get(i).endsWith("\"")){
-                instructions.add(inputCommands.get(i)); //TODO: make sure this properly indexes
+                instructions.add(inputCommands.get(i));
                 break;
             }else{
                 instructions.add(inputCommands.get(i));

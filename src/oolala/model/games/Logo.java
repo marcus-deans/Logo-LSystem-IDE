@@ -9,8 +9,8 @@ import oolala.model.instructions.LogoInstruction;
 
 public class Logo extends Game {
 
-  public ArrayList<String> doubleCommands;
-  public ArrayList<String> singleCommands;
+  private ArrayList<String> doubleCommands;
+  private ArrayList<String> singleCommands;
 
   private boolean isValidCommand;
   private final LinkedList<LogoInstruction> myInstructions;

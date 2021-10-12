@@ -11,17 +11,17 @@ import oolala.model.instructions.LogoInstruction;
 
 public abstract class Game {
 
-    public static final String FORWARD = "fd";
-    public static final String BACKWARD = "bk";
-    public static final String LEFT = "lt";
-    public static final String RIGHT = "rt";
-    public static final String TELL = "tell";
-    public static final String PENDOWN = "pd";
-    public static final String PENUP = "pu";
-    public static final String SHOW_TURTLE = "st";
-    public static final String HIDE_TURTLE = "ht";
-    public static final String HOME = "home";
-    public static final String STAMP = "stamp";
+    protected static final String FORWARD = "fd";
+    protected static final String BACKWARD = "bk";
+    protected static final String LEFT = "lt";
+    protected static final String RIGHT = "rt";
+    protected static final String TELL = "tell";
+    protected static final String PENDOWN = "pd";
+    protected static final String PENUP = "pu";
+    protected static final String SHOW_TURTLE = "st";
+    protected static final String HIDE_TURTLE = "ht";
+    protected static final String HOME = "home";
+    protected static final String STAMP = "stamp";
 
     public Game() {
     }
