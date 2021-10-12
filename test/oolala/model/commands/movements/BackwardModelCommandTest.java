@@ -19,11 +19,10 @@ class BackwardModelCommandTest {
   private static final int TurtleHomeY = ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2);
 
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  TurtleLinkage turtLink = new TurtleLinkage(0);
 
   @Test
   void checkPositiveBackwardMovement() {
-    assertEquals(myModelTurtle.getTurtleCoordinates().turtleNewX, 100);
+    assertEquals(myModelTurtle.getTurtleCoordinates().turtleNewX, TurtleHomeX);
   }
 
   @Test
@@ -37,31 +36,31 @@ class BackwardModelCommandTest {
   void computeBackwardWithSouth100() {
     BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, TESTING_PIXELS);
     assertEquals(TurtleHomeX, bc.myNewX);
-    assertEquals(TurtleHomeY-TESTING_PIXELS, bc.myNewY);
+    assertEquals(TurtleHomeY+TESTING_PIXELS, bc.myNewY);
   }
 
   @Test
   void computeBackwardWithNortheast100() {
     myModelTurtle.setDegreesRotation(45);
-    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, 100);
+    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, TESTING_PIXELS);
     assertEquals(TurtleHomeX - 70, bc.myNewX);
     assertEquals(TurtleHomeY + 70, bc.myNewY);
   }
 
   @Test
   void computeBackwardWithNorthwest100() {
-    myModelTurtle.setDegreesRotation(45);
-    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, 100);
+    myModelTurtle.setDegreesRotation(315);
+    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, TESTING_PIXELS);
     assertEquals(TurtleHomeX + 70, bc.myNewX);
-    assertEquals(TurtleHomeX + 70, bc.myNewY);
+    assertEquals(TurtleHomeY + 70, bc.myNewY);
   }
 
   @Test
-  void computeForwardWithDegrees295Length100() {
-    myModelTurtle.setDegreesRotation(295);
-    ForwardModelCommand fc = new ForwardModelCommand(myModelTurtle, 100);
-    assertEquals(TurtleHomeX + 90, fc.myNewX); //sin --> new x-coord
-    assertEquals(TurtleHomeY + 42, fc.myNewY); //cos --> new y-coord
+  void computeBackwardWithDegrees260Length100() {
+    myModelTurtle.setDegreesRotation(260);
+    BackwardModelCommand bc = new BackwardModelCommand(myModelTurtle, TESTING_PIXELS);
+    assertEquals(TurtleHomeX - 98, bc.myNewX); //sin --> new x-coord
+    assertEquals(TurtleHomeY + 17, bc.myNewY); //cos --> new y-coord
   }
 
 }
