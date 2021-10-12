@@ -64,15 +64,6 @@ public class ModelCreature extends ModelTurtle {
   }
 
   /**
-   * Add a new instructions to this creature's list of instructions
-   *
-   * @param newCreatureInstruction the CreatureInstruction to be added
-   */
-  public void addNewCreatureInstruction(CreatureInstruction newCreatureInstruction) {
-    myCreatureInstructions.add(newCreatureInstruction);
-  }
-
-  /**
    * Get the nearby threshold of this modelCreature
    *
    * @return the integer NearbyThreshold
