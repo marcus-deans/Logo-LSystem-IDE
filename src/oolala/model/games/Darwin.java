@@ -1,4 +1,4 @@
-package oolala.model.processors;
+package oolala.model.games;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
-public class Darwin extends GameProcessor{
+public class Darwin extends Game {
 
     public static final String MOVE = "move";
     public static final String LEFT = "left";

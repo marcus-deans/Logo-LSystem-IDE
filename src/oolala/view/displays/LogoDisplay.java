@@ -12,9 +12,9 @@ import javafx.scene.shape.Line;
 import oolala.model.Coordinates;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
+import oolala.model.games.Logo;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.InstructionProcessor;
-import oolala.model.processors.Logo;
 import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
 

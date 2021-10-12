@@ -1,7 +1,7 @@
 package oolala.model.commands.visuals;
 
 import oolala.model.commands.ViewCommand;
-import oolala.view.TurtleLinkage;
+import oolala.view.ViewTurtle;
 
 /**
  * @author marcusdeans
@@ -16,10 +16,10 @@ public abstract class VisibleViewCommand extends ViewCommand {
   /**
    * Create a new abstract VisibleViewCommand to control whether turtle is shown
    *
-   * @param turtleLinkage the turtle on which the action will be imparted
+   * @param viewTurtle the turtle on which the action will be imparted
    */
-  public VisibleViewCommand(TurtleLinkage turtleLinkage) {
-    super(turtleLinkage);
+  public VisibleViewCommand(ViewTurtle viewTurtle) {
+    super(viewTurtle);
   }
 
   //change the visibility of the JavaFX ImageView object by referencing ViewTurtle

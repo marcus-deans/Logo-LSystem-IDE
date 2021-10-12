@@ -1,4 +1,4 @@
-package oolala.model.processors;
+package oolala.model.games;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,7 +9,7 @@ import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
-public abstract class GameProcessor {
+public abstract class Game {
 
     public static final String FORWARD = "fd";
     public static final String BACKWARD = "bk";
@@ -23,7 +23,8 @@ public abstract class GameProcessor {
     public static final String HOME = "home";
     public static final String STAMP = "stamp";
 
-    public GameProcessor() {}
+    public Game() {
+    }
 
     //Method to save the user input commands to a fle
     public boolean saveCommandGivenPath(String inputStream, String path) {
@@ -44,17 +45,19 @@ public abstract class GameProcessor {
 
     protected boolean nextCommandIsInt(int index, List<String> inputCommands) {
         boolean nextCommandIsInteger = true;
-        try{
-            Integer.parseInt(inputCommands.get(index+1));
-        }catch(NumberFormatException e){
+        try {
+            Integer.parseInt(inputCommands.get(index + 1));
+        } catch (NumberFormatException e) {
             nextCommandIsInteger = false;
         }
         return nextCommandIsInteger;
     }
 
-    protected void createDoubleCommand(String command, Integer number){}; //NOT abstract
+    protected void createDoubleCommand(String command, Integer number) {
+    } //NOT abstract
 
-    protected void createSingleCommand(String command){}; //NOT abstract
+    protected void createSingleCommand(String command) {
+    } //NOT abstract
 
     public abstract void inputParser(int levels, int angle, int length, String inputStream);
 
@@ -73,5 +76,7 @@ public abstract class GameProcessor {
 
     public abstract ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels();
 
-    public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey){return new ArrayList<>();}; //not abstract
+    public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey) {
+        return new ArrayList<>();
+    } //not abstract
 }

@@ -1,4 +1,4 @@
-package oolala.model.processors;
+package oolala.model.games;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
-public class Logo extends GameProcessor{
+public class Logo extends Game {
 
   public ArrayList<String> doubleCommands;
   public ArrayList<String> singleCommands;

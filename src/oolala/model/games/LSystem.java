@@ -1,4 +1,4 @@
-package oolala.model.processors;
+package oolala.model.games;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
 
-public class LSystem extends GameProcessor{
+public class LSystem extends Game {
 
     public List<String> validCommands;
     public List<String> doubleAngleCommands;

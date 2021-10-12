@@ -10,9 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Paint;
+import oolala.model.games.Darwin;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
-import oolala.model.processors.Darwin;
 import oolala.view.darwin.CreatureLinkage;
 
 public class DarwinDisplay extends Display {

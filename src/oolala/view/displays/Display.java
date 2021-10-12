@@ -30,9 +30,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import oolala.model.games.Game;
+import oolala.model.games.Logo;
 import oolala.model.instructions.Instruction;
-import oolala.model.processors.GameProcessor;
-import oolala.model.processors.Logo;
 import oolala.view.TurtleLinkage;
 
 
@@ -103,7 +103,7 @@ public abstract class Display extends Application {
   protected Group root = new Group();
   protected Timeline myAnimation;
   protected Scene scene;
-  protected GameProcessor myGameProcessor;
+  protected Game myGameProcessor;
   protected TextArea commandLine;
   protected ComboBox savedPrograms;
   protected ComboBox historyPrograms;
@@ -259,7 +259,7 @@ public abstract class Display extends Application {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setContentText(alertMessage);
     alert.show();
-  };
+  }
 
   protected abstract File [] getFilesFromPath();
 
@@ -437,7 +437,8 @@ public abstract class Display extends Application {
     root.getChildren().add(creaturesText);
   }
 
-  protected void initializeCreatureDropdown(){}; //DON'T MAKE ABSTRACT
+  protected void initializeCreatureDropdown() {
+  } //DON'T MAKE ABSTRACT
 
   //TODO: override this method in each game, make it clear specific dropdowns
   protected abstract void clearSpecificGameDropdowns();

@@ -10,8 +10,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import oolala.model.games.LSystem;
 import oolala.model.instructions.Instruction;
-import oolala.model.processors.LSystem;
 
 public class LSystemDisplay extends LogoDisplay {
 
