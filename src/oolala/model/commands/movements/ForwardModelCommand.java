@@ -1,8 +1,8 @@
 package oolala.model.commands.movements;
 
 import oolala.model.Coordinates;
+import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
-import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -18,11 +18,11 @@ public class ForwardModelCommand extends MovementModelCommand {
   /**
    * Construct a forward command to move forward
    *
-   * @param turtleLinkage the turtle on which the action will be imparted
-   * @param pixels        the distance of movement
+   * @param modelTurtle the turtle on which the action will be imparted
+   * @param pixels      the distance of movement
    */
-  public ForwardModelCommand(TurtleLinkage turtleLinkage, int pixels) {
-    super(turtleLinkage, pixels);
+  public ForwardModelCommand(ModelTurtle modelTurtle, int pixels) {
+    super(modelTurtle, pixels);
     myCommandName = Commands.FORWARD;
     computeForwardCoordinates();
     //TODO: only update coordinates if they are actually within bounds (also used for Creatures)

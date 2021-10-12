@@ -2,17 +2,14 @@ package oolala.view.displays;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import oolala.model.Coordinates;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.LSystem;
 
@@ -23,7 +20,6 @@ public class LSystemDisplay extends LogoDisplay {
   public static final int BUFFER = 300;
   private Text levelText;
   private ComboBox levelsDropdown;
-  public static final int BUFFER = 50;
   private int numLevels;
   private int turnAngle;
   private int stepLength;
@@ -108,6 +104,8 @@ public class LSystemDisplay extends LogoDisplay {
 
   void relocateAndHideTurtle() {
     //set Turtle starting coordinates to top left corner
+
+    //TODO: set this value to the user-specified start of the drawing
     myModelTurtle.setNewX(LSYSTEM_OFFSET_X);
     myModelTurtle.setNewY(LSYSTEM_OFFSET_Y);
 //    myModelTurtle.setNewY(OFFSET_Y_TOP + ((Math.abs(BORDER_HEIGHT) - BUFFER)));

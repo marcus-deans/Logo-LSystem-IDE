@@ -1,7 +1,6 @@
 package oolala.model.commands;
 
 import oolala.model.ModelTurtle;
-import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -16,27 +15,25 @@ public abstract class ModelCommand {
   protected Commands myCommandName;
   protected int pixels;
   protected ModelTurtle myModelTurtle;
-  protected TurtleLinkage myTurtleLinkage;
 
   /**
    * Create new abstract ModelCommand
    *
-   * @param turtleLinkage TurtleLinkage on which commands should be imparted
-   * @param pixels        length or rotation amount
+   * @param modelTurtle TurtleLinkage on which commands should be imparted
+   * @param pixels      length or rotation amount
    */
-  public ModelCommand(TurtleLinkage turtleLinkage, int pixels) {
-    this(turtleLinkage);
+  public ModelCommand(ModelTurtle modelTurtle, int pixels) {
+    this(modelTurtle);
     this.pixels = pixels;
   }
 
   /**
    * Create new abstract ModelCommand
    *
-   * @param turtleLinkage TurtleLinkage on which commands should be imparted
+   * @param modelTurtle TurtleLinkage on which commands should be imparted
    */
-  public ModelCommand(TurtleLinkage turtleLinkage) {
-    myTurtleLinkage = turtleLinkage;
-    this.myModelTurtle = myTurtleLinkage.myModelTurtle;
+  public ModelCommand(ModelTurtle modelTurtle) {
+    myModelTurtle = modelTurtle;
   }
 
 }

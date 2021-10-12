@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -18,13 +17,15 @@ import oolala.view.darwin.CreatureLinkage;
 
 public class DarwinDisplay extends Display {
 
-  private static List<CreatureLinkage> allCreatureLinkages;
+  private static ArrayList<CreatureLinkage> allCreatureLinkages;
   private List<String> allCreatureNames;
   private String mySpeciesIdentifier;
   private ComboBox allCreatures;
-  private int myCreatureCount;
 
-  public static List<CreatureLinkage> getAllCreatureLinkages() {
+  private int myCreatureCount;
+  private int myNearbyThreshold;
+
+  public static ArrayList<CreatureLinkage> getAllCreatureLinkages() {
     return allCreatureLinkages;
   }
 
@@ -33,6 +34,8 @@ public class DarwinDisplay extends Display {
     myGameProcessor = new Darwin();
     allCreatureLinkages = new ArrayList<>();
     allCreatureNames = new ArrayList<>();
+    myCreatureCount = 0;
+    myNearbyThreshold = 0;
     performInitialSetup(); //run in general display class
     initializeRunButton(getWord("run_text_darwin")); //initialize the program run button
     creaturesTitle(getWord("creatures_text_darwin"));
@@ -76,13 +79,21 @@ public class DarwinDisplay extends Display {
   }
 
   private void makeScreenClickable() {
-    root.setOnMouseClicked(mouseEvent ->{
+    root.setOnMouseClicked(mouseEvent -> {
       double spawnX = mouseEvent.getX();
       double spawnY = mouseEvent.getY();
+      myCreatureCount++;
+      spawnCreature(spawnX, spawnY, myCreatureCount);
       //TODO: spawn new creature at x,y location
       //TODO: add creature to list of creatures, and if its not already in the list of exisitng creatures add it
       //TODO: set an image for the creature
     });
+  }
+
+  private void spawnCreature(double spawnX, double spawnY, int creatureCount) {
+    CreatureLinkage createdCreatureLinkage = new CreatureLinkage(creatureCount, myNearbyThreshold,
+        mySpeciesIdentifier, (int) spawnX, (int) spawnY);
+    allCreatureLinkages.add(createdCreatureLinkage);
   }
 
   @Override
@@ -100,7 +111,7 @@ public class DarwinDisplay extends Display {
 
   private void updateCreatureDropdown() {
     allCreatures.getItems().clear();
-    for(String creature: allCreatureNames){
+    for (String creature : allCreatureNames) {
       allCreatures.getItems().add(creature);
     }
   }
@@ -119,29 +130,28 @@ public class DarwinDisplay extends Display {
   }
 
   private void checkForInstructionsAndExecute() {
-//    allCreatureLinkages = randomizeCreatureOrder();
-//    for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
-//      int checkCreatureLinkageSpecies = checkCreatureLinkage.myModelCreature.getMySpeciesIdentifier();
-//      ArrayList<CreatureInstruction> checkInstructions = myGameProcessor.getMySpeciesInstructions(
-//          checkCreatureLinkageSpecies);
-//
-//      while (!checkInstructions.isEmpty()) {
-//        Instruction currentInstruction = checkInstructions.get(0); //pop a single instruction, FIFO
-//        //TODO:
-//        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
-//        executeInstruction(currentInstruction, myCreatureLinkage, root);
-//        //TODO: associate each creature with its map
-//        // drawTurtleLine();
-//        // myModelTurtle.updateCoordinates(0;
-//        currentCreatureInstructions.remove(0);
-//      }
-//      creatureExecutionOrderList.remove(0);
-//    }
+    allCreatureLinkages = randomizeCreatureOrder();
+    for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
+      int checkCreatureLinkageSpecies = checkCreatureLinkage.myModelCreature.getMySpeciesIdentifier();
+      ArrayList<CreatureInstruction> checkInstructions = myGameProcessor.getMySpeciesInstructions(
+          checkCreatureLinkageSpecies);
+
+      while (!checkInstructions.isEmpty()) {
+        Instruction currentInstruction = checkInstructions.get(0); //pop a single instruction, FIFO
+        //TODO:
+        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
+        executeInstruction(currentInstruction, myCreatureLinkage, root);
+        //TODO: associate each creature with its map
+        // drawTurtleLine();
+        // myModelTurtle.updateCoordinates(0;
+        currentCreatureInstructions.remove(0);
+      }
+      creatureExecutionOrderList.remove(0);
+    }
 //    //TODO: execute all instructions
   }
 
   private ArrayList<CreatureLinkage> randomizeCreatureOrder() {
-    //TODO: get instructions and execute in random order
     Random rand = new Random();
     // create a temporary list for storing
     // selected element
@@ -161,7 +171,6 @@ public class DarwinDisplay extends Display {
     return randomizedCreatureLinkageOrder;
 //    ArrayList<Integer> numericOptions = createNumericOptionsArraylist();
   }
-
 
 
   @Override
