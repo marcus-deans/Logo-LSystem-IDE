@@ -33,7 +33,6 @@ import javafx.util.Duration;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.GameProcessor;
 import oolala.model.processors.Logo;
-import oolala.view.Language;
 import oolala.view.TurtleLinkage;
 
 
@@ -102,6 +101,7 @@ public abstract class Display extends Application {
       Arrays.asList("English", "Spanish", "French"));
 
   protected Group root = new Group();
+  protected Timeline myAnimation;
   protected Scene scene;
   protected GameProcessor myGameProcessor;
   protected TextArea commandLine;
@@ -128,14 +128,14 @@ public abstract class Display extends Application {
 
   public void start(Stage stage) {
     //Variables
-    Scene scene = setupGame(FRAME_WIDTH, FRAME_HEIGHT, BACKGROUND);
+    scene = setupGame(FRAME_WIDTH, FRAME_HEIGHT, BACKGROUND);
     stage.setScene(scene);
     stage.setTitle(TITLE);
     stage.show();
-    Timeline animation = new Timeline();
-    animation.setCycleCount(Timeline.INDEFINITE);
-    animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
-    animation.play();
+    myAnimation = new Timeline();
+    myAnimation.setCycleCount(Timeline.INDEFINITE);
+    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
+    myAnimation.play();
   }
 
   protected Scene setupGame(int width, int height, Paint background) {
@@ -220,7 +220,7 @@ public abstract class Display extends Application {
     savedPrograms.setMaxWidth(MAX_DROPDOWN_WIDTH);
     populateFileNames();
     savedPrograms.setOnAction((event) -> {
-      getContentFromFilename();
+      getContentFromFilename(savedPrograms.getSelectionModel().getSelectedItem().toString());
     });
     root.getChildren().add(savedPrograms);
   }
@@ -230,8 +230,7 @@ public abstract class Display extends Application {
     populateFileNames();
   }
 
-  protected void getContentFromFilename() {
-    String filename = savedPrograms.getSelectionModel().getSelectedItem().toString();
+  protected void getContentFromFilename(String filename) {
     File[] files = getFilesFromPath();
     for (File file : files) {
       if (file.isFile() && file.getName().equals(filename)) {
@@ -245,13 +244,20 @@ public abstract class Display extends Application {
               contents.append(input + " ");
             }
           }
+          commandLine.clear();
           commandLine.setText(contents.toString());
         } catch (FileNotFoundException e) {
-          e.printStackTrace();
+            sendAlert("File not parseable");
         }
       }
     }
   }
+
+  protected void sendAlert(String alertMessage){
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setContentText(alertMessage);
+    alert.show();
+  };
 
   protected abstract File [] getFilesFromPath();
 
@@ -291,17 +297,24 @@ public abstract class Display extends Application {
     root.getChildren().add(languages);
   }
 
-  protected void initializeLanguages() {
+  private void initializeLanguages() {
     languagesPrograms = new ComboBox(FXCollections.observableList(languageTypes));
     languagesPrograms.setOnAction((event) -> {
-      Language lang = (Language) languagesPrograms.getValue();
+      String lang = (String)languagesPrograms.getValue();
       switch (lang) {
-        case ENGLISH -> Locale.setDefault(new Locale("en"));
-        case SPANISH -> Locale.setDefault(new Locale("es"));
-        case FRENCH -> Locale.setDefault(new Locale("fr"));
-        default -> throw new IllegalStateException("Unexpected value: " + lang);
+        case "English":
+          Locale.setDefault(new Locale("en"));
+          updateLanguage();
+          break;
+        case "Spanish":
+          Locale.setDefault(new Locale("es"));
+          updateLanguage();
+          break;
+        case "French":
+          Locale.setDefault(new Locale("fr"));
+          updateLanguage();
+          break;
       }
-      updateLanguage();
     });
     languagesPrograms.setLayoutX(LANGUAGES_DROPDOWN_X);
     languagesPrograms.setLayoutY(LANGUAGES_DROPDOWN_Y);
@@ -378,7 +391,7 @@ public abstract class Display extends Application {
   }
 
   protected void initializeSaveButton() {
-    Button saveCommands = new Button("Save");
+    Button saveCommands = new Button(getWord("save_text"));
     saveCommands.setPrefWidth(SAVE_WIDTH);
     saveCommands.setPrefHeight(SAVE_HEIGHT);
     saveCommands.setLayoutX(SAVE_X);
@@ -387,7 +400,7 @@ public abstract class Display extends Application {
     saveCommands.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        String filename = getUserFileName();
+        String filename = getUserFileName(getWord("get_user_filename"));
         myGameProcessor.saveCommand(commandLine.getText(), filename);
         updateSavedDropdown();
       }
@@ -395,7 +408,7 @@ public abstract class Display extends Application {
   }
 
   protected void initializeClearScreen() {
-    Button clearScreen = new Button("Clear");
+    Button clearScreen = new Button(getWord("clear_text"));
     clearScreen.setPrefWidth(CLEAR_WIDTH);
     clearScreen.setPrefHeight(CLEAR_HEIGHT);
     clearScreen.setLayoutX(CLEAR_X);
@@ -419,24 +432,19 @@ public abstract class Display extends Application {
     root.getChildren().add(creaturesText);
   }
 
-  protected abstract void initializeCreatureDropdown();
+  protected void initializeCreatureDropdown(){}; //DON'T MAKE ABSTRACT
 
   //TODO: override this method in each game, make it clear specific dropdowns
-  protected void clearSpecificGameDropdowns() {
-    turtleDropdown.getItems().clear();
-    //myModelTurtle = new ModelTurtle(0);
-  }
+  protected abstract void clearSpecificGameDropdowns();
 
-  protected String getUserFileName() {
+  protected String getUserFileName(String message) {
     TextInputDialog getUserInput = new TextInputDialog();
-    getUserInput.setHeaderText("Enter a filename:");
+    getUserInput.setHeaderText(message);
     String fileName = getUserInput.showAndWait().toString();
     if (validateStringFilenameUsingIO(fileName)) {
       return fileName;
-    } else {
-      //TODO: throw error - invalid filename, make user try again
-      return "";
     }
+    return getUserFileName(message); //TODO: test to make sure this gives users another chance if they submit an invalid filename
   }
 
   protected boolean validateStringFilenameUsingIO(String filename) {
@@ -446,7 +454,7 @@ public abstract class Display extends Application {
       created = file.createNewFile();
       return created;
     } catch (IOException e) {
-      e.printStackTrace(); //TODO: don't print stack trace directly
+      sendAlert("Invalid filename!");
     } finally {
       if (created) {
         file.delete();
@@ -474,7 +482,6 @@ public abstract class Display extends Application {
 
   protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
-
   }
 
 }

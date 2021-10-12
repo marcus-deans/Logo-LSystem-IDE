@@ -73,5 +73,5 @@ public abstract class GameProcessor {
 
     public abstract ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels();
 
-    public abstract ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey);
+    public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey){return new ArrayList<>();}; //not abstract
 }

@@ -9,7 +9,6 @@ import oolala.model.instructions.Instruction;
 
 public class Logo extends GameProcessor{
 
-
   public ArrayList<String> doubleCommands;
   public ArrayList<String> singleCommands;
 

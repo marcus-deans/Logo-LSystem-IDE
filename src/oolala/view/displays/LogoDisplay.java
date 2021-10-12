@@ -167,6 +167,11 @@ public class LogoDisplay extends Display {
     }
   }
 
+  @Override
+  protected void clearSpecificGameDropdowns() {
+    //TODO: choose which dropdowns to clear
+  }
+
   private void switchTurtleLinkage(TurtleLinkage turtleLinkage) {
     myTurtleLinkage = turtleLinkage;
     myModelTurtle = turtleLinkage.myModelTurtle;
