@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
-import oolala.model.Coordinates;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.LSystem;
 
@@ -14,6 +12,9 @@ public class LSystemDisplay extends LogoDisplay {
   private static final int BORDER_HEIGHT = OFFSET_Y_TOP - (COMMAND_Y - OFFSET_Y);
   public static final int BUFFER = 50;
   private int numLevels;
+
+  private final int LSYSTEM_OFFSET_X = 300;
+  private final int LSYSTEM_OFFSET_Y = 100;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
@@ -35,8 +36,9 @@ public class LSystemDisplay extends LogoDisplay {
 
   void relocateAndHideTurtle() {
     //set Turtle starting coordinates to top left corner
-    myModelTurtle.setNewX(OFFSET_X);
-    myModelTurtle.setNewY(OFFSET_Y_TOP);
+    myModelTurtle.setNewX(LSYSTEM_OFFSET_X);
+    myModelTurtle.setNewY(LSYSTEM_OFFSET_Y);
+//    myModelTurtle.setNewY(OFFSET_Y_TOP + ((Math.abs(BORDER_HEIGHT) - BUFFER)));
 
 //    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
@@ -81,23 +83,25 @@ public class LSystemDisplay extends LogoDisplay {
   }
 
   private void updateTurtleCoordinatesAndPositioning(int level) {
-    myModelTurtle.setNewX(OFFSET_X);
-    myModelTurtle.setNewY(OFFSET_Y_TOP + ((Math.abs(BORDER_HEIGHT) - BUFFER) / numLevels) * level);
+    myModelTurtle.setNewX(LSYSTEM_OFFSET_X);
+//    myModelTurtle.setNewY(LSYSTEM_OFFSET_Y*level);
+    myModelTurtle.setNewY(
+        LSYSTEM_OFFSET_Y + ((Math.abs(BORDER_HEIGHT) - BUFFER) / numLevels) * level);
 //    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
   }
 
-  private void drawTurtleLine() {
-    Coordinates turtleCoordinates = myTurtleLinkage.myModelTurtle.getTurtleVisualCoordinates();
-    Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleOldY,
-        turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
-    connector.setOpacity(1.0);
-    connector.setStrokeWidth(3.0);
-//    connector.setOpacity(myTurtleLinkage.myViewTurtle.getPenOpacity());
-//    connector.setId("turtle-line");
-    root.getChildren().add(connector);
-  }
+//  private void drawTurtleLine() {
+//    Coordinates turtleCoordinates = myTurtleLinkage.myModelTurtle.getTurtleVisualCoordinates();
+//    Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleOldY,
+//        turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
+//    connector.setOpacity(1.0);
+//    connector.setStrokeWidth(3.0);
+////    connector.setOpacity(myTurtleLinkage.myViewTurtle.getPenOpacity());
+////    connector.setId("turtle-line");
+//    root.getChildren().add(connector);
+//  }
 
   @Override
   protected File[] getFilesFromPath() {

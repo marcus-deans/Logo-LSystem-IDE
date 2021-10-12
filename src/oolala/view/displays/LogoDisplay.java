@@ -203,7 +203,7 @@ public class LogoDisplay extends Display {
   }
 
 
-  private void drawTurtleLine() {
+  protected void drawTurtleLine() {
     Coordinates turtleCoordinates = myTurtleLinkage.myModelTurtle.getTurtleVisualCoordinates();
     Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleOldY,
         turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
