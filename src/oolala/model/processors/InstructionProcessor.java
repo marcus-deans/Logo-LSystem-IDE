@@ -11,7 +11,7 @@ import oolala.model.commands.visuals.HideViewCommand;
 import oolala.model.commands.visuals.PenUpViewCommand;
 import oolala.model.commands.visuals.ShowViewCommand;
 import oolala.model.commands.visuals.StampViewCommand;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
 
@@ -28,17 +28,18 @@ public class InstructionProcessor {
 
   /**
    * Create new InstructionProcessor
-   * @param currentInst current instruction that should be executed
+   *
+   * @param currentInst   current instruction that should be executed
    * @param turtleLinkage TurtleLinkage associated with the Instruction
-   * @param root JavaFX Group being used for the current program
+   * @param root          JavaFX Group being used for the current program
    */
-  public InstructionProcessor(Instruction currentInst, TurtleLinkage turtleLinkage,
+  public InstructionProcessor(LogoInstruction currentInst, TurtleLinkage turtleLinkage,
       Group root) {
     performInstruction(currentInst, turtleLinkage, root);
   }
 
   //create an appropriate command corresponding to the already error-checked instruction
-  private void performInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
+  private void performInstruction(LogoInstruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
     int commandPixels = currentInstruction.pixels;
     ModelTurtle myModelTurtle = turtleLinkage.myModelTurtle;

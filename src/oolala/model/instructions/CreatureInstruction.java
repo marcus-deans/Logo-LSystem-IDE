@@ -2,18 +2,35 @@ package oolala.model.instructions;
 
 import oolala.model.commands.Commands;
 
-public class CreatureInstruction extends Instruction {
+/**
+ * @author marcusdeans Purpose: defined structured 'CreatureInstruction' that have the command as
+ * well as movement value and conditional command to execute if needed Assumptions: Error-checked
+ * inputs of String and pixels with appropriate call Dependencies: Commands, LogoInstruction Example
+ * Usage: used for all commands in Darwin User Details: None, usage exactly as dictated by command
+ * entry pattern (error-checked)
+ */
+public class CreatureInstruction extends LogoInstruction {
 
+  /**
+   * Create new CreatureInstruction
+   * @param inCommand String to be assigned to CreatureInstruction
+   * @param amount integer pixels for movement, for rotation, or for next command to execute
+   */
   public CreatureInstruction(String inCommand, int amount) {
     super(inCommand, amount);
     checkCreatureCommand();
   }
 
+  /**
+   * Create new CreatureInstruction
+   * @param inCommand String to be assigned to CreatureInstruction
+   */
   public CreatureInstruction(String inCommand) {
     super(inCommand);
     checkCreatureCommand();
   }
 
+  //determine the appropriate command based on Commands enum
   private void checkCreatureCommand() {
     if (this.order == Commands.OOPS) {
       switch (this.command) {

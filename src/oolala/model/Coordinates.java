@@ -1,11 +1,10 @@
 package oolala.model;
 
 /**
- * @author
- * Purpose: to declare the turtle's original and target x and y coordinates
- * Assumptions: Functioning ModelTurtle; and other values error-checked
- * Example Usage: used for computeForwardCoordinates() to declare myTurtleOldX
- * User Details: None, usage exactly as dictated by command entry pattern (error-checked)
+ * @author marcusdeans Purpose: to declare the turtle's original and target x and y coordinates
+ * Assumptions: Functioning ModelTurtle; and other values error-checked Dependencies: None Example
+ * Usage: used for computeForwardCoordinates() to declare myTurtleOldX User Details: None, usage
+ * exactly as dictated by command entry pattern (error-checked)
  */
 public class Coordinates {
 

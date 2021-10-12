@@ -2,22 +2,38 @@ package oolala.model.instructions;
 
 import oolala.model.commands.Commands;
 
-public class Instruction {
+/**
+ * @author marcusdeans Purpose: defined structured 'LogoInstruction' that have the command as well
+ * as movement value if needed Assumptions: Error-checked inputs of String and pixels with
+ * appropriate call Dependencies: Commands Example Usage: used for all commands in Logo User
+ * Details: None, usage exactly as dictated by command entry pattern (error-checked)
+ */
+public class LogoInstruction {
 
   public int pixels;
   public String command;
   public Commands order;
 
-  public Instruction(String inCommand, int inPixels) {
+  /**
+   * Create new LogoInstruction
+   * @param inCommand String to be assigned to LogoInstruction
+   * @param inPixels integer pixels for movement or for rotation
+   */
+  public LogoInstruction(String inCommand, int inPixels) {
     this(inCommand);
     this.pixels = inPixels;
   }
 
-  public Instruction(String inCommand) {
+  /**
+   * Create new LogoInstruction
+   * @param inCommand String to be assigned to LogoInstruction
+   */
+  public LogoInstruction(String inCommand) {
     this.command = inCommand;
     computeCommands();
   }
 
+  //determine the appropriate command based on Commands enum
   private void computeCommands() {
     switch (this.command) {
       case "fd" -> this.order = Commands.FORWARD;

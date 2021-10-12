@@ -13,7 +13,7 @@ import oolala.model.Coordinates;
 import oolala.model.ModelTurtle;
 import oolala.model.commands.Commands;
 import oolala.model.games.Logo;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 import oolala.model.processors.InstructionProcessor;
 import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
@@ -187,9 +187,9 @@ public class LogoDisplay extends Display {
   private void checkForInstructionsAndExecute() {
     //TODO: update dropdowns
     //If an instruction has been sent to myLogo, run it
-    LinkedList<Instruction> instructions = myGameProcessor.getMyInstructions();
+    LinkedList<LogoInstruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
-      Instruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
+      LogoInstruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);
       //TODO: create map (possibly global) ->
       drawTurtleLine();
@@ -199,7 +199,7 @@ public class LogoDisplay extends Display {
   }
 
   @Override
-  protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
+  protected void executeInstruction(LogoInstruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
     if (currentInstruction.order == Commands.TELL) {
       tellTurtle(turtleLinkage.myID);

@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.games.Game;
 import oolala.model.games.Logo;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 import oolala.view.TurtleLinkage;
 
 
@@ -473,7 +473,7 @@ public abstract class Display extends Application {
   //Create method that passes in queue of commands to Logo
   protected void step() {
     //If an instruction has been sent to myLogo, run it
-    Queue<Instruction> instructions = myGameProcessor.getMyInstructions();
+    Queue<LogoInstruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
 
     }
@@ -486,7 +486,7 @@ public abstract class Display extends Application {
     }
   }
 
-  protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
+  protected void executeInstruction(LogoInstruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
   }
 
