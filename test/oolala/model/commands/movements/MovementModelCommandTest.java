@@ -22,7 +22,6 @@ class MovementModelCommandTest {
   private static final int TurtleHomeY = ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2);
 
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  TurtleLinkage turtLink = new TurtleLinkage(0);
 
   @Test
   void getTurtleCoordinatesT() {
