@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import oolala.model.ModelTurtle;
-import oolala.view.TurtleLinkage;
 import org.junit.jupiter.api.Test;
 
 class MovementModelCommandTest {
@@ -22,7 +21,6 @@ class MovementModelCommandTest {
   private static final int TurtleHomeY = ((FRAME_HEIGHT - OFFSET_Y_TOP - COMMAND_HEIGHT + OFFSET_Y) / 2);
 
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  TurtleLinkage turtLink = new TurtleLinkage(0);
 
   @Test
   void getTurtleCoordinatesT() {

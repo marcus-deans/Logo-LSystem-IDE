@@ -10,10 +10,10 @@ import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.LogoInstruction;
 
 /**
- * @author marcusdeans Purpose: create abstract class representing all of the games that may be
- * played Assumptions: running display, error-checked inputs Dependencies: None Example Usage: used
- * as superclass for Logo, LSystem, and Darwin backends User Details: Some abstract classes will not
- * be genuinely implemented in each program
+ * @author naylaboorady, marcusdeans Purpose: create abstract class representing all of the games
+ * that may be played Assumptions: running display, error-checked inputs Dependencies: None Example
+ * Usage: used as superclass for Logo, LSystem, and Darwin backends User Details: Some abstract
+ * classes will not be genuinely implemented in each program
  */
 public abstract class Game {
 

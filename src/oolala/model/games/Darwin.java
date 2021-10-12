@@ -9,9 +9,9 @@ import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.LogoInstruction;
 
 /**
- * @author marcusdeans Purpose: create backend game for Darwin Assumptions: running display,
- * error-checked inputs Dependencies: None Example Usage: serves as backend for playing Darwin User
- * Details: getConvertInstructionLevels() should not be used
+ * @author naylaboorady, marcusdeans Purpose: create backend game for Darwin Assumptions: running
+ * display, error-checked inputs Dependencies: None Example Usage: serves as backend for playing
+ * Darwin User Details: getConvertInstructionLevels() should not be used
  */
 public class Darwin extends Game {
 

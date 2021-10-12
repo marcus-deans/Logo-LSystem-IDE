@@ -6,13 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import oolala.model.ModelTurtle;
 import oolala.model.commands.movements.ForwardModelCommand;
-import oolala.view.TurtleLinkage;
 import org.junit.jupiter.api.Test;
 
 class RotateModelCommandTest {
 
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  TurtleLinkage turtLink = new TurtleLinkage(0);
 
   @Test
   void setRotationLeft() {

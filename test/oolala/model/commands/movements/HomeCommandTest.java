@@ -6,7 +6,6 @@ import static oolala.view.displays.LogoDisplay.FRAME_WIDTH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oolala.model.ModelTurtle;
-import oolala.view.TurtleLinkage;
 import org.junit.jupiter.api.Test;
 
 class HomeCommandTest {
@@ -19,7 +18,6 @@ class HomeCommandTest {
       / 2);
 
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  TurtleLinkage turtLink = new TurtleLinkage(0);
 
   @Test
   void computeHomeCoordinates() {
