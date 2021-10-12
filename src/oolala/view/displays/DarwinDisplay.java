@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import oolala.model.games.Darwin;
 import oolala.model.instructions.CreatureInstruction;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 import oolala.view.darwin.CreatureLinkage;
 
 public class DarwinDisplay extends Display {
@@ -173,7 +173,7 @@ public class DarwinDisplay extends Display {
           checkCreatureLinkageSpecies);
 
       while (!instructionsToExecute.isEmpty()) {
-        Instruction currentInstruction = instructionsToExecute.get(
+        LogoInstruction currentInstruction = instructionsToExecute.get(
             0); //pop a single instruction, FIFO
         //TODO:
 //        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);

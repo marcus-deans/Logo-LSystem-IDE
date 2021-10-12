@@ -11,18 +11,35 @@ import oolala.model.commands.visuals.HideViewCommand;
 import oolala.model.commands.visuals.PenUpViewCommand;
 import oolala.model.commands.visuals.ShowViewCommand;
 import oolala.model.commands.visuals.StampViewCommand;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Process Instructions that are created as part of Logo or LSystem Assumptions:
+ * Functioning parsing system with accurate commands Dependencies: Insturction, TurtleLinkage,
+ * Group, all Commands Example Usage: Used in Logo and LSystem to execute all of the commands that
+ * are specified for turtles Details: None, usage exactly as dictated by command entry pattern
+ * (error-checked)
+ */
 public class InstructionProcessor {
 
-  public InstructionProcessor(Instruction currentInst, TurtleLinkage turtleLinkage,
+  /**
+   * Create new InstructionProcessor
+   *
+   * @param currentInst   current instruction that should be executed
+   * @param turtleLinkage TurtleLinkage associated with the Instruction
+   * @param root          JavaFX Group being used for the current program
+   */
+  public InstructionProcessor(LogoInstruction currentInst, TurtleLinkage turtleLinkage,
       Group root) {
     performInstruction(currentInst, turtleLinkage, root);
   }
 
-  private void performInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
+  //create an appropriate command corresponding to the already error-checked instruction
+  private void performInstruction(LogoInstruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
     int commandPixels = currentInstruction.pixels;
     ModelTurtle myModelTurtle = turtleLinkage.myModelTurtle;
@@ -39,7 +56,6 @@ public class InstructionProcessor {
       case STAMP -> new StampViewCommand(myViewTurtle, root);
       default -> {
       }
-//      default -> myTurtle.execute(currentInstruction, root, lineRoot);
     }
     turtleLinkage.update();
   }

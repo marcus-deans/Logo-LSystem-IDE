@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 
 public class Darwin extends Game {
 
@@ -100,7 +100,7 @@ public class Darwin extends Game {
         isValidCommand = status;
     }
 
-    public LinkedList<Instruction> getMyInstructions() {
+    public LinkedList<LogoInstruction> getMyInstructions() {
         return new LinkedList<>();
     }
 
@@ -112,7 +112,7 @@ public class Darwin extends Game {
     }
 
     //expansions by level in Logo instruction format
-    public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
-        return new ArrayList<ArrayList<Instruction>>();
+    public ArrayList<ArrayList<LogoInstruction>> getConvertedInstructionLevels() {
+        return new ArrayList<ArrayList<LogoInstruction>>();
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 
 public abstract class Game {
 
@@ -72,9 +72,9 @@ public abstract class Game {
     //Method to save the user input commands to a fle
     public abstract boolean saveCommand(String inputStream, String filename);
 
-    public abstract LinkedList<Instruction> getMyInstructions();
+    public abstract LinkedList<LogoInstruction> getMyInstructions();
 
-    public abstract ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels();
+    public abstract ArrayList<ArrayList<LogoInstruction>> getConvertedInstructionLevels();
 
     public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey) {
         return new ArrayList<>();

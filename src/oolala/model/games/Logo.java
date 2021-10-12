@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 
 public class Logo extends Game {
 
@@ -13,7 +13,7 @@ public class Logo extends Game {
   public ArrayList<String> singleCommands;
 
   private boolean isValidCommand;
-  private final LinkedList<Instruction> myInstructions;
+  private final LinkedList<LogoInstruction> myInstructions;
   private final List<String> myHistory;
 
   public Logo() {
@@ -49,12 +49,12 @@ public class Logo extends Game {
   }
 
   protected void createDoubleCommand(String command, Integer number) {
-    Instruction newInstruction = new Instruction(command, number);
+    LogoInstruction newInstruction = new LogoInstruction(command, number);
     myInstructions.add(newInstruction);
   }
 
   protected void createSingleCommand(String command) {
-    Instruction newInstruction = new Instruction(command);
+    LogoInstruction newInstruction = new LogoInstruction(command);
     myInstructions.add(newInstruction);
   }
 
@@ -87,13 +87,13 @@ public class Logo extends Game {
     isValidCommand = status;
   }
 
-  public LinkedList<Instruction> getMyInstructions() {
+  public LinkedList<LogoInstruction> getMyInstructions() {
     return myInstructions;
   }
 
   //expansions by level in Logo instruction format
-  public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
-    return new ArrayList<ArrayList<Instruction>>();
+  public ArrayList<ArrayList<LogoInstruction>> getConvertedInstructionLevels() {
+    return new ArrayList<ArrayList<LogoInstruction>>();
   }
 
   @Override

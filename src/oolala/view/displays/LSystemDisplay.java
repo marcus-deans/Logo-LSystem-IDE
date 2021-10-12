@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import oolala.model.games.LSystem;
-import oolala.model.instructions.Instruction;
+import oolala.model.instructions.LogoInstruction;
 
 public class LSystemDisplay extends LogoDisplay {
 
@@ -115,8 +115,8 @@ public class LSystemDisplay extends LogoDisplay {
     myViewTurtle.update(myModelTurtle);
 
     //hide turtle by issuing hide turtle command
-//    executeInstruction(new Instruction("ht"), myTurtleLinkage, root);
-    executeInstruction(new Instruction("rt", 90), myTurtleLinkage, root);
+    executeInstruction(new LogoInstruction("ht"), myTurtleLinkage, root);
+    executeInstruction(new LogoInstruction("rt", 90), myTurtleLinkage, root);
   }
 
   //Create method that passes in queue of commands to Logo
@@ -132,14 +132,15 @@ public class LSystemDisplay extends LogoDisplay {
 
   private void checkForInstructionsAndExecute() {
     //If an instruction has been sent to myGameProcessor, run it
-    ArrayList<ArrayList<Instruction>> instructions = myGameProcessor.getConvertedInstructionLevels();
+    ArrayList<ArrayList<LogoInstruction>> instructions = myGameProcessor.getConvertedInstructionLevels();
     numLevels = instructions.size();
     int level = 1;
 
     if (!instructions.isEmpty()) {
-      ArrayList<Instruction> currentLevelInstructions = instructions.get(0);
+      ArrayList<LogoInstruction> currentLevelInstructions = instructions.get(0);
       while (!currentLevelInstructions.isEmpty()) {
-        Instruction currentInstruction = currentLevelInstructions.get(0); //pop a single instruction, FIFO
+        LogoInstruction currentInstruction = currentLevelInstructions.get(
+            0); //pop a single instruction, FIFO
         executeInstruction(currentInstruction, myTurtleLinkage, root);
         //TODO: create map (possibly global) ->
         drawTurtleLine();

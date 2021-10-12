@@ -18,16 +18,37 @@ import oolala.model.commands.rotations.RotateRightModelCommand;
 import oolala.model.instructions.CreatureInstruction;
 import oolala.view.darwin.CreatureLinkage;
 
+/**
+ * @author marcusdeans
+ * <p>
+ * Purpose: Process CreatureInstructions that are created as part of Darwin Assumptions:Functioning
+ * parsing system with accurate commands Dependencies: CreatureInstruction, CreatureLinkage, Group,
+ * all Commands Example Usage: Used in Darwin to execute all of the commands that are specified for
+ * creatures Details: None, usage exactly as dictated by command entry pattern (error-checked)
+ */
 public class DarwinInstructionProcessor {
 
   private ArrayList<CreatureInstruction> allInstructions;
 
+  /**
+   * Create new DarwinInstructionProcessor
+   * @param currentInst current instruction that should be executed
+   * @param creatureLinkage creatureLinkage associated with the CreatureInstruction
+   * @param root JavaFX Group being used for the current program
+   */
   public DarwinInstructionProcessor(CreatureInstruction currentInst,
       CreatureLinkage creatureLinkage,
       Group root) {
     performInstruction(currentInst, creatureLinkage, root);
   }
 
+  /**
+   * Create new DarwinInstructionProcessor
+   * @param currentInst current instruction that should be executed
+   * @param creatureLinkage creatureLinkage associated with the CreatureInstruction
+   * @param root JavaFX Group being used for the current program
+   * @param instructions list of additional instruction for the current object to be used in conditional commands
+   */
   public DarwinInstructionProcessor(CreatureInstruction currentInst,
       CreatureLinkage creatureLinkage,
       Group root,
@@ -36,12 +57,18 @@ public class DarwinInstructionProcessor {
     performInstruction(currentInst, creatureLinkage, root);
   }
 
+  /**
+   * Create new DarwinInstructionProcessor
+   * @param currentInst current instruction that should be executed
+   *    * @param creatureLinkage creatureLinkage associated with the CreatureInstruction
+   */
   public DarwinInstructionProcessor(CreatureInstruction currentInst,
       CreatureLinkage creatureLinkage) {
     Group root = new Group();
     performInstruction(currentInst, creatureLinkage, root);
   }
 
+  //create an appropriate command corresponding to the already error-checked instruction
   private void performInstruction(CreatureInstruction currentInstruction,
       CreatureLinkage creatureLinkage,
       Group root) {
@@ -67,7 +94,6 @@ public class DarwinInstructionProcessor {
       case GO -> new GoConditionalCommand(myModelCreature, commandPixels, allInstructions, root);
       default -> {
       }
-//      default -> myTurtle.execute(currentInstruction, root, lineRoot);
     }
     creatureLinkage.update();
   }

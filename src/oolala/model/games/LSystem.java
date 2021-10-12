@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import oolala.model.instructions.CreatureInstruction;
-import oolala.model.instructions.Instruction;
 import oolala.model.instructions.LSystemInstruction;
+import oolala.model.instructions.LogoInstruction;
 
 public class LSystem extends Game {
 
@@ -22,8 +22,8 @@ public class LSystem extends Game {
 
     public List<String> expansionLevels; //expansions in LSystem language
 
-    public ArrayList<ArrayList<Instruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
-    private final LinkedList<Instruction> myInstructions; //TODO: do we need this? prob not
+    public ArrayList<ArrayList<LogoInstruction>> convertedInstructionLevels; //expansions by level in Logo instruction format
+    private final LinkedList<LogoInstruction> myInstructions; //TODO: do we need this? prob not
 
     private final List<String> myHistory;
     private boolean isValidCommand;
@@ -111,7 +111,8 @@ public class LSystem extends Game {
 
     private void convertToLogoCommands(int levels, int angle, int length) {
         for(int i=0; i<expansionLevels.size(); i++){ //each expansion level
-            ArrayList<Instruction> thisLevelInstructions = createCommandsFromLSystem(levels, angle,
+            ArrayList<LogoInstruction> thisLevelInstructions = createCommandsFromLSystem(levels,
+                angle,
                 length / (i + 1), expansionLevels.get(i));
             convertedInstructionLevels.add(thisLevelInstructions);
         }
@@ -134,10 +135,10 @@ public class LSystem extends Game {
     }
 
 
-    private ArrayList<Instruction> createCommandsFromLSystem(int level, int angle, int length,
+    private ArrayList<LogoInstruction> createCommandsFromLSystem(int level, int angle, int length,
         String commandStream) {
         String[] commandStreamSplit = commandStream.split("");
-        ArrayList<Instruction> instructions = new ArrayList<>();
+        ArrayList<LogoInstruction> instructions = new ArrayList<>();
         for (String currentLSystemCommand : commandStreamSplit) {
             List<String> logoCommands; //equivalent logo commands for this LSystem character
             if (currentLSystemCommand.matches(
@@ -153,10 +154,11 @@ public class LSystem extends Game {
         return instructions;
     }
 
-    private Instruction convertLogoCommandToInstruction(int level, int angle, int length, String thisCommand) {
-        if(singleCommands.contains(thisCommand)){ //if this is single command
+    private LogoInstruction convertLogoCommandToInstruction(int level, int angle, int length,
+        String thisCommand) {
+        if (singleCommands.contains(thisCommand)) { //if this is single command
             return new LSystemInstruction(level, thisCommand);
-        }else if(doubleAngleCommands.contains(thisCommand)){ //double command
+        } else if (doubleAngleCommands.contains(thisCommand)) { //double command
             return new LSystemInstruction(level, thisCommand, angle);
         } else {
             return new LSystemInstruction(level, thisCommand, length);
@@ -200,12 +202,12 @@ public class LSystem extends Game {
     }
 
     @Override
-    public LinkedList<Instruction> getMyInstructions() {
+    public LinkedList<LogoInstruction> getMyInstructions() {
         return myInstructions;
     }
 
     //expansions by level in Logo instruction format
-    public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
+    public ArrayList<ArrayList<LogoInstruction>> getConvertedInstructionLevels() {
         return convertedInstructionLevels;
     }
 
