@@ -123,7 +123,7 @@ public class LSystemDisplay extends LogoDisplay {
     stepDropdown.setLayoutX(LENGTH_DROPDOWN_X);
     stepDropdown.setLayoutY(LENGTH_DROPDOWN_Y);
     stepDropdown.setMaxWidth(MAX_DROPDOWN_WIDTH);
-    for (int i = 10; i < 30; i++) {
+    for (int i = 10; i < 31; i++) {
       stepDropdown.getItems().add(i);
     }
     stepDropdown.setOnAction((event) -> {
@@ -151,9 +151,6 @@ public class LSystemDisplay extends LogoDisplay {
     //TODO: set this value to the user-specified start of the drawing
     myModelTurtle.setNewX(LSYSTEM_OFFSET_X);
     myModelTurtle.setNewY(LSYSTEM_OFFSET_Y);
-//    myModelTurtle.setNewY(OFFSET_Y_TOP + ((Math.abs(BORDER_HEIGHT) - BUFFER)));
-
-//    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
 
@@ -170,7 +167,8 @@ public class LSystemDisplay extends LogoDisplay {
 
   @Override
   protected void handleInputParsing(String text) {
-    myGameProcessor.inputParser(6, 60, 20, text);
+    myGameProcessor.inputParser(5, 60, 20, text);
+//    myGameProcessor.inputParser(numLevels, turnAngle, stepLength, text);
   }
 
   private void checkForInstructionsAndExecute() {
@@ -184,7 +182,6 @@ public class LSystemDisplay extends LogoDisplay {
         LogoInstruction currentInstruction = currentLevelInstructions.get(
             0); //pop a single instruction, FIFO
         executeInstruction(currentInstruction, myTurtleLinkage, root);
-        //TODO: create map (possibly global) ->
         drawTurtleLine();
         myModelTurtle.updateCoordinates();
         currentLevelInstructions.remove(0);
@@ -204,7 +201,7 @@ public class LSystemDisplay extends LogoDisplay {
     myModelTurtle.setNewX(LSYSTEM_OFFSET_X);
 //    myModelTurtle.setNewY(LSYSTEM_OFFSET_Y*level);
     myModelTurtle.setNewY(
-        LSYSTEM_OFFSET_Y + ((Math.abs(BORDER_HEIGHT) - BUFFER) / numLevels) * level);
+        LSYSTEM_OFFSET_Y + ((Math.abs(BORDER_HEIGHT) + 200) / numLevels) * level);
 //    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);

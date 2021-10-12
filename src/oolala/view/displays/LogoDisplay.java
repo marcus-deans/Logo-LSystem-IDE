@@ -184,16 +184,13 @@ public class LogoDisplay extends Display {
     checkForInstructionsAndExecute();
   }
 
+  //If an instruction has been sent to myLogo, run it
   private void checkForInstructionsAndExecute() {
-    //TODO: update dropdowns
-    //If an instruction has been sent to myLogo, run it
     LinkedList<LogoInstruction> instructions = myGameProcessor.getMyInstructions();
     if (!instructions.isEmpty()) {
       LogoInstruction currentInstruction = instructions.poll(); //pop a single instruction, FIFO
       executeInstruction(currentInstruction, myTurtleLinkage, root);
-      //TODO: create map (possibly global) ->
       drawTurtleLine();
-//      myGameProcessor.updateMyInstructions();
       myModelTurtle.updateCoordinates();
     }
   }
