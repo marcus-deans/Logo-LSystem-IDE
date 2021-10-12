@@ -1,5 +1,6 @@
 package oolala.view.displays;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import oolala.model.games.Darwin;
 import oolala.model.instructions.CreatureInstruction;
@@ -24,6 +27,10 @@ public class DarwinDisplay extends Display {
 
   private int myCreatureCount;
   private int myNearbyThreshold;
+
+  private ImageView pauseImage = new ImageView(new Image("pause.png"));
+  private ImageView playImage = new ImageView(new Image("play-button.png"));
+  private boolean paused;
 
   public static ArrayList<CreatureLinkage> getAllCreatureLinkages() {
     return allCreatureLinkages;
@@ -41,10 +48,31 @@ public class DarwinDisplay extends Display {
     creaturesTitle(getWord("creatures_text_darwin"));
     initializeCreatureDropdown(); //initialize the dropdown of creatures
     makeScreenClickable();
+    initializeAnimationPause();
+    paused = false;
     //Set the scene
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
     return scene;
+  }
+
+  private void initializeAnimationPause() {
+    Button pauseButton = new Button();
+    pauseButton.setGraphic(pauseImage);
+    pauseButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        paused = !paused;
+        if(paused){
+          pauseButton.setGraphic(pauseImage);
+          myAnimation.pause();
+        }else{
+          pauseButton.setGraphic(playImage);
+          myAnimation.play();
+        }
+
+      }
+    });
   }
 
   @Override
