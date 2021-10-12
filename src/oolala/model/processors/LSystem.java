@@ -164,8 +164,11 @@ public class LSystem extends GameProcessor{
     }
 
     public boolean saveCommand(String inputStream, String filename) {
-        String path = "data/examples/lsystem" + filename + ".txt";
-        return saveCommandGivenPath(inputStream, path);
+        StringBuilder sb = new StringBuilder();
+        sb.append("data/examples/lsystem/");
+        sb.append(filename);
+        sb.append(".txt");
+        return saveCommandGivenPath(inputStream, sb.toString());
     }
 
     @Override
