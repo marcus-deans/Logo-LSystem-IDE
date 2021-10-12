@@ -2,7 +2,6 @@ package oolala.model.commands.conditionals;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.scene.Group;
 import oolala.model.ModelCreature;
 import oolala.model.instructions.CreatureInstruction;
@@ -26,12 +25,12 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
   /**
    * Create new IfEntityConditionalCommand
    *
-   * @param creatureLinkage ModelCreature object on which command will be imparted
-   * @param nextCommand     conditional command that will be executed if conditions are met
+   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param nextCommand   conditional command that will be executed if conditions are met
    */
-  public IfEntityConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand,
+  public IfEntityConditionalCommand(ModelCreature modelCreature, int nextCommand,
       ArrayList<CreatureInstruction> creatureInstructions, Group root) {
-    super(creatureLinkage, nextCommand, creatureInstructions, root);
+    super(modelCreature, nextCommand, creatureInstructions, root);
     this.mySpeciesIdentifier = myModelCreature.getMySpeciesIdentifier();
   }
 

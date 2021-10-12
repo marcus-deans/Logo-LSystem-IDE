@@ -33,12 +33,12 @@ public abstract class ConditionalCommand extends ModelCommand {
   /**
    * Create new abstract ConditionalCommand
    *
-   * @param creatureLinkage ModelCreature object on which command will be imparted
-   * @param nextCommand     conditional comand that will be executed if conditions are met
+   * @param modelCreature ModelCreature object on which command will be imparted
+   * @param nextCommand   conditional comand that will be executed if conditions are met
    */
-  public ConditionalCommand(CreatureLinkage creatureLinkage, int nextCommand,
+  public ConditionalCommand(ModelCreature modelCreature, int nextCommand,
       ArrayList<CreatureInstruction> creatureInstructions, Group root) {
-    super(creatureLinkage);
+    super(modelCreature);
     myRoot = root;
 //    myCreatureLinkage = creatureLinkage;
 //    myModelCreature = creatureLinkage.myModelCreature;
