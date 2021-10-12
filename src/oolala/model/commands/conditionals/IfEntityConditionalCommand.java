@@ -66,8 +66,6 @@ public abstract class IfEntityConditionalCommand extends ConditionalCommand {
   private boolean compareWithinFieldOfView(ModelCreature checkModelCreature) {
     int checkModelCreatureX = checkModelCreature.getTurtleCoordinates().turtleNewX;
     int checkModelCreatureY = checkModelCreature.getTurtleCoordinates().turtleNewY;
-    //https://stackoverflow.com/questions/6270785/how-to-determine-whether-a-point-x-y-is-contained-within-an-arc-section-of-a-c
-    //https://math.stackexchange.com/questions/1596513/find-the-bearing-angle-between-two-points-in-a-2d-space
     double startAngle = ((myDegreesRotation + FULL_CIRCLE) - halfFieldOfView) % FULL_CIRCLE;
     double endAngle = (myDegreesRotation + halfFieldOfView) % FULL_CIRCLE;
     double checkAngle = Math.atan2(checkModelCreatureY - myModelCreatureY,
