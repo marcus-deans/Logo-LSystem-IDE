@@ -5,7 +5,7 @@ import oolala.model.ModelTurtle;
 /**
  * @author marcusdeans
  * <p>
- * Purpose: Create an associate construct betwen the ViewTurtle and ModelTurtle for same turtle
+ * Purpose: Create an associative construct betwen the ViewTurtle and ModelTurtle for same turtle
  * Assumptions: Functioning coordinate system and commmands Dependencies: ModelTurtle, ViewTurtle
  * Example Usage: Used in Logo and LSystem programs to create the object that moves on the screen
  * Details: None, usage exactly as dictated by command entry pattern (error-checked)
@@ -25,6 +25,12 @@ public class TurtleLinkage {
     myID = id;
     myModelTurtle = new ModelTurtle(id);
     myViewTurtle = new ViewTurtle(id);
+  }
+
+  /**
+   * Constructor required for subclasses
+   */
+  public TurtleLinkage() {
   }
 
   /**
