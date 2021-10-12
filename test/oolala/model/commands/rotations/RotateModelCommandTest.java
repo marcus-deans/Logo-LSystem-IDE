@@ -6,26 +6,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import oolala.model.ModelTurtle;
 import oolala.model.commands.movements.ForwardModelCommand;
-import oolala.view.TurtleLinkage;
 import org.junit.jupiter.api.Test;
 
 class RotateModelCommandTest {
 
   ModelTurtle myModelTurtle = new ModelTurtle(0);
-  TurtleLinkage turtLink = new TurtleLinkage(0);
 
   @Test
   void setRotationLeft() {
     RotateLeftModelCommand rlc = new RotateLeftModelCommand(myModelTurtle, 75);
     rlc.setLeftRotation();
-    assertEquals(myModelTurtle.getDegreesRotation(), -75);
+    assertEquals(myModelTurtle.getDegreesRotation(), 210);
   }
 
   @Test
   void setRotationRight() {
-    RotateRightModelCommand rrc = new RotateRightModelCommand(myModelTurtle, 200);
+    RotateRightModelCommand rrc = new RotateRightModelCommand(myModelTurtle, 15);
     rrc.setRightRotation();
-    assertEquals(myModelTurtle.getDegreesRotation(), 200);
+    assertEquals(myModelTurtle.getDegreesRotation(), 30);
   }
 
   @Test

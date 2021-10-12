@@ -42,6 +42,12 @@ public class LSystemDisplay extends LogoDisplay {
   public static final int LENGTH_DROPDOWN_X = 800;
   public static final int LENGTH_DROPDOWN_Y = 166;
 
+  private final int LSYSTEM_OFFSET_X = 300;
+  private final int LSYSTEM_OFFSET_Y = 100;
+
+  private final int LSYSTEM_OFFSET_X = 300;
+  private final int LSYSTEM_OFFSET_Y = 100;
+
   @Override //Overrides in order to change the frame width
   public void start(Stage stage) {
     //Variables
@@ -54,9 +60,6 @@ public class LSystemDisplay extends LogoDisplay {
     myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
     myAnimation.play();
   }
-
-  private final int LSYSTEM_OFFSET_X = 300;
-  private final int LSYSTEM_OFFSET_Y = 100;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
