@@ -4,13 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
+import oolala.model.Coordinates;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.LSystem;
 
 public class LSystemDisplay extends LogoDisplay {
 
   private static final int BORDER_HEIGHT = OFFSET_Y_TOP - (COMMAND_Y - OFFSET_Y);
-  public static final int BUFFER = 200;
+  public static final int BUFFER = 50;
   private int numLevels;
 
   @Override
@@ -60,7 +62,7 @@ public class LSystemDisplay extends LogoDisplay {
     //If an instruction has been sent to myGameProcessor, run it
     ArrayList<ArrayList<Instruction>> instructions = myGameProcessor.getConvertedInstructionLevels();
     numLevels = instructions.size();
-    int level=0;
+    int level = 1;
 
     if (!instructions.isEmpty()) {
       ArrayList<Instruction> currentLevelInstructions = instructions.get(0);
@@ -80,10 +82,21 @@ public class LSystemDisplay extends LogoDisplay {
 
   private void updateTurtleCoordinatesAndPositioning(int level) {
     myModelTurtle.setNewX(OFFSET_X);
-    myModelTurtle.setNewY(OFFSET_Y_TOP + ((BORDER_HEIGHT - BUFFER) / numLevels) * level * 2);
+    myModelTurtle.setNewY(OFFSET_Y_TOP + ((Math.abs(BORDER_HEIGHT) - BUFFER) / numLevels) * level);
 //    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
+  }
+
+  private void drawTurtleLine() {
+    Coordinates turtleCoordinates = myTurtleLinkage.myModelTurtle.getTurtleVisualCoordinates();
+    Line connector = new Line(turtleCoordinates.turtleOldX, turtleCoordinates.turtleOldY,
+        turtleCoordinates.turtleNewX, turtleCoordinates.turtleNewY);
+    connector.setOpacity(1.0);
+    connector.setStrokeWidth(3.0);
+//    connector.setOpacity(myTurtleLinkage.myViewTurtle.getPenOpacity());
+//    connector.setId("turtle-line");
+    root.getChildren().add(connector);
   }
 
   @Override

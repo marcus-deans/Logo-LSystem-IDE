@@ -112,7 +112,7 @@ public class LSystem extends GameProcessor{
     private void convertToLogoCommands(int levels, int angle, int length) {
         for(int i=0; i<expansionLevels.size(); i++){ //each expansion level
             ArrayList<Instruction> thisLevelInstructions = createCommandsFromLSystem(levels, angle,
-                length, expansionLevels.get(i));
+                length / (i + 1), expansionLevels.get(i));
             convertedInstructionLevels.add(thisLevelInstructions);
         }
     }
