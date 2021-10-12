@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import oolala.model.instructions.CreatureInstruction;
 import oolala.model.instructions.Instruction;
 
 public class Logo extends GameProcessor{
@@ -90,5 +91,10 @@ public class Logo extends GameProcessor{
   //expansions by level in Logo instruction format
   public ArrayList<ArrayList<Instruction>> getConvertedInstructionLevels() {
     return new ArrayList<ArrayList<Instruction>>();
+  }
+
+  @Override
+  public ArrayList<CreatureInstruction> getMySpeciesInstructions(int speciesKey) {
+    return null;
   }
 }

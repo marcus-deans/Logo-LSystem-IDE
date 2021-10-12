@@ -37,6 +37,11 @@ public class ModelTurtle {
     oldY = TurtleHomeY;
     visualOldX = correctXCoordinate(TurtleHomeX);
     visualOldY = correctYCoordinate(TurtleHomeY);
+
+    newX = TurtleHomeX;
+    newY = TurtleHomeY;
+    visualNewX = correctXCoordinate(TurtleHomeX);
+    visualNewY = correctYCoordinate(TurtleHomeY);
 //        TurtleHomeY = (int) ((FRAME_HEIGHT-26-COMMAND_HEIGHT+15)/2 - this.myTurtleView.getFitHeight()/2);
 //        TurtleHomeX = (int) (FRAME_WIDTH/2 - this.myTurtleView.getFitWidth()/2);
   }

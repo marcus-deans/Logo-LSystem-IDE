@@ -102,15 +102,18 @@ public class LSystemDisplay extends LogoDisplay {
     relocateAndHideTurtle();
   }
 
-  void relocateAndHideTurtle(){
+  void relocateAndHideTurtle() {
     //set Turtle starting coordinates to top left corner
-    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
+    myModelTurtle.setNewX(OFFSET_X);
+    myModelTurtle.setNewY(OFFSET_Y_TOP);
+
+//    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
 
     //hide turtle by issuing hide turtle command
 //    executeInstruction(new Instruction("ht"), myTurtleLinkage, root);
-    executeInstruction(new Instruction("rt",90), myTurtleLinkage, root);
+    executeInstruction(new Instruction("rt", 90), myTurtleLinkage, root);
   }
 
   //Create method that passes in queue of commands to Logo
@@ -152,9 +155,9 @@ public class LSystemDisplay extends LogoDisplay {
   }
 
   private void updateTurtleCoordinatesAndPositioning(int level) {
-//    myModelTurtle.setNewX(OFFSET_X);
-//    myModelTurtle.setNewY(OFFSET_Y_TOP + ((BORDER_HEIGHT-BUFFER)/numLevels)*level);
-    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
+    myModelTurtle.setNewX(OFFSET_X);
+    myModelTurtle.setNewY(OFFSET_Y_TOP + ((BORDER_HEIGHT - BUFFER) / numLevels) * level * 2);
+//    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
   }

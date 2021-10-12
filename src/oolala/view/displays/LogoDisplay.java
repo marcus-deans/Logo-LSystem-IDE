@@ -17,7 +17,6 @@ import oolala.model.processors.InstructionProcessor;
 import oolala.model.processors.Logo;
 import oolala.view.TurtleLinkage;
 import oolala.view.ViewTurtle;
-import oolala.view.darwin.CreatureLinkage;
 
 
 /**
@@ -202,11 +201,11 @@ public class LogoDisplay extends Display {
   @Override
   protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
-//    if (currentInstruction.order == Commands.TELL) {
-//      tellTurtle(turtleLinkage.myID);
-//    }
-//    InstructionProcessor instructionProcessor = new InstructionProcessor(currentInstruction,
-//        (CreatureLinkage) turtleLinkage, root);
+    if (currentInstruction.order == Commands.TELL) {
+      tellTurtle(turtleLinkage.myID);
+    }
+    InstructionProcessor instructionProcessor = new InstructionProcessor(currentInstruction,
+        turtleLinkage, root);
   }
 
 
