@@ -95,7 +95,7 @@ public class LSystem extends Game {
                     inputCommands);
                 commandConversion.put(inputCommands.get(i + 1), instructionDefinition);
                 skip += instructionDefinition.size() + 1; //skip letter and definition
-            } else { //TODO: error handling - invalid command stream
+            } else {
                 isValidCommand = false;
                 break;
             }
@@ -138,7 +138,7 @@ public class LSystem extends Game {
             if(inputCommands.get(i).startsWith("\"")){
                 instructions.add(inputCommands.get(i).substring(1));
             }else if(inputCommands.get(i).endsWith("\"")){
-                instructions.add(inputCommands.get(i)); //TODO: make sure this properly indexes
+                instructions.add(inputCommands.get(i));
                 break;
             }else{
                 instructions.add(inputCommands.get(i));

@@ -16,8 +16,8 @@ import oolala.model.instructions.LogoInstruction;
 public class LSystemDisplay extends LogoDisplay {
 
   private static final int BORDER_HEIGHT = OFFSET_Y_TOP - (COMMAND_Y - OFFSET_Y);
-  public static final int FRAME_WIDTH = 900;
-  public static final int BUFFER = 300;
+  private static final int FRAME_WIDTH = 900;
+  private static final int BUFFER = 300;
   private Text levelText;
   private Text angleText;
   private Text stepText;
@@ -173,7 +173,7 @@ public class LSystemDisplay extends LogoDisplay {
 
   @Override
   protected void handleInputParsing(String text) {
-    myGameProcessor.inputParser(numLevels, turnAngle, stepLength, text);
+    myGameProcessor.inputParser(2, 50, 3, text);
   }
 
   private void checkForInstructionsAndExecute() {
@@ -181,7 +181,6 @@ public class LSystemDisplay extends LogoDisplay {
     ArrayList<ArrayList<LogoInstruction>> instructions = myGameProcessor.getConvertedInstructionLevels();
     numLevels = instructions.size();
     int level = 1;
-
     if (!instructions.isEmpty()) {
       ArrayList<LogoInstruction> currentLevelInstructions = instructions.get(0);
       while (!currentLevelInstructions.isEmpty()) {
