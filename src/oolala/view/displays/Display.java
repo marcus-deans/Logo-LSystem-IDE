@@ -74,7 +74,7 @@ public abstract class Display extends Application {
   public static final int MAX_DROPDOWN_WIDTH = 50;
   public static final int OFFSET_X = 10;
   public static final int OFFSET_Y = 15;
-  public static final int OFFSET_Y_TOP = 26;
+  public static final int OFFSET_Y_TOP = 40;
 
   //Bottom Layout
   public static final int COMMAND_WIDTH = 600;

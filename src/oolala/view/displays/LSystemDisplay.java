@@ -4,14 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
-import oolala.model.Coordinates;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.LSystem;
 
 public class LSystemDisplay extends LogoDisplay {
 
   private static final int BORDER_HEIGHT = OFFSET_Y_TOP - (COMMAND_Y - OFFSET_Y);
-  public static final int BUFFER = 300;
+  public static final int BUFFER = 200;
   private int numLevels;
 
   @Override
@@ -32,15 +31,18 @@ public class LSystemDisplay extends LogoDisplay {
     relocateAndHideTurtle();
   }
 
-  void relocateAndHideTurtle(){
+  void relocateAndHideTurtle() {
     //set Turtle starting coordinates to top left corner
-    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
+    myModelTurtle.setNewX(OFFSET_X);
+    myModelTurtle.setNewY(OFFSET_Y_TOP);
+
+//    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
 
     //hide turtle by issuing hide turtle command
 //    executeInstruction(new Instruction("ht"), myTurtleLinkage, root);
-    executeInstruction(new Instruction("rt",90), myTurtleLinkage, root);
+    executeInstruction(new Instruction("rt", 90), myTurtleLinkage, root);
   }
 
   //Create method that passes in queue of commands to Logo
@@ -51,7 +53,7 @@ public class LSystemDisplay extends LogoDisplay {
 
   @Override
   protected void handleInputParsing(String text) {
-    myGameProcessor.inputParser(4, 30, 10, text);
+    myGameProcessor.inputParser(4, 60, 20, text);
   }
 
   private void checkForInstructionsAndExecute() {
@@ -77,9 +79,9 @@ public class LSystemDisplay extends LogoDisplay {
   }
 
   private void updateTurtleCoordinatesAndPositioning(int level) {
-//    myModelTurtle.setNewX(OFFSET_X);
-//    myModelTurtle.setNewY(OFFSET_Y_TOP + ((BORDER_HEIGHT-BUFFER)/numLevels)*level);
-    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
+    myModelTurtle.setNewX(OFFSET_X);
+    myModelTurtle.setNewY(OFFSET_Y_TOP + ((BORDER_HEIGHT - BUFFER) / numLevels) * level * 2);
+//    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
   }
