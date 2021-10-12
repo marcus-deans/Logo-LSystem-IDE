@@ -115,7 +115,7 @@ public class LSystemDisplay extends LogoDisplay {
     myViewTurtle.update(myModelTurtle);
 
     //hide turtle by issuing hide turtle command
-//    executeInstruction(new Instruction("ht"), myTurtleLinkage, root);
+    executeInstruction(new Instruction("ht"), myTurtleLinkage, root);
     executeInstruction(new Instruction("rt", 90), myTurtleLinkage, root);
   }
 
