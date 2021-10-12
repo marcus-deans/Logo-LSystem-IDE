@@ -19,7 +19,11 @@ public class LSystemDisplay extends LogoDisplay {
   public static final int FRAME_WIDTH = 900;
   public static final int BUFFER = 300;
   private Text levelText;
+  private Text angleText;
+  private Text stepText;
   private ComboBox levelsDropdown;
+  private ComboBox anglesDropdown;
+  private ComboBox stepDropdown;
   private int numLevels;
   private int turnAngle;
   private int stepLength;
@@ -29,14 +33,14 @@ public class LSystemDisplay extends LogoDisplay {
   public static final int LEVEL_TEXT_Y = 100;
   public static final int LEVEL_DROPDOWN_X = 800;
   public static final int LEVEL_DROPDOWN_Y = 86;
-  public static final int ANGLE_TEXT_X = 0;
-  public static final int ANGLE_TEXT_Y = 0;
-  public static final int ANGLE_DROPDOWN_X = 0;
-  public static final int ANGLE_DROPDOWN_Y = 0;
-  public static final int LENGTH_TEXT_X = 0;
-  public static final int LENGTH_TEXT_Y = 0;
-  public static final int LENGTH_DROPDOWN_X = 0;
-  public static final int LENGTH_DROPDOWN_Y = 0;
+  public static final int ANGLE_TEXT_X = 740;
+  public static final int ANGLE_TEXT_Y = 140;
+  public static final int ANGLE_DROPDOWN_X = 800;
+  public static final int ANGLE_DROPDOWN_Y = 126;
+  public static final int LENGTH_TEXT_X = 740;
+  public static final int LENGTH_TEXT_Y = 180;
+  public static final int LENGTH_DROPDOWN_X = 800;
+  public static final int LENGTH_DROPDOWN_Y = 166;
 
   private final int LSYSTEM_OFFSET_X = 300;
   private final int LSYSTEM_OFFSET_Y = 100;
@@ -92,8 +96,47 @@ public class LSystemDisplay extends LogoDisplay {
   }
 
   private void initializeAngleDropdown() {
+    anglesTitle();
+    anglesDropdown= new ComboBox();
+    anglesDropdown.setLayoutX(ANGLE_DROPDOWN_X);
+    anglesDropdown.setLayoutY(ANGLE_DROPDOWN_Y);
+    anglesDropdown.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    for(int i=0; i<365; i+=10){
+      anglesDropdown.getItems().add(i);
+    }
+    anglesDropdown.setOnAction((event) -> {
+      turnAngle = Integer.valueOf(anglesDropdown.getSelectionModel().getSelectedItem().toString());
+    });
+    root.getChildren().add(anglesDropdown);
   }
+
+  private void anglesTitle() {
+    angleText = new Text("Angle: ");
+    angleText.setLayoutX(ANGLE_TEXT_X);
+    angleText.setLayoutY(ANGLE_TEXT_Y);
+    root.getChildren().add(angleText);
+  }
+
   private void initializeLengthDropdown() {
+    lengthTitle();
+    stepDropdown= new ComboBox();
+    stepDropdown.setLayoutX(LENGTH_DROPDOWN_X);
+    stepDropdown.setLayoutY(LENGTH_DROPDOWN_Y);
+    stepDropdown.setMaxWidth(MAX_DROPDOWN_WIDTH);
+    for(int i=0; i<15; i++){
+      stepDropdown.getItems().add(i);
+    }
+    stepDropdown.setOnAction((event) -> {
+      stepLength = Integer.valueOf(stepDropdown.getSelectionModel().getSelectedItem().toString());
+    });
+    root.getChildren().add(stepDropdown);
+  }
+
+  private void lengthTitle() {
+    stepText = new Text("Step Size: ");
+    stepText.setLayoutX(LENGTH_TEXT_X);
+    stepText.setLayoutY(LENGTH_TEXT_Y);
+    root.getChildren().add(stepText);
   }
 
   @Override
