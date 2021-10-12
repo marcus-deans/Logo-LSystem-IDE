@@ -16,14 +16,14 @@ import oolala.view.TurtleLinkage;
 public abstract class MovementModelCommand extends ModelCommand {
 
   //Direction quantifiers in degrees, named via compass
-  public static final int NORTH = 0;
-  public static final int EAST = 90;
-  public static final int SOUTH = 180;
-  public static final int WEST = 270;
-  public static final int NORTHEAST = 45;
-  public static final int NORTHWEST = 315;
-  public static final int SOUTHWEST = 225;
-  public static final int SOUTHEAST = 135;
+  private static final int NORTH = 0;
+  private static final int EAST = 90;
+  private static final int SOUTH = 180;
+  private static final int WEST = 270;
+  private static final int NORTHEAST = 45;
+  private static final int NORTHWEST = 315;
+  private static final int SOUTHWEST = 225;
+  private static final int SOUTHEAST = 135;
 
   protected Coordinates myTurtleCoordinates;
   protected Coordinates myTurtleVisualCoordinates;
@@ -38,6 +38,8 @@ public abstract class MovementModelCommand extends ModelCommand {
 
   protected int myVisualNewX;
   protected int myVisualNewY;
+
+  private final int FULL_CIRCLE = 360;
 
   /**
    * Construct a movement command to move the turtle
@@ -72,15 +74,18 @@ public abstract class MovementModelCommand extends ModelCommand {
 
   //use vector math to determine the value of the vectors on each axis
   protected void computeVectors() {
-    Math.toRadians(myDegreesRotation);
-    int sinLength = (int) Math.abs(Math.sin(myDegreesRotation) * pixels);
-    int cosLength = (int) Math.abs(Math.cos(myDegreesRotation) * pixels);
-    myXVector = checkVectorOrientation() ? sinLength : cosLength;
-    myYVector = checkVectorOrientation() ? cosLength : sinLength;
+    double myRadianDegreesRotation = Math.toRadians(myDegreesRotation);
+    int sinLength = (int) (Math.sin(myRadianDegreesRotation) * pixels);
+    int cosLength = (int) (Math.cos(myRadianDegreesRotation) * pixels);
+    myXVector = Math.abs(sinLength);
+    myYVector = Math.abs(cosLength);
+//    myXVector = checkVectorOrientation() ? sinLength : cosLength;
+//    myYVector = checkVectorOrientation() ? cosLength : sinLength;
   }
 
   //determine orientation of turtle so that appropriate trigonometric conversions used
   protected boolean checkVectorOrientation() {
+    myDegreesRotation %= FULL_CIRCLE;
     return (myDegreesRotation <= NORTHEAST) || (myDegreesRotation >= NORTHWEST) || (
         (myDegreesRotation >= SOUTHEAST)
             && (myDegreesRotation <= SOUTHWEST));
