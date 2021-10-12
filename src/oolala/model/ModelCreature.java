@@ -5,9 +5,10 @@ import java.util.List;
 import oolala.model.instructions.CreatureInstruction;
 
 /**
- * @author Purpose: Extends from ModelTurtle for the Darwin application Assumptions: Utilizes
- * functioning creature x and y locations; nearby threshold and species identifier; other values
- * error checked Example Usage: used to create specific creatures for the Darwin application
+ * @author marcusdeans, maddiedemming Purpose: Extends from ModelTurtle for the Darwin application
+ * Assumptions: Utilizes functioning creature x and y locations; nearby threshold and species
+ * identifier; other values error checked Example Usage: used to create specific creatures for the
+ * Darwin application
  */
 public class ModelCreature extends ModelTurtle {
 
