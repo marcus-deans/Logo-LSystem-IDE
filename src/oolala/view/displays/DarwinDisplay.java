@@ -33,7 +33,7 @@ public class DarwinDisplay extends Display {
     myGameProcessor = new Darwin();
     allCreatureLinkages = new ArrayList<>();
     allCreatureNames = new ArrayList<>();
-    performInitialSetup();
+    performInitialSetup(); //run in general display class
     initializeRunButton(getWord("run_text_darwin")); //initialize the program run button
     creaturesTitle(getWord("creatures_text_darwin"));
     initializeCreatureDropdown(); //initialize the dropdown of creatures
@@ -114,8 +114,7 @@ public class DarwinDisplay extends Display {
   //Create method that passes in queue of commands to Logo
   @Override
   protected void step() {
-    //TODO: make sure step is updating all dropdowns
-    updateCreatureDropdown();
+    updateCreatureDropdown(); //TODO: make sure step is updating all dropdowns
     checkForInstructionsAndExecute();
   }
 
@@ -162,6 +161,8 @@ public class DarwinDisplay extends Display {
     return randomizedCreatureLinkageOrder;
 //    ArrayList<Integer> numericOptions = createNumericOptionsArraylist();
   }
+
+
 
   @Override
   protected File[] getFilesFromPath() {

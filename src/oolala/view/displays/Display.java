@@ -33,7 +33,6 @@ import javafx.util.Duration;
 import oolala.model.instructions.Instruction;
 import oolala.model.processors.GameProcessor;
 import oolala.model.processors.Logo;
-import oolala.view.Language;
 import oolala.view.TurtleLinkage;
 
 
@@ -102,6 +101,7 @@ public abstract class Display extends Application {
       Arrays.asList("English", "Spanish", "French"));
 
   protected Group root = new Group();
+  protected Timeline myAnimation;
   protected Scene scene;
   protected GameProcessor myGameProcessor;
   protected TextArea commandLine;
@@ -128,14 +128,14 @@ public abstract class Display extends Application {
 
   public void start(Stage stage) {
     //Variables
-    Scene scene = setupGame(FRAME_WIDTH, FRAME_HEIGHT, BACKGROUND);
+    scene = setupGame(FRAME_WIDTH, FRAME_HEIGHT, BACKGROUND);
     stage.setScene(scene);
     stage.setTitle(TITLE);
     stage.show();
-    Timeline animation = new Timeline();
-    animation.setCycleCount(Timeline.INDEFINITE);
-    animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
-    animation.play();
+    myAnimation = new Timeline();
+    myAnimation.setCycleCount(Timeline.INDEFINITE);
+    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
+    myAnimation.play();
   }
 
   protected Scene setupGame(int width, int height, Paint background) {
@@ -432,7 +432,7 @@ public abstract class Display extends Application {
     root.getChildren().add(creaturesText);
   }
 
-  protected abstract void initializeCreatureDropdown();
+  protected void initializeCreatureDropdown(){}; //DON'T MAKE ABSTRACT
 
   //TODO: override this method in each game, make it clear specific dropdowns
   protected abstract void clearSpecificGameDropdowns();
@@ -482,7 +482,6 @@ public abstract class Display extends Application {
 
   protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
-
   }
 
 }

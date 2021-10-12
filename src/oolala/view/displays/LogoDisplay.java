@@ -202,11 +202,11 @@ public class LogoDisplay extends Display {
   @Override
   protected void executeInstruction(Instruction currentInstruction, TurtleLinkage turtleLinkage,
       Group root) {
-    if (currentInstruction.order == Commands.TELL) {
-      tellTurtle(turtleLinkage.myID);
-    }
-    InstructionProcessor instructionProcessor = new InstructionProcessor(currentInstruction,
-        (CreatureLinkage) turtleLinkage, root);
+//    if (currentInstruction.order == Commands.TELL) {
+//      tellTurtle(turtleLinkage.myID);
+//    }
+//    InstructionProcessor instructionProcessor = new InstructionProcessor(currentInstruction,
+//        (CreatureLinkage) turtleLinkage, root);
   }
 
 
