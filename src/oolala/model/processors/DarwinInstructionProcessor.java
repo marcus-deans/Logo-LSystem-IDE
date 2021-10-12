@@ -2,6 +2,7 @@ package oolala.model.processors;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
+import oolala.model.ModelCreature;
 import oolala.model.commands.InfectCommand;
 import oolala.model.commands.conditionals.GoConditionalCommand;
 import oolala.model.commands.conditionals.IfEmptyConditionalCommand;
@@ -45,24 +46,25 @@ public class DarwinInstructionProcessor {
       CreatureLinkage creatureLinkage,
       Group root) {
     int commandPixels = currentInstruction.pixels;
+    ModelCreature myModelCreature = creatureLinkage.myModelCreature;
     switch (currentInstruction.order) {
-      case FORWARD -> new ForwardModelCommand(creatureLinkage, commandPixels);
-      case BACKWARD -> new BackwardModelCommand(creatureLinkage, commandPixels);
-      case RIGHT -> new RotateRightModelCommand(creatureLinkage, commandPixels);
-      case LEFT -> new RotateLeftModelCommand(creatureLinkage, commandPixels);
-      case HOME -> new HomeModelCommand(creatureLinkage);
-      case INFECT -> new InfectCommand(creatureLinkage);
-      case IFEMPTY -> new IfEmptyConditionalCommand(creatureLinkage, commandPixels,
+      case FORWARD -> new ForwardModelCommand(myModelCreature, commandPixels);
+      case BACKWARD -> new BackwardModelCommand(myModelCreature, commandPixels);
+      case RIGHT -> new RotateRightModelCommand(myModelCreature, commandPixels);
+      case LEFT -> new RotateLeftModelCommand(myModelCreature, commandPixels);
+      case HOME -> new HomeModelCommand(myModelCreature);
+      case INFECT -> new InfectCommand(myModelCreature);
+      case IFEMPTY -> new IfEmptyConditionalCommand(myModelCreature, commandPixels,
           allInstructions, root);
-      case IFWALL -> new IfWallConditionalCommand(creatureLinkage, commandPixels, allInstructions,
+      case IFWALL -> new IfWallConditionalCommand(myModelCreature, commandPixels, allInstructions,
           root);
-      case IFSAME -> new IfSameConditionalCommand(creatureLinkage, commandPixels, allInstructions,
+      case IFSAME -> new IfSameConditionalCommand(myModelCreature, commandPixels, allInstructions,
           root);
-      case IFENEMY -> new IfEnemyConditionalCommand(creatureLinkage, commandPixels,
+      case IFENEMY -> new IfEnemyConditionalCommand(myModelCreature, commandPixels,
           allInstructions, root);
-      case IFRANDOM -> new IfRandomConditionalCommand(creatureLinkage, commandPixels,
+      case IFRANDOM -> new IfRandomConditionalCommand(myModelCreature, commandPixels,
           allInstructions, root);
-      case GO -> new GoConditionalCommand(creatureLinkage, commandPixels, allInstructions, root);
+      case GO -> new GoConditionalCommand(myModelCreature, commandPixels, allInstructions, root);
       default -> {
       }
 //      default -> myTurtle.execute(currentInstruction, root, lineRoot);

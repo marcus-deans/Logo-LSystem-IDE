@@ -1,7 +1,6 @@
 package oolala.model.commands;
 
 import oolala.model.ModelCreature;
-import oolala.view.darwin.CreatureLinkage;
 
 /**
  * @author marcusdeans
@@ -18,11 +17,13 @@ public class InfectCommand extends ModelCommand {
 
   /**
    * Create new InfectCommand to infect another model creature
-   * @param creatureLinkage the ModelCreature which will do the infecting
+   *
+   * @param modelCreature the ModelCreature which will do the infecting
    */
-  public InfectCommand(CreatureLinkage creatureLinkage) {
-    super(creatureLinkage);
-    infectingModelCreature = creatureLinkage.myModelCreature;
+  public InfectCommand(ModelCreature modelCreature) {
+    super(modelCreature);
+    infectingModelCreature = modelCreature;
+//    infectingModelCreature = creatureLinkage.myModelCreature;
     determineInfectedCreature();
     infectOtherCreature();
   }
