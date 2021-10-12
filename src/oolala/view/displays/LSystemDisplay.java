@@ -23,6 +23,7 @@ public class LSystemDisplay extends LogoDisplay {
   public static final int BUFFER = 300;
   private Text levelText;
   private ComboBox levelsDropdown;
+  public static final int BUFFER = 50;
   private int numLevels;
   private int turnAngle;
   private int stepLength;
@@ -53,6 +54,9 @@ public class LSystemDisplay extends LogoDisplay {
     myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
     myAnimation.play();
   }
+
+  private final int LSYSTEM_OFFSET_X = 300;
+  private final int LSYSTEM_OFFSET_Y = 100;
 
   @Override
   protected Scene setupGame(int width, int height, Paint background) {
@@ -104,8 +108,9 @@ public class LSystemDisplay extends LogoDisplay {
 
   void relocateAndHideTurtle() {
     //set Turtle starting coordinates to top left corner
-    myModelTurtle.setNewX(OFFSET_X);
-    myModelTurtle.setNewY(OFFSET_Y_TOP);
+    myModelTurtle.setNewX(LSYSTEM_OFFSET_X);
+    myModelTurtle.setNewY(LSYSTEM_OFFSET_Y);
+//    myModelTurtle.setNewY(OFFSET_Y_TOP + ((Math.abs(BORDER_HEIGHT) - BUFFER)));
 
 //    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
@@ -131,7 +136,7 @@ public class LSystemDisplay extends LogoDisplay {
     //If an instruction has been sent to myGameProcessor, run it
     ArrayList<ArrayList<Instruction>> instructions = myGameProcessor.getConvertedInstructionLevels();
     numLevels = instructions.size();
-    int level=0;
+    int level = 1;
 
     if (!instructions.isEmpty()) {
       ArrayList<Instruction> currentLevelInstructions = instructions.get(0);
@@ -155,8 +160,10 @@ public class LSystemDisplay extends LogoDisplay {
   }
 
   private void updateTurtleCoordinatesAndPositioning(int level) {
-    myModelTurtle.setNewX(OFFSET_X);
-    myModelTurtle.setNewY(OFFSET_Y_TOP + ((BORDER_HEIGHT - BUFFER) / numLevels) * level * 2);
+    myModelTurtle.setNewX(LSYSTEM_OFFSET_X);
+//    myModelTurtle.setNewY(LSYSTEM_OFFSET_Y*level);
+    myModelTurtle.setNewY(
+        LSYSTEM_OFFSET_Y + ((Math.abs(BORDER_HEIGHT) - BUFFER) / numLevels) * level);
 //    myModelTurtle.setTurtleCoordinates(new Coordinates(OFFSET_X,OFFSET_Y_TOP+(BUFFER/2), OFFSET_X, OFFSET_Y_TOP+(BUFFER/2)));
     myModelTurtle.updateCoordinates();
     myViewTurtle.update(myModelTurtle);
