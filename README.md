@@ -53,8 +53,12 @@ Assumptions or Simplifications:
 Interesting data files:
 
 Known Bugs:
+* Distancing bugs in LSystem wherein the spacing between the first and second line is erroneous
 
 Extra credit:
+
+* Added field of view to ModelCreatuere objects which is cutomizable and controls which other
+  objects are included as being nearby
 
 
 ### Impressions
