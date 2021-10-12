@@ -76,6 +76,11 @@ public class LSystemDisplay extends LogoDisplay {
     }
   }
 
+  @Override
+  protected void clearSpecificGameDropdowns() {
+    //TODO: choose which dropdowns to clear
+  }
+
   private void updateTurtleCoordinatesAndPositioning(int level) {
 //    myModelTurtle.setNewX(OFFSET_X);
 //    myModelTurtle.setNewY(OFFSET_Y_TOP + ((BORDER_HEIGHT-BUFFER)/numLevels)*level);

@@ -39,8 +39,7 @@ public class Darwin extends GameProcessor{
     }
 
     //TODO: ignore lines that start with #
-    public void inputParser(int nearbyThreshold, int speciesIdentifier, int length,
-        String inputStream) {
+    public void inputParser(int nearbyThreshold, int speciesIdentifier, int length, String inputStream) {
         myInstructions.clear();
         isValidCommand = true;
         List<String> inputCommands = Arrays.asList(

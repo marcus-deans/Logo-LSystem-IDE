@@ -4,7 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Paint;
 import oolala.model.instructions.CreatureInstruction;
@@ -28,6 +32,7 @@ public class DarwinDisplay extends Display {
   protected Scene setupGame(int width, int height, Paint background) {
     myGameProcessor = new Darwin();
     allCreatureLinkages = new ArrayList<>();
+    allCreatureNames = new ArrayList<>();
     performInitialSetup();
     initializeRunButton(getWord("run_text_darwin")); //initialize the program run button
     creaturesTitle(getWord("creatures_text_darwin"));
@@ -37,6 +42,37 @@ public class DarwinDisplay extends Display {
     Scene scene = new Scene(root, width, height, background);
     scene.getStylesheets().add(LogoDisplay.class.getResource("Display.css").toExternalForm());
     return scene;
+  }
+
+  @Override
+  protected void initializeRunButton(String runTitle) {
+    String creatureName = getUserCreatureName();
+    Button runCommands = new Button(runTitle);
+    runCommands.setPrefWidth(RUN_WIDTH);
+    runCommands.setPrefHeight(RUN_HEIGHT);
+    runCommands.setLayoutX(RUN_X);
+    runCommands.setLayoutY(RUN_Y);
+    root.getChildren().add(runCommands);
+    runCommands.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        handleInputParsing(commandLine.getText());
+        validateCommandStream();
+        myGameProcessor.saveHistory(commandLine.getText());
+        updateHistoryDropdown();
+        updateCreatureDropdown();
+      }
+    });
+  }
+
+  private String getUserCreatureName() {
+    //TODO: popup to get user's name for this new creature
+    return "";
+  }
+
+  @Override
+  protected void clearSpecificGameDropdowns() {
+    //TODO: choose which dropdowns to clear
   }
 
   private void makeScreenClickable() {
@@ -71,37 +107,38 @@ public class DarwinDisplay extends Display {
 
   @Override
   protected void handleInputParsing(String text) {
+    //TODO: pass in species identifier somehow
     myGameProcessor.inputParser(4, 4, 4, text);
   }
 
   //Create method that passes in queue of commands to Logo
   @Override
   protected void step() {
-    //TODO: update dropdowns
+    //TODO: make sure step is updating all dropdowns
     updateCreatureDropdown();
     checkForInstructionsAndExecute();
   }
 
   private void checkForInstructionsAndExecute() {
-    allCreatureLinkages = randomizeCreatureOrder();
-    for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
-      int checkCreatureLinkageSpecies = checkCreatureLinkage.myModelCreature.getMySpeciesIdentifier();
-      ArrayList<CreatureInstruction> checkInstructions = myGameProcessor.getMySpeciesInstructions(
-          checkCreatureLinkageSpecies);
-
-      while (!checkInstructions.isEmpty()) {
-        Instruction currentInstruction = checkInstructions.get(0); //pop a single instruction, FIFO
-        //TODO:
-        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
-        executeInstruction(currentInstruction, myCreatureLinkage, root);
-        //TODO: associate each creature with its map
-        // drawTurtleLine();
-        // myModelTurtle.updateCoordinates(0;
-        currentCreatureInstructions.remove(0);
-      }
-      creatureExecutionOrderList.remove(0);
-    }
-    //TODO: execute all instructions
+//    allCreatureLinkages = randomizeCreatureOrder();
+//    for (CreatureLinkage checkCreatureLinkage : allCreatureLinkages) {
+//      int checkCreatureLinkageSpecies = checkCreatureLinkage.myModelCreature.getMySpeciesIdentifier();
+//      ArrayList<CreatureInstruction> checkInstructions = myGameProcessor.getMySpeciesInstructions(
+//          checkCreatureLinkageSpecies);
+//
+//      while (!checkInstructions.isEmpty()) {
+//        Instruction currentInstruction = checkInstructions.get(0); //pop a single instruction, FIFO
+//        //TODO:
+//        CreatureLinkage myCreatureLinkage = new CreatureLinkage(0, 0, 0, 10, 10);
+//        executeInstruction(currentInstruction, myCreatureLinkage, root);
+//        //TODO: associate each creature with its map
+//        // drawTurtleLine();
+//        // myModelTurtle.updateCoordinates(0;
+//        currentCreatureInstructions.remove(0);
+//      }
+//      creatureExecutionOrderList.remove(0);
+//    }
+//    //TODO: execute all instructions
   }
 
   private ArrayList<CreatureLinkage> randomizeCreatureOrder() {
