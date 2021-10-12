@@ -1,8 +1,8 @@
 package oolala.model.commands.movements;
 
 import oolala.model.Coordinates;
+import oolala.model.ModelTurtle;
 import oolala.model.commands.ModelCommand;
-import oolala.view.TurtleLinkage;
 
 /**
  * @author marcusdeans
@@ -44,11 +44,11 @@ public abstract class MovementModelCommand extends ModelCommand {
   /**
    * Construct a movement command to move the turtle
    *
-   * @param turtleLinkage the turtle on which the action will be imparted
-   * @param pixels        the distance of movement
+   * @param modelTurtle the turtle on which the action will be imparted
+   * @param pixels      the distance of movement
    */
-  public MovementModelCommand(TurtleLinkage turtleLinkage, int pixels) {
-    super(turtleLinkage, pixels);
+  public MovementModelCommand(ModelTurtle modelTurtle, int pixels) {
+    super(modelTurtle, pixels);
     getTurtleCoordinates();
     myDegreesRotation = myModelTurtle.getDegreesRotation();
     computeVectors();

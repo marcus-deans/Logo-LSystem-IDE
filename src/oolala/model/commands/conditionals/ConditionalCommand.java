@@ -40,8 +40,8 @@ public abstract class ConditionalCommand extends ModelCommand {
       ArrayList<CreatureInstruction> creatureInstructions, Group root) {
     super(creatureLinkage);
     myRoot = root;
-    myCreatureLinkage = creatureLinkage;
-    myModelCreature = creatureLinkage.myModelCreature;
+//    myCreatureLinkage = creatureLinkage;
+//    myModelCreature = creatureLinkage.myModelCreature;
     myNextCommand = nextCommand;
     myCreatureInstructions = creatureInstructions;
 
