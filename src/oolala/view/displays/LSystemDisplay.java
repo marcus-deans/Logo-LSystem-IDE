@@ -45,6 +45,9 @@ public class LSystemDisplay extends LogoDisplay {
   private final int LSYSTEM_OFFSET_X = 300;
   private final int LSYSTEM_OFFSET_Y = 100;
 
+  private final int LSYSTEM_OFFSET_X = 300;
+  private final int LSYSTEM_OFFSET_Y = 100;
+
   @Override //Overrides in order to change the frame width
   public void start(Stage stage) {
     //Variables
