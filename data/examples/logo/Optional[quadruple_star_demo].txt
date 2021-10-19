@@ -1,0 +1,8 @@
+rt 90
+fd 100 rt 144 fd 100 rt 144 fd 100 rt 144 fd 100 rt 144 fd 100 rt 144
+rt 180
+fd 100 lt 144 fd 100 lt 144 fd 100 lt 144 fd 100 lt 144 fd 100 lt 144
+rt 90
+fd 200 lt 144 fd 100 lt 144 fd 100 lt 144 fd 100 lt 144 fd 100 lt 144
+rt 180
+fd 300 lt 144 fd 100 lt 144 fd 100 lt 144 fd 100 lt 144 fd 100 lt 144
